@@ -8,7 +8,6 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { ThemeProvider } from "next-themes";
 import { Inter, Roboto_Flex } from "next/font/google";
 
-import { AlternateDocumentProvider } from "@/components/docs/layout/language-switcher";
 import { TabsLayout } from "@/components/docs/layout/tab-layout";
 import type { Locale } from "@/utils/locale";
 import type React from "react";
@@ -58,11 +57,7 @@ export function DocsLayout({
           disableTransitionOnChange={false}
         >
           {isThemeSelectorEnabled && <ThemeSelector />}
-          <AlternateDocumentProvider>
-            <Content>
-              <DocsMenu locale={locale}>{children}</DocsMenu>
-            </Content>
-          </AlternateDocumentProvider>
+          <Content>{children}</Content>
         </ThemeProvider>
       </body>
     </html>
@@ -91,11 +86,16 @@ async function navigationRelativePath(locale: Locale) {
   return match._sys.relativePath;
 }
 
-const DocsMenu = async ({
+// Renders the tab/nav chrome around a doc page. Called from DocsPage (not DocsLayout)
+// because the language switcher's SSR href needs `siblingExists`, which is only known
+// once the page has resolved its slug.
+export const DocsMenu = async ({
   locale,
+  siblingExists,
   children,
 }: {
   locale: Locale;
+  siblingExists: boolean;
   children?: React.ReactNode;
 }) => {
   const navigationData = await client.queries.minimisedNavigationBarFetch({
@@ -107,6 +107,7 @@ const DocsMenu = async ({
       <TinaClient
         props={{
           children,
+          siblingExists,
           query: navigationData.query,
           variables: navigationData.variables,
           data: navigationData.data,

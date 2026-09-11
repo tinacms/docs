@@ -12,9 +12,11 @@ import { NavbarLogo } from "./navbar-logo";
 export const TopNav = ({
   tabs,
   navigationDocsData,
+  siblingExists,
 }: {
   tabs: { label: string; content: any }[];
   navigationDocsData: any;
+  siblingExists: boolean;
 }) => {
   const ctaButtons = navigationDocsData?.ctaButtons;
   const hasButtons = ctaButtons && (ctaButtons.button1 || ctaButtons.button2);
@@ -119,7 +121,7 @@ export const TopNav = ({
               </div>
             </>
           )}
-          <LanguageSwitcher />
+          <LanguageSwitcher siblingExists={siblingExists} />
           <MobileNavSidebar tocData={tabs} />
           <div className="w-full hidden lg:flex justify-end">
             <LightDarkSwitch />
