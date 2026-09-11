@@ -1,8 +1,10 @@
 "use client";
 
+import { getLocale, getLocaleHome } from "@/utils/locale";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface NavbarLogoProps {
@@ -11,6 +13,7 @@ interface NavbarLogoProps {
 
 export const NavbarLogo = ({ navigationDocsData }: NavbarLogoProps) => {
   const { resolvedTheme } = useTheme();
+  const pathname = usePathname() ?? "/";
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -21,7 +24,11 @@ export const NavbarLogo = ({ navigationDocsData }: NavbarLogoProps) => {
   const darkLogo = navigationDocsData[0]?.darkModeLogo || lightLogo;
 
   return (
-    <Link href="/" className="flex items-center">
+    <Link
+      href={getLocaleHome(getLocale(pathname))}
+      className="flex items-center"
+      data-testid="navbar-logo"
+    >
       <div className="relative md:w-[120px] w-[90px] h-[40px]">
         {mounted ? (
           <>

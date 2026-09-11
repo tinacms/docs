@@ -202,3 +202,16 @@ query minimisedNavigationBarFetch($relativePath: String!) {
     ...MinimisedNavigationBarParts
   }
 }
+
+query navigationBarLocales {
+  navigationBarConnection {
+    edges {
+      node {
+        locale
+        _sys {
+          relativePath
+        }
+      }
+    }
+  }
+}

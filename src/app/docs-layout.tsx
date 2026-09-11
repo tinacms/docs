@@ -10,7 +10,7 @@ import { Inter, Roboto_Flex } from "next/font/google";
 
 import { AlternateDocumentProvider } from "@/components/docs/layout/language-switcher";
 import { TabsLayout } from "@/components/docs/layout/tab-layout";
-import { type Locale, locales } from "@/utils/locale";
+import type { Locale } from "@/utils/locale";
 import type React from "react";
 import { TinaClient } from "./tina-client";
 
@@ -79,6 +79,18 @@ const Content = ({ children }: { children?: React.ReactNode }) => (
   </>
 );
 
+async function navigationRelativePath(locale: Locale) {
+  const { data } = await client.queries.navigationBarLocales();
+  const nodes = (data.navigationBarConnection.edges ?? [])
+    .map((edge) => edge?.node)
+    .filter((node) => node != null);
+  const match = nodes.find((node) => (node.locale ?? "en") === locale);
+  if (!match) {
+    throw new Error(`No navigation-bar document has locale "${locale}"`);
+  }
+  return match._sys.relativePath;
+}
+
 const DocsMenu = async ({
   locale,
   children,
@@ -87,7 +99,7 @@ const DocsMenu = async ({
   children?: React.ReactNode;
 }) => {
   const navigationData = await client.queries.minimisedNavigationBarFetch({
-    relativePath: locales[locale].navigationFile,
+    relativePath: await navigationRelativePath(locale),
   });
 
   return (

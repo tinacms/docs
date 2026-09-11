@@ -6,14 +6,12 @@ export const locales = {
     contentDir: "content/docs",
     pathPrefix: "",
     tinaIoDocsPath: "/docs",
-    navigationFile: "docs-navigation-bar.json",
   },
   zh: {
     collection: "docsZh",
     contentDir: "content/docs-zh",
     pathPrefix: "/zh",
     tinaIoDocsPath: "/zh/docs",
-    navigationFile: "docs-navigation-bar-zh.json",
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 
@@ -29,4 +27,11 @@ export function getAlternateLocale(locale: Locale): Locale {
 
 export function getLocaleHome(locale: Locale): string {
   return locales[locale].pathPrefix || "/";
+}
+
+export function getAlternateLocalePath(pathname: string): string {
+  if (getLocale(pathname) === "zh") {
+    return pathname.replace(/^\/zh(?=\/|$)/, "") || "/";
+  }
+  return `/zh${pathname === "/" ? "" : pathname}`;
 }

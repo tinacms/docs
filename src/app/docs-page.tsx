@@ -7,7 +7,6 @@ import { GitHubMetadataProvider } from "@/src/components/page-metadata/github-me
 import GithubConfig from "@/src/utils/github-client";
 import client from "@/tina/__generated__/client";
 import { getTableOfContents } from "@/utils/docs";
-import { getUrl } from "@/utils/get-url";
 import { type Locale, getAlternateLocale, locales } from "@/utils/locale";
 import { getSeo } from "@/utils/metadata/getSeo";
 import type { Metadata } from "next";
@@ -123,14 +122,11 @@ export async function DocsPage({
     ? await GithubConfig.fetchMetadata(doc.id)
     : null;
 
-  const alternate = getAlternateLocale(locale);
-  const alternateUrl = (await docExists(alternate, slug))
-    ? getUrl(`${locales[alternate].contentDir}/${slug}.mdx`)
-    : null;
+  const siblingExists = await docExists(getAlternateLocale(locale), slug);
 
   return (
     <GitHubMetadataProvider data={githubMetadata}>
-      <AlternateDocument url={alternateUrl} />
+      <AlternateDocument exists={siblingExists} />
       <TinaClient
         Component={Document}
         props={{

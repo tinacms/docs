@@ -3,6 +3,7 @@
 import {
   type Locale,
   getAlternateLocale,
+  getAlternateLocalePath,
   getLocale,
   getLocaleHome,
 } from "@/utils/locale";
@@ -20,8 +21,8 @@ import { MdLanguage } from "react-icons/md";
 const LABELS: Record<Locale, string> = { en: "English", zh: "中文" };
 
 type AlternateDocumentContextValue = {
-  url: string | null;
-  setUrl: (url: string | null) => void;
+  exists: boolean | null;
+  setExists: (exists: boolean | null) => void;
 };
 
 const AlternateDocumentContext =
@@ -32,21 +33,21 @@ export function AlternateDocumentProvider({
 }: {
   children: ReactNode;
 }) {
-  const [url, setUrl] = useState<string | null>(null);
+  const [exists, setExists] = useState<boolean | null>(null);
   return (
-    <AlternateDocumentContext.Provider value={{ url, setUrl }}>
+    <AlternateDocumentContext.Provider value={{ exists, setExists }}>
       {children}
     </AlternateDocumentContext.Provider>
   );
 }
 
-export function AlternateDocument({ url }: { url: string | null }) {
+export function AlternateDocument({ exists }: { exists: boolean }) {
   const context = useContext(AlternateDocumentContext);
-  const setUrl = context?.setUrl;
+  const setExists = context?.setExists;
   useEffect(() => {
-    setUrl?.(url);
-    return () => setUrl?.(null);
-  }, [setUrl, url]);
+    setExists?.(exists);
+    return () => setExists?.(null);
+  }, [setExists, exists]);
   return null;
 }
 
@@ -57,8 +58,11 @@ function setLocaleCookie(locale: Locale) {
 export function LanguageSwitcher() {
   const pathname = usePathname() ?? "/";
   const target = getAlternateLocale(getLocale(pathname));
-  const alternateUrl = useContext(AlternateDocumentContext)?.url;
-  const href = alternateUrl ?? getLocaleHome(target);
+  const siblingExists = useContext(AlternateDocumentContext)?.exists;
+  const href =
+    siblingExists === false
+      ? getLocaleHome(target)
+      : getAlternateLocalePath(pathname);
 
   return (
     <Link

@@ -22,5 +22,19 @@ test.describe("Chinese docs", () => {
     const switcher = page.getByTestId("language-switcher");
     await expect(switcher).toHaveAttribute("href", basePath);
     await expect(switcher).toHaveText("English");
+    await expect(page.getByTestId("navbar-logo")).toHaveAttribute(
+      "href",
+      `${basePath}/zh`
+    );
+  });
+
+  test("links a nested zh page to its English sibling", async ({ page }) => {
+    await page.goto(`${basePath}/zh/using-tinacms/what-is-tinacms`);
+
+    await expect(page.locator("html")).toHaveAttribute("lang", "zh");
+    await expect(page.getByTestId("language-switcher")).toHaveAttribute(
+      "href",
+      `${basePath}/using-tinacms/what-is-tinacms`
+    );
   });
 });
