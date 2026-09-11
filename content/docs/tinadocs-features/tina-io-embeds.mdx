@@ -1,0 +1,86 @@
+---
+title: tina.io Embeds
+last_edited: '2026-09-11T00:00:00.000Z'
+auto_generated: false
+---
+
+Embeds ported from tina.io so migrated docs render without changes.
+
+## GraphQL Code Block
+
+<GraphQLCodeBlock
+  query="{
+  ##post(relativePath:#&#x22;hello-world.md&#x22;)#{
+  ####title
+  ####body
+  ##}
+  }"
+  response="{
+  ##&#x22;data&#x22;:#{
+  ####&#x22;post&#x22;:#{
+  ######&#x22;title&#x22;:#&#x22;Hello,#World!&#x22;,
+  ######&#x22;body&#x22;:#&#x22;Welcome#to#TinaCMS.&#x22;
+  ####}
+  ##}
+  }"
+/>
+
+## Webm Embed
+
+<WebmEmbed embedSrc="/img/docs/editing/markdown.webm" />
+
+## Image and Text
+
+<ImageAndText
+  heading="_schema.json"
+  docText={<>
+    The GraphQL Schema AST (represented in JSON).
+  </>}
+  image="/img/rico-replacement.jpg"
+/>
+
+## Iframe
+
+<Iframe iframeSrc="https://stackblitz.com/edit/vitejs-vite-hello?embed=1" height={400} />
+
+## Summary Tab
+
+<SummaryTab
+  heading="Why does this exist?"
+  text={<>
+    Collapsible detail that stays out of the way until a reader wants it.
+  </>}
+/>
+
+## Property Table
+
+<propertyTable
+  title="tinaField"
+  property={[
+    {
+      name: "object",
+      description: "The object which holds the field you're accessing.\n",
+      type: "object",
+      required: true
+    },
+    {
+      name: "property",
+      description: "The property from the object which you're accessing.\n",
+      type: "string"
+    },
+    {
+      groupName: "options",
+      name: "experimental",
+      description: "Marks the field as experimental.\n",
+      type: "boolean",
+      default: "false",
+      experimental: true
+    },
+    {
+      groupName: "options",
+      name: "label",
+      description: "Overrides the label shown in the sidebar.\n",
+      type: "string"
+    }
+  ]}
+/>

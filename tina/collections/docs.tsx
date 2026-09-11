@@ -6,10 +6,16 @@ import CalloutTemplate from "@/tina/templates/markdown-embeds/callout.template";
 import CardGridTemplate from "@/tina/templates/markdown-embeds/card-grid.template";
 import CodeTabsTemplate from "@/tina/templates/markdown-embeds/code-tabs.template";
 import { FileStructureTemplate } from "@/tina/templates/markdown-embeds/file-structure.template";
+import GraphQLCodeBlockTemplate from "@/tina/templates/markdown-embeds/graphql-code-block.template";
+import IframeTemplate from "@/tina/templates/markdown-embeds/iframe.template";
+import ImageAndTextTemplate from "@/tina/templates/markdown-embeds/image-and-text.template";
 import ImageEmbedTemplate from "@/tina/templates/markdown-embeds/image-embed.template";
+import PropertyTableTemplate from "@/tina/templates/markdown-embeds/property-table.template";
 import RecipeTemplate from "@/tina/templates/markdown-embeds/recipe.template";
 import ScrollShowcaseTemplate from "@/tina/templates/markdown-embeds/scroll-showcase.template";
+import SummaryTabTemplate from "@/tina/templates/markdown-embeds/summary-tab.template";
 import { TypeDefinitionTemplate } from "@/tina/templates/markdown-embeds/type-definition.template";
+import WebmEmbedTemplate from "@/tina/templates/markdown-embeds/webm-embed.template";
 import YoutubeTemplate from "@/tina/templates/markdown-embeds/youtube.template";
 import type { Template } from "tinacms";
 import SeoInformation from "./seo-information";
@@ -99,6 +105,12 @@ export const docsCollection = {
         TypeDefinitionTemplate as Template,
         FileStructureTemplate as unknown as Template,
         ImageEmbedTemplate as Template,
+        GraphQLCodeBlockTemplate as Template,
+        WebmEmbedTemplate as Template,
+        ImageAndTextTemplate as Template,
+        IframeTemplate as Template,
+        SummaryTabTemplate as Template,
+        PropertyTableTemplate as Template,
       ],
     },
   ],
