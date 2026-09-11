@@ -1,6 +1,6 @@
+import { DocsMenu } from "@/app/docs-layout";
 import { TinaClient } from "@/app/tina-client";
 import Document from "@/components/docs/document";
-import { AlternateDocument } from "@/components/docs/layout/language-switcher";
 import settings from "@/content/siteConfig.json";
 import { fetchTinaData } from "@/services/tina/fetch-tina-data";
 import { GitHubMetadataProvider } from "@/src/components/page-metadata/github-metadata-context";
@@ -125,20 +125,21 @@ export async function DocsPage({
   const siblingExists = await docExists(getAlternateLocale(locale), slug);
 
   return (
-    <GitHubMetadataProvider data={githubMetadata}>
-      <AlternateDocument exists={siblingExists} />
-      <TinaClient
-        Component={Document}
-        props={{
-          query: data.query,
-          variables: data.variables,
-          data: data.data,
-          collection: locales[locale].collection,
-          hasGithubConfig: GithubConfig.IsConfigured,
-          pageTableOfContents,
-          formId: doc.id,
-        }}
-      />
-    </GitHubMetadataProvider>
+    <DocsMenu locale={locale} siblingExists={siblingExists}>
+      <GitHubMetadataProvider data={githubMetadata}>
+        <TinaClient
+          Component={Document}
+          props={{
+            query: data.query,
+            variables: data.variables,
+            data: data.data,
+            collection: locales[locale].collection,
+            hasGithubConfig: GithubConfig.IsConfigured,
+            pageTableOfContents,
+            formId: doc.id,
+          }}
+        />
+      </GitHubMetadataProvider>
+    </DocsMenu>
   );
 }

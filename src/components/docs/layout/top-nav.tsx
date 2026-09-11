@@ -1,6 +1,5 @@
 import { MobileNavSidebar } from "@/components/navigation/mobile-navigation-sidebar";
 import * as Tabs from "@radix-ui/react-tabs";
-import Link from "next/link";
 import type React from "react";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -12,9 +11,11 @@ import { NavbarLogo } from "./navbar-logo";
 export const TopNav = ({
   tabs,
   navigationDocsData,
+  siblingExists,
 }: {
   tabs: { label: string; content: any }[];
   navigationDocsData: any;
+  siblingExists: boolean;
 }) => {
   const ctaButtons = navigationDocsData?.ctaButtons;
   const hasButtons = ctaButtons && (ctaButtons.button1 || ctaButtons.button2);
@@ -60,26 +61,28 @@ export const TopNav = ({
             <>
               <div className="hidden lg:flex gap-2">
                 {ctaButtons.button1?.label && ctaButtons.button1?.link && (
-                  <Link
+                  <a
                     href={ctaButtons.button1.link}
                     target="_blank"
+                    rel="noreferrer"
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${getButtonClasses(
                       ctaButtons.button1.variant
                     )}`}
                   >
                     {ctaButtons.button1.label}
-                  </Link>
+                  </a>
                 )}
                 {ctaButtons.button2?.label && ctaButtons.button2?.link && (
-                  <Link
+                  <a
                     href={ctaButtons.button2.link}
                     target="_blank"
+                    rel="noreferrer"
                     className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${getButtonClasses(
                       ctaButtons.button2.variant
                     )}`}
                   >
                     {ctaButtons.button2.label}
-                  </Link>
+                  </a>
                 )}
               </div>
               <div className="lg:hidden relative">
@@ -95,23 +98,23 @@ export const TopNav = ({
                     <div className="py-1">
                       {ctaButtons.button1?.label &&
                         ctaButtons.button1?.link && (
-                          <Link
+                          <a
                             href={ctaButtons.button1.link}
                             className="block px-4 py-2 text-sm text-neutral-text hover:bg-neutral-background-secondary"
                             onClick={() => setIsDropdownOpen(false)}
                           >
                             {ctaButtons.button1.label}
-                          </Link>
+                          </a>
                         )}
                       {ctaButtons.button2?.label &&
                         ctaButtons.button2?.link && (
-                          <Link
+                          <a
                             href={ctaButtons.button2.link}
                             className="block px-4 py-2 text-sm text-neutral-text hover:bg-neutral-background-secondary"
                             onClick={() => setIsDropdownOpen(false)}
                           >
                             {ctaButtons.button2.label}
-                          </Link>
+                          </a>
                         )}
                     </div>
                   </div>
@@ -119,7 +122,7 @@ export const TopNav = ({
               </div>
             </>
           )}
-          <LanguageSwitcher />
+          <LanguageSwitcher siblingExists={siblingExists} />
           <MobileNavSidebar tocData={tabs} />
           <div className="w-full hidden lg:flex justify-end">
             <LightDarkSwitch />

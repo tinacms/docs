@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { tinaField } from "tinacms/dist/react";
 
 export const CardGrid = (data: {
@@ -16,10 +15,11 @@ export const CardGrid = (data: {
       {data.cards?.map((card, index) => {
         if (card.link) {
           return (
-            <Link
+            <a
               href={card.link}
               className={cardClasses}
               key={`card-${index}-${card.title}`}
+              data-testid="card-grid-link"
             >
               <h2
                 className="text-2xl font-medium brand-primary-gradient mb-2 font-heading"
@@ -45,7 +45,7 @@ export const CardGrid = (data: {
                   <span className="ml-1 mr-2 brand-secondary-gradient"> ›</span>
                 </p>
               )}
-            </Link>
+            </a>
           );
         }
         return (

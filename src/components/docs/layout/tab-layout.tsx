@@ -22,11 +22,12 @@ type TabItem = {
 };
 
 export const TabsLayout = ({
-  props: { children },
+  props: { children, siblingExists },
   tinaProps,
 }: {
   props: {
     children: React.ReactNode;
+    siblingExists: boolean;
   };
   tinaProps: { data: Record<string, unknown> };
 }) => {
@@ -86,7 +87,11 @@ export const TabsLayout = ({
       onValueChange={handleTabChange}
       className="flex flex-col w-full"
     >
-      <TopNav tabs={tabs} navigationDocsData={navigationDocsData} />
+      <TopNav
+        tabs={tabs}
+        navigationDocsData={navigationDocsData}
+        siblingExists={siblingExists}
+      />
       <NavigationProvider navigationData={navigationDocsData}>
         <div className="w-full flex flex-col md:flex-row gap-4 md:p-4 max-w-[2560px] mx-auto">
           <Sidebar tabs={tabs} />
