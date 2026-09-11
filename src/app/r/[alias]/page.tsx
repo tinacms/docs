@@ -27,12 +27,22 @@ export default async function AliasRedirect({
   params: Promise<{ alias: string }>;
 }) {
   const { alias } = await params;
-  const { data } = await client.queries.docsConnection({
-    filter: { alias: { eq: alias } },
-  });
-  const doc = data.docsConnection.edges?.[0]?.node;
+  const doc = await resolveAlias(alias);
 
   if (!doc) notFound();
 
   redirect(getUrl(doc._sys.path));
+}
+
+async function resolveAlias(alias: string) {
+  try {
+    const { data } = await client.queries.docsConnection({
+      filter: { alias: { eq: alias } },
+    });
+    return data.docsConnection.edges?.[0]?.node ?? null;
+  } catch (error) {
+    // biome-ignore lint/suspicious/noConsole: build-time diagnostics
+    console.error(`Error resolving alias "${alias}":`, error);
+    return null;
+  }
 }
