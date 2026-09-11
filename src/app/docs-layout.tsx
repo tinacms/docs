@@ -8,6 +8,7 @@ import { GoogleTagManager } from "@next/third-parties/google";
 import { ThemeProvider } from "next-themes";
 import { Inter, Roboto_Flex } from "next/font/google";
 
+import { AlternateDocumentProvider } from "@/components/docs/layout/language-switcher";
 import { TabsLayout } from "@/components/docs/layout/tab-layout";
 import { type Locale, locales } from "@/utils/locale";
 import type React from "react";
@@ -57,9 +58,11 @@ export function DocsLayout({
           disableTransitionOnChange={false}
         >
           {isThemeSelectorEnabled && <ThemeSelector />}
-          <Content>
-            <DocsMenu locale={locale}>{children}</DocsMenu>
-          </Content>
+          <AlternateDocumentProvider>
+            <Content>
+              <DocsMenu locale={locale}>{children}</DocsMenu>
+            </Content>
+          </AlternateDocumentProvider>
         </ThemeProvider>
       </body>
     </html>

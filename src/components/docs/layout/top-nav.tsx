@@ -6,6 +6,7 @@ import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Search } from "../../search-docs/search";
 import LightDarkSwitch from "../../ui/light-dark-switch";
+import { LanguageSwitcher } from "./language-switcher";
 import { NavbarLogo } from "./navbar-logo";
 
 export const TopNav = ({
@@ -118,6 +119,7 @@ export const TopNav = ({
               </div>
             </>
           )}
+          <LanguageSwitcher />
           <MobileNavSidebar tocData={tabs} />
           <div className="w-full hidden lg:flex justify-end">
             <LightDarkSwitch />
