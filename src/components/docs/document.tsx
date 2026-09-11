@@ -13,10 +13,7 @@ import type { DocsCollection } from "@/utils/locale";
 import { tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 
-type DocsData = (DocsQuery["docs"] | DocsZhQuery["docsZh"]) & {
-  previous?: { id: string; title: string } | null;
-  next?: { id: string; title: string } | null;
-};
+type DocsData = DocsQuery["docs"] | DocsZhQuery["docsZh"];
 
 type DocumentProps = {
   props: {
@@ -33,15 +30,6 @@ export default function Document({ props, tinaProps }: DocumentProps) {
   const documentationData = tinaProps.data[props.collection] as DocsData;
   const { pageTableOfContents } = props;
   const formattedDate = formatDate(documentationData?.last_edited ?? null);
-  const previousPage = {
-    slug: documentationData?.previous?.id.slice(7, -4),
-    title: documentationData?.previous?.title,
-  };
-
-  const nextPage = {
-    slug: documentationData?.next?.id.slice(7, -4),
-    title: documentationData?.next?.title,
-  };
 
   // Table of Contents Listener to Highlight Active Section
   const { activeIds, contentRef } = useTocListener(documentationData);
@@ -89,7 +77,10 @@ export default function Document({ props, tinaProps }: DocumentProps) {
               Last Edited: {formattedDate}
             </span>
           )}
-          <Pagination />
+          <Pagination
+            previous={documentationData?.previous}
+            next={documentationData?.next}
+          />
         </div>
       </div>
       {/* DESKTOP TABLE OF CONTENTS */}

@@ -5,9 +5,20 @@ import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 import { useNavigation } from "../docs/layout/navigation-context";
 import { DynamicLink } from "./dynamic-link";
 
-export function Pagination() {
-  const [prevPage, setPrevPage] = React.useState<any>(null);
-  const [nextPage, setNextPage] = React.useState<any>(null);
+type PaginationLink = { id: string; title: string };
+
+type PaginationProps = {
+  previous?: PaginationLink | null;
+  next?: PaginationLink | null;
+};
+
+export function Pagination({ previous, next }: PaginationProps) {
+  const [sidebarPrev, setSidebarPrev] = React.useState<PaginationLink | null>(
+    null
+  );
+  const [sidebarNext, setSidebarNext] = React.useState<PaginationLink | null>(
+    null
+  );
   const pathname = usePathname();
   const docsData = useNavigation();
 
@@ -15,14 +26,14 @@ export function Pagination() {
     if (!docsData?.data) return;
 
     // Flatten the hierarchical structure into a linear array
-    const flattenItems = (items: any[]): any[] => {
-      const flattened: any[] = [];
+    const flattenItems = (items: any[]): PaginationLink[] => {
+      const flattened: PaginationLink[] = [];
 
       const traverse = (itemList: any[]) => {
         for (const item of itemList) {
           if (item.slug) {
             flattened.push({
-              slug: item.slug.id,
+              id: item.slug.id,
               title: item.slug.title,
             });
           }
@@ -37,8 +48,8 @@ export function Pagination() {
       return flattened;
     };
 
-    const getAllPages = (): any[] => {
-      const allPages: any[] = [];
+    const getAllPages = (): PaginationLink[] => {
+      const allPages: PaginationLink[] = [];
 
       for (const tab of docsData.data) {
         if (tab.items) {
@@ -55,28 +66,27 @@ export function Pagination() {
 
     // Find current page index
     const currentIndex = allPages.findIndex(
-      (page: any) => getUrl(page.slug) === pathname
+      (page) => getUrl(page.id) === pathname
     );
 
     if (currentIndex !== -1) {
-      // Set previous page (if exists)
-      const prev = currentIndex > 0 ? allPages[currentIndex - 1] : null;
-      setPrevPage(prev);
-
-      // Set next page (if exists)
-      const next =
-        currentIndex < allPages.length - 1 ? allPages[currentIndex + 1] : null;
-      setNextPage(next);
+      setSidebarPrev(currentIndex > 0 ? allPages[currentIndex - 1] : null);
+      setSidebarNext(
+        currentIndex < allPages.length - 1 ? allPages[currentIndex + 1] : null
+      );
     } else {
-      setPrevPage(null);
-      setNextPage(null);
+      setSidebarPrev(null);
+      setSidebarNext(null);
     }
   }, [docsData, pathname]);
 
+  const prevPage = previous ?? sidebarPrev;
+  const nextPage = next ?? sidebarNext;
+
   return (
     <div className="flex justify-between mt-2 py-4 rounded-lg gap-4 w-full">
-      {prevPage?.slug ? (
-        <DynamicLink href={getUrl(prevPage.slug)} passHref>
+      {prevPage ? (
+        <DynamicLink href={getUrl(prevPage.id)} passHref>
           <div className="group relative block cursor-pointer py-4 text-left transition-all">
             <span className="pl-10 text-sm uppercase opacity-50 group-hover:opacity-100 text-neutral-text-secondary">
               Previous
@@ -93,8 +103,8 @@ export function Pagination() {
       ) : (
         <div />
       )}
-      {nextPage?.slug ? (
-        <DynamicLink href={getUrl(nextPage.slug)} passHref>
+      {nextPage ? (
+        <DynamicLink href={getUrl(nextPage.id)} passHref>
           <div className="group relative col-start-2 block cursor-pointer p-4 text-right transition-all">
             <span className="pr-6 text-sm uppercase opacity-50 md:pr-10 group-hover:opacity-100 text-neutral-text-secondary">
               Next

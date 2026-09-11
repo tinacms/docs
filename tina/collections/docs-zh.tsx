@@ -1,4 +1,4 @@
-import { docsCollection } from "./docs";
+import { docsCollection, docsFields } from "./docs";
 
 export const docsZhCollection = {
   ...docsCollection,
@@ -15,6 +15,7 @@ export const docsZhCollection = {
       return `/zh/${slug}`;
     },
   },
+  fields: docsFields("docsZh"),
 };
 
 export default docsZhCollection;
