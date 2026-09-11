@@ -1,6 +1,7 @@
 "use client";
 
 import type { ImageMetadata } from "@/tina/collections/image-metadata";
+import { withBasePath } from "@/utils/with-base-path";
 import Image from "next/image";
 import { useState } from "react";
 import { ImageOverlayWrapper } from "../../ui/image-overlay-wrapper";
@@ -20,8 +21,7 @@ const ImageEmbed = ({
 
   if (!image?.src) return null;
 
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const resolvedSrc = `${basePath}${image.src}`;
+  const resolvedSrc = withBasePath(image.src);
   const alt = image.alt || caption || "";
   const hasDimensions = !!(image.width && image.height);
 
