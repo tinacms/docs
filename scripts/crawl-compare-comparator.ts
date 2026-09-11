@@ -11,6 +11,9 @@ export interface CrawlOutcome {
   status: number;
   finalPath: string;
   html: string;
+  // Set when the fetch itself failed (network error, timeout). status is 0
+  // in that case, not a real HTTP status.
+  error?: string;
 }
 
 export interface PageSnapshot {
@@ -21,7 +24,14 @@ export interface PageSnapshot {
 }
 
 export interface FieldDiff {
-  field: "status" | "finalPath" | "title" | "h1" | "canonical" | "hreflang";
+  field:
+    | "status"
+    | "finalPath"
+    | "title"
+    | "h1"
+    | "canonical"
+    | "hreflang"
+    | "error";
   old: string;
   new: string;
 }
@@ -60,13 +70,25 @@ function cleanText(html: string): string {
     .trim();
 }
 
+// Comments and script/style bodies can contain tag-shaped text (a
+// commented-out <link>, a JS string literal with "<title>") that would
+// otherwise look like real markup to the extractors below.
+function stripNonContentMarkup(html: string): string {
+  return html
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "");
+}
+
 export function extractTitle(html: string): string | null {
-  const match = html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+  const match = stripNonContentMarkup(html).match(
+    /<title[^>]*>([\s\S]*?)<\/title>/i
+  );
   return match ? cleanText(match[1]) : null;
 }
 
 export function extractFirstH1(html: string): string | null {
-  const match = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  const match = stripNonContentMarkup(html).match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   return match ? cleanText(match[1]) : null;
 }
 
@@ -82,7 +104,11 @@ function parseAttrs(tag: string): Record<string, string> {
 }
 
 function findTags(html: string, tagName: string): string[] {
-  return html.match(new RegExp(`<${tagName}\\b[^>]*>`, "gi")) ?? [];
+  return (
+    stripNonContentMarkup(html).match(
+      new RegExp(`<${tagName}\\b[^>]*>`, "gi")
+    ) ?? []
+  );
 }
 
 export function extractCanonical(html: string): string | null {
@@ -148,6 +174,16 @@ export function compareCrawlOutcomes(
     if (oldValue !== newValue)
       diffs.push({ field, old: oldValue, new: newValue });
   };
+
+  // Always surfaced when either side failed to fetch, even if both sides
+  // happen to produce the same error message.
+  if (oldOutcome.error || newOutcome.error) {
+    diffs.push({
+      field: "error",
+      old: oldOutcome.error ?? "",
+      new: newOutcome.error ?? "",
+    });
+  }
 
   compareField("status", String(oldOutcome.status), String(newOutcome.status));
   compareField("finalPath", oldOutcome.finalPath, newOutcome.finalPath);

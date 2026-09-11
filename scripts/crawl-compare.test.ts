@@ -2,7 +2,10 @@ import { strict as assert } from "node:assert";
 import { test } from "node:test";
 import {
   compareCrawlOutcomes,
+  extractCanonical,
   extractDocLinks,
+  extractFirstH1,
+  extractTitle,
 } from "./crawl-compare-comparator";
 import { renderReport } from "./crawl-compare-report";
 
@@ -74,9 +77,30 @@ test("extractDocLinks collects unique /docs links and ignores other hrefs", () =
 test("renderReport tables a row per diff and lists broken links", () => {
   const report = renderReport(
     [{ path: "/docs/foo", diffs: [{ field: "title", old: "A", new: "B" }] }],
-    [{ path: "/docs/foo", link: "/docs/missing", status: 404 }]
+    [{ link: "/docs/missing", status: 404, foundOn: ["/docs/foo"] }]
   );
 
   assert.match(report, /\| \/docs\/foo \| title \| A \| B \|/);
-  assert.match(report, /\| \/docs\/foo \| \/docs\/missing \| 404 \|/);
+  assert.match(report, /\| \/docs\/missing \| 404 \| \/docs\/foo \|/);
+});
+
+const NOISY_HTML = `
+<html>
+<head>
+  <script>const markup = "<title>Fake Script Title</title><h1>Fake Script H1</h1>";</script>
+  <style>/* <link rel="canonical" href="https://tina.io/docs/fake-style" /> */</style>
+  <!-- <link rel="canonical" href="https://tina.io/docs/fake-comment" /> -->
+  <title>Real Title</title>
+  <link rel="canonical" href="https://tina.io/docs/real" />
+</head>
+<body>
+  <h1>Real Heading</h1>
+</body>
+</html>
+`;
+
+test("extraction ignores tag-shaped text inside comments, <script>, and <style>", () => {
+  assert.equal(extractTitle(NOISY_HTML), "Real Title");
+  assert.equal(extractFirstH1(NOISY_HTML), "Real Heading");
+  assert.equal(extractCanonical(NOISY_HTML), "https://tina.io/docs/real");
 });

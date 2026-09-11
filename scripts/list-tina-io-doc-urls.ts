@@ -69,8 +69,8 @@ function main(): void {
   });
 
   if (!values.root) {
-    console.error(
-      "Usage: list-tina-io-doc-urls --root <path-to-tina.io-checkout> [--out urls.txt]"
+    process.stderr.write(
+      "Usage: list-tina-io-doc-urls --root <path-to-tina.io-checkout> [--out urls.txt]\n"
     );
     process.exitCode = 1;
     return;
@@ -86,7 +86,7 @@ function main(): void {
   const outPath = values.out ?? "urls.txt";
 
   writeFileSync(outPath, `${urls.join("\n")}\n`);
-  console.log(`Wrote ${urls.length} URLs to ${outPath}`);
+  process.stdout.write(`Wrote ${urls.length} URLs to ${outPath}\n`);
 }
 
 main();

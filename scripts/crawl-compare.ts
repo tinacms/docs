@@ -12,6 +12,7 @@ import {
   extractDocLinks,
 } from "./crawl-compare-comparator";
 import {
+  describeError,
   fetchPage,
   headStatus,
   mapWithConcurrency,
@@ -49,8 +50,18 @@ async function main(): Promise<void> {
   });
 
   if (!values.old || !values.new || !values.urls) {
-    console.error(
-      "Usage: crawl-compare --old <url> --new <url> --urls <file> [--concurrency <n>] [--bypass-secret <secret>]"
+    process.stderr.write(
+      "Usage: crawl-compare --old <url> --new <url> --urls <file> [--concurrency <n>] [--bypass-secret <secret>]\n"
+    );
+    process.exitCode = 1;
+    return;
+  }
+
+  const concurrencyRaw = values.concurrency ?? "8";
+  const concurrency = Number.parseInt(concurrencyRaw, 10);
+  if (!Number.isInteger(concurrency) || concurrency < 1) {
+    process.stderr.write(
+      `--concurrency must be a positive integer, got "${concurrencyRaw}"\n`
     );
     process.exitCode = 1;
     return;
@@ -59,12 +70,14 @@ async function main(): Promise<void> {
   const oldBase = values.old;
   const newBase = values.new;
   const bypassSecret = values["bypass-secret"];
-  const concurrency = Number.parseInt(values.concurrency ?? "8", 10);
   const paths = readUrlList(values.urls);
 
   const rows: ComparisonRow[] = [];
-  const brokenLinks: BrokenLink[] = [];
+  // Which pages referenced each /docs link, so a link found on multiple
+  // pages is still HEAD-checked exactly once.
+  const linkToPages = new Map<string, Set<string>>();
   let hasNonOkOnNew = false;
+  let hasRowFailure = false;
 
   await mapWithConcurrency(paths, concurrency, async (path) => {
     const [oldOutcome, newOutcome] = await Promise.all([
@@ -73,29 +86,45 @@ async function main(): Promise<void> {
     ]);
 
     if (newOutcome.status !== 200) hasNonOkOnNew = true;
+    if (oldOutcome.error || newOutcome.error) hasRowFailure = true;
     rows.push({ path, diffs: compareCrawlOutcomes(oldOutcome, newOutcome) });
 
-    const docLinks = extractDocLinks(newOutcome.html);
-    await Promise.all(
-      docLinks.map(async (link) => {
-        const status = await headStatus(resolveUrl(newBase, link), {
-          bypassSecret,
-        });
-        if (isBrokenStatus(status)) brokenLinks.push({ path, link, status });
-      })
-    );
+    for (const link of extractDocLinks(newOutcome.html)) {
+      const pages = linkToPages.get(link) ?? new Set<string>();
+      pages.add(path);
+      linkToPages.set(link, pages);
+    }
   });
 
-  rows.sort((a, b) => a.path.localeCompare(b.path));
-  brokenLinks.sort(
-    (a, b) => a.path.localeCompare(b.path) || a.link.localeCompare(b.link)
+  const uniqueLinks = [...linkToPages.keys()].sort();
+  const linkStatuses = await mapWithConcurrency(
+    uniqueLinks,
+    concurrency,
+    async (link) => ({
+      link,
+      status: await headStatus(resolveUrl(newBase, link), { bypassSecret }),
+    })
   );
 
+  const brokenLinks: BrokenLink[] = linkStatuses
+    .filter(({ status }) => isBrokenStatus(status))
+    .map(({ link, status }) => ({
+      link,
+      status,
+      foundOn: [...(linkToPages.get(link) ?? [])].sort(),
+    }));
+
+  rows.sort((a, b) => a.path.localeCompare(b.path));
+  brokenLinks.sort((a, b) => a.link.localeCompare(b.link));
+
   const report = renderReport(rows, brokenLinks);
-  console.log(report);
+  process.stdout.write(`${report}\n`);
   writeFileSync("crawl-report.md", report);
 
-  process.exitCode = hasNonOkOnNew ? 1 : 0;
+  process.exitCode = hasNonOkOnNew || hasRowFailure ? 1 : 0;
 }
 
-main();
+main().catch((err) => {
+  process.stderr.write(`${describeError(err)}\n`);
+  process.exitCode = 1;
+});

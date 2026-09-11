@@ -19,21 +19,29 @@
  * 7. Provides a completely clean documentation slate
  */
 
-const fs = require("fs");
-const path = require("path");
-const readline = require("readline");
+const fs = require("node:fs");
+const path = require("node:path");
+const readline = require("node:readline");
 
-console.log("🧹 TinaDocs API Documentation Cleanup\n");
-console.log(
-  "🚨 WARNING: This will PERMANENTLY DELETE all documentation content!"
-);
-console.log("   - All directories in content/docs/ (except index.mdx)");
-console.log("   - All API schema files");
-console.log("   - All image assets");
-console.log("   - Navigation links");
-console.log("   - Next.js cache");
-console.log("\n❌ If you've made changes, they will be DELETED!");
-console.log("✅ Only run this if you want a completely clean slate.\n");
+function log(message) {
+  process.stdout.write(`${message}\n`);
+}
+
+function logError(message, detail) {
+  process.stderr.write(
+    detail === undefined ? `${message}\n` : `${message} ${detail}\n`
+  );
+}
+
+log("🧹 TinaDocs API Documentation Cleanup\n");
+log("🚨 WARNING: This will PERMANENTLY DELETE all documentation content!");
+log("   - All directories in content/docs/ (except index.mdx)");
+log("   - All API schema files");
+log("   - All image assets");
+log("   - Navigation links");
+log("   - Next.js cache");
+log("\n❌ If you've made changes, they will be DELETED!");
+log("✅ Only run this if you want a completely clean slate.\n");
 
 /**
  * Prompt user for confirmation before proceeding with cleanup
@@ -45,24 +53,22 @@ function askForConfirmation() {
       output: process.stdout,
     });
 
-    console.log("🔍 Do you want to proceed with the cleanup?");
-    console.log("   Type 'yes' or 'y' to continue");
-    console.log("   Type 'no' or 'n' to cancel");
+    log("🔍 Do you want to proceed with the cleanup?");
+    log("   Type 'yes' or 'y' to continue");
+    log("   Type 'no' or 'n' to cancel");
 
     rl.question("\n👉 Your choice (yes/no): ", (answer) => {
       rl.close();
 
       const normalizedAnswer = answer.toLowerCase().trim();
       if (normalizedAnswer === "yes" || normalizedAnswer === "y") {
-        console.log("\n✅ Proceeding with cleanup...\n");
+        log("\n✅ Proceeding with cleanup...\n");
         resolve(true);
       } else if (normalizedAnswer === "no" || normalizedAnswer === "n") {
-        console.log("\n❌ Cleanup cancelled. No changes were made.");
+        log("\n❌ Cleanup cancelled. No changes were made.");
         resolve(false);
       } else {
-        console.log(
-          "\n⚠️  Invalid input. Please type 'yes', 'y', 'no', or 'n'."
-        );
+        log("\n⚠️  Invalid input. Please type 'yes', 'y', 'no', or 'n'.");
         // Recursively ask again for invalid input
         askForConfirmation().then(resolve);
       }
@@ -93,16 +99,14 @@ function validateTinaDocsProject() {
 
   for (const requiredPath of requiredPaths) {
     if (!fs.existsSync(path.join(process.cwd(), requiredPath))) {
-      console.error(`❌ Error: This doesn't appear to be a TinaDocs project.`);
-      console.error(`   Missing required path: ${requiredPath}`);
-      console.error(
-        `   Please run this script from your TinaDocs project root.`
-      );
+      logError("❌ Error: This doesn't appear to be a TinaDocs project.");
+      logError(`   Missing required path: ${requiredPath}`);
+      logError("   Please run this script from your TinaDocs project root.");
       process.exit(1);
     }
   }
 
-  console.log("✅ TinaDocs project detected\n");
+  log("✅ TinaDocs project detected\n");
 }
 
 /**
@@ -110,42 +114,38 @@ function validateTinaDocsProject() {
  */
 function deleteDirectory(dirPath) {
   if (!fs.existsSync(dirPath)) {
-    console.log(
-      `⚠️  Directory not found: ${path.relative(process.cwd(), dirPath)}`
-    );
+    log(`⚠️  Directory not found: ${path.relative(process.cwd(), dirPath)}`);
     return false;
   }
 
-  console.log(
-    `🗑️  Deleting directory: ${path.relative(process.cwd(), dirPath)}`
-  );
+  log(`🗑️  Deleting directory: ${path.relative(process.cwd(), dirPath)}`);
 
   try {
     const files = fs.readdirSync(dirPath);
     let fileCount = 0;
 
     // Delete each file/directory
-    files.forEach((file) => {
+    for (const file of files) {
       const filePath = path.join(dirPath, file);
       const stat = fs.statSync(filePath);
 
       if (stat.isDirectory()) {
         deleteDirectory(filePath); // Recursive delete
       } else {
-        console.log(`   📄 Deleting file: ${file}`);
+        log(`   📄 Deleting file: ${file}`);
         fs.unlinkSync(filePath);
         fileCount++;
       }
-    });
+    }
 
     // Remove the now-empty directory
     fs.rmdirSync(dirPath);
-    console.log(
+    log(
       `✅ Directory deleted: ${path.basename(dirPath)} (${fileCount} files)\n`
     );
     return true;
   } catch (error) {
-    console.error(
+    logError(
       `❌ Error deleting directory ${path.basename(dirPath)}:`,
       error.message
     );
@@ -157,10 +157,10 @@ function deleteDirectory(dirPath) {
  * Update navigation to clean up all references to deleted directories
  */
 function updateNavigation() {
-  console.log("📝 Updating navigation...");
+  log("📝 Updating navigation...");
 
   if (!fs.existsSync(navigationPath)) {
-    console.log("⚠️  Navigation file not found - skipping navigation update");
+    log("⚠️  Navigation file not found - skipping navigation update");
     return false;
   }
 
@@ -183,8 +183,8 @@ function updateNavigation() {
 
     // Clean up Docs tab - remove all groups except Introduction with only index.mdx
     const docsTab = navigationData.tabs?.find((tab) => tab.title === "Docs");
-    if (docsTab && docsTab.supermenuGroup) {
-      console.log(
+    if (docsTab?.supermenuGroup) {
+      log(
         `   🔍 Found Docs tab with ${docsTab.supermenuGroup.length} menu groups`
       );
 
@@ -205,27 +205,25 @@ function updateNavigation() {
       const removedGroups = originalGroupCount - docsTab.supermenuGroup.length;
       updatesCount += removedGroups;
 
-      console.log(
-        `   🗑️  Cleaned up Docs navigation (removed ${removedGroups} groups)`
-      );
-      console.log(`   ✅ Navigation now only shows index.mdx`);
+      log(`   🗑️  Cleaned up Docs navigation (removed ${removedGroups} groups)`);
+      log("   ✅ Navigation now only shows index.mdx");
     }
 
     if (updatesCount > 0) {
       if (apiTabsRemoved > 0) {
-        console.log(`   🗑️  Completely removed API tab from navigation`);
+        log("   🗑️  Completely removed API tab from navigation");
       }
 
       // Write back to file
       fs.writeFileSync(navigationPath, JSON.stringify(navigationData, null, 2));
-      console.log("✅ Navigation updated successfully\n");
+      log("✅ Navigation updated successfully\n");
     } else {
-      console.log("   ℹ️  No navigation updates needed\n");
+      log("   ℹ️  No navigation updates needed\n");
     }
 
     return true;
   } catch (error) {
-    console.error("❌ Error updating navigation:", error.message);
+    logError("❌ Error updating navigation:", error.message);
     return false;
   }
 }
@@ -235,45 +233,43 @@ function updateNavigation() {
  */
 function cleanupDocsDirectories() {
   if (!fs.existsSync(docsPath)) {
-    console.log("⚠️  Docs directory not found - nothing to clean up");
+    log("⚠️  Docs directory not found - nothing to clean up");
     return { deletedDirectories: [], totalFiles: 0 };
   }
 
-  console.log("🗑️  Cleaning up docs directories (preserving index.mdx)...\n");
+  log("🗑️  Cleaning up docs directories (preserving index.mdx)...\n");
 
   const results = { deletedDirectories: [], totalFiles: 0 };
 
   try {
     const items = fs.readdirSync(docsPath);
 
-    items.forEach((item) => {
+    for (const item of items) {
       const itemPath = path.join(docsPath, item);
       const stat = fs.statSync(itemPath);
 
       if (stat.isDirectory()) {
-        console.log(
-          `🗑️  Deleting directory: ${path.relative(process.cwd(), itemPath)}`
-        );
+        log(`🗑️  Deleting directory: ${path.relative(process.cwd(), itemPath)}`);
 
         // Count files in this directory recursively
         let fileCount = 0;
         function countFiles(dirPath) {
           try {
             const dirItems = fs.readdirSync(dirPath);
-            dirItems.forEach((dirItem) => {
+            for (const dirItem of dirItems) {
               const dirItemPath = path.join(dirPath, dirItem);
               const dirItemStat = fs.statSync(dirItemPath);
               if (dirItemStat.isFile()) {
                 fileCount++;
-                console.log(
+                log(
                   `   📄 Deleting file: ${path.relative(itemPath, dirItemPath)}`
                 );
               } else if (dirItemStat.isDirectory()) {
                 countFiles(dirItemPath);
               }
-            });
+            }
           } catch (error) {
-            console.error(
+            logError(
               `   ⚠️  Error reading directory ${dirPath}:`,
               error.message
             );
@@ -284,24 +280,24 @@ function cleanupDocsDirectories() {
 
         // Delete the directory
         if (deleteDirectory(itemPath)) {
-          console.log(`✅ Directory deleted: ${item} (${fileCount} files)\n`);
+          log(`✅ Directory deleted: ${item} (${fileCount} files)\n`);
           results.deletedDirectories.push(item);
           results.totalFiles += fileCount;
         }
       } else if (stat.isFile() && item !== "index.mdx") {
         // Delete any other files in docs root (but preserve index.mdx)
-        console.log(`🗑️  Deleting file: ${item}`);
+        log(`🗑️  Deleting file: ${item}`);
         fs.unlinkSync(itemPath);
-        console.log(`✅ File deleted: ${item}\n`);
+        log(`✅ File deleted: ${item}\n`);
         results.totalFiles += 1;
       } else if (item === "index.mdx") {
-        console.log(`✅ Preserving: ${item}`);
+        log(`✅ Preserving: ${item}`);
       }
-    });
+    }
 
     return results;
   } catch (error) {
-    console.error(`❌ Error cleaning up docs directories:`, error.message);
+    logError("❌ Error cleaning up docs directories:", error.message);
     return { deletedDirectories: [], totalFiles: 0 };
   }
 }
@@ -314,73 +310,64 @@ function cleanupImageAssets() {
 
   // Clean up docs-assets directory
   if (fs.existsSync(docsAssetsPath)) {
-    console.log(
-      `🗑️  Deleting docs-assets directory: ${path.relative(
-        process.cwd(),
-        docsAssetsPath
-      )}`
+    log(
+      `🗑️  Deleting docs-assets directory: ${path.relative(process.cwd(), docsAssetsPath)}`
     );
 
     try {
       const files = fs.readdirSync(docsAssetsPath);
       let fileCount = 0;
 
-      files.forEach((file) => {
+      for (const file of files) {
         const filePath = path.join(docsAssetsPath, file);
         const stat = fs.statSync(filePath);
         if (stat.isFile()) {
-          console.log(`   📄 Deleting file: ${file}`);
+          log(`   📄 Deleting file: ${file}`);
           fs.unlinkSync(filePath);
           fileCount++;
         }
-      });
+      }
 
       fs.rmdirSync(docsAssetsPath);
-      console.log(`✅ docs-assets directory deleted (${fileCount} files)\n`);
+      log(`✅ docs-assets directory deleted (${fileCount} files)\n`);
       results.deletedDirectories.push("docs-assets");
       results.totalFiles += fileCount;
     } catch (error) {
-      console.error(`❌ Error deleting docs-assets directory:`, error.message);
+      logError("❌ Error deleting docs-assets directory:", error.message);
     }
   } else {
-    console.log("⚠️  docs-assets directory not found - skipping");
+    log("⚠️  docs-assets directory not found - skipping");
   }
 
   // Clean up landing-assets directory
   if (fs.existsSync(landingAssetsPath)) {
-    console.log(
-      `🗑️  Deleting landing-assets directory: ${path.relative(
-        process.cwd(),
-        landingAssetsPath
-      )}`
+    log(
+      `🗑️  Deleting landing-assets directory: ${path.relative(process.cwd(), landingAssetsPath)}`
     );
 
     try {
       const files = fs.readdirSync(landingAssetsPath);
       let fileCount = 0;
 
-      files.forEach((file) => {
+      for (const file of files) {
         const filePath = path.join(landingAssetsPath, file);
         const stat = fs.statSync(filePath);
         if (stat.isFile()) {
-          console.log(`   📄 Deleting file: ${file}`);
+          log(`   📄 Deleting file: ${file}`);
           fs.unlinkSync(filePath);
           fileCount++;
         }
-      });
+      }
 
       fs.rmdirSync(landingAssetsPath);
-      console.log(`✅ landing-assets directory deleted (${fileCount} files)\n`);
+      log(`✅ landing-assets directory deleted (${fileCount} files)\n`);
       results.deletedDirectories.push("landing-assets");
       results.totalFiles += fileCount;
     } catch (error) {
-      console.error(
-        `❌ Error deleting landing-assets directory:`,
-        error.message
-      );
+      logError("❌ Error deleting landing-assets directory:", error.message);
     }
   } else {
-    console.log("⚠️  landing-assets directory not found - skipping");
+    log("⚠️  landing-assets directory not found - skipping");
   }
 
   return results;
@@ -390,10 +377,10 @@ function cleanupImageAssets() {
  * Clean up API schema files
  */
 function cleanupApiSchema() {
-  console.log("📄 Cleaning API schema files...");
+  log("📄 Cleaning API schema files...");
 
   if (!fs.existsSync(apiSchemaPath)) {
-    console.log("   ⚠️  API schema directory not found - skipping\n");
+    log("   ⚠️  API schema directory not found - skipping\n");
     return { deletedFiles: 0 };
   }
 
@@ -408,19 +395,19 @@ function cleanupApiSchema() {
       if (stat.isFile()) {
         fs.unlinkSync(filePath);
         deletedFiles++;
-        console.log(`   🗑️  Deleted: ${file}`);
+        log(`   🗑️  Deleted: ${file}`);
       }
     }
 
     if (deletedFiles > 0) {
-      console.log(`   ✅ Cleaned up ${deletedFiles} API schema file(s)\n`);
+      log(`   ✅ Cleaned up ${deletedFiles} API schema file(s)\n`);
     } else {
-      console.log("   ℹ️  No files found to delete\n");
+      log("   ℹ️  No files found to delete\n");
     }
 
     return { deletedFiles };
   } catch (error) {
-    console.error(`   ❌ Error cleaning API schema: ${error.message}\n`);
+    logError(`   ❌ Error cleaning API schema: ${error.message}\n`);
     return { deletedFiles: 0 };
   }
 }
@@ -429,10 +416,10 @@ function cleanupApiSchema() {
  * Clean up Next.js cache directory
  */
 function cleanupNextCache() {
-  console.log("🗂️  Cleaning Next.js cache...");
+  log("🗂️  Cleaning Next.js cache...");
 
   if (!fs.existsSync(nextCachePath)) {
-    console.log("   ℹ️  No .next folder found (cache already clean)\n");
+    log("   ℹ️  No .next folder found (cache already clean)\n");
     return false;
   }
 
@@ -453,10 +440,10 @@ function cleanupNextCache() {
 
     // Delete the .next directory
     fs.rmSync(nextCachePath, { recursive: true, force: true });
-    console.log(`   ✅ Deleted .next cache directory (${fileCount} files)\n`);
+    log(`   ✅ Deleted .next cache directory (${fileCount} files)\n`);
     return true;
   } catch (error) {
-    console.error(`   ❌ Error deleting .next cache: ${error.message}\n`);
+    logError(`   ❌ Error deleting .next cache: ${error.message}\n`);
     return false;
   }
 }
@@ -465,12 +452,12 @@ function cleanupNextCache() {
  * Rewrite index.mdx after successful cleanup
  */
 function rewriteIndexMdx() {
-  console.log("📝 Updating index.mdx for clean slate...");
+  log("📝 Updating index.mdx for clean slate...");
 
   const indexPath = path.join(process.cwd(), "content/docs/index.mdx");
 
   if (!fs.existsSync(indexPath)) {
-    console.log("   ⚠️  index.mdx not found - skipping rewrite\n");
+    log("   ⚠️  index.mdx not found - skipping rewrite\n");
     return false;
   }
 
@@ -485,7 +472,7 @@ function rewriteIndexMdx() {
     );
 
     if (frontMatterEnd === -1) {
-      console.log("   ❌ Could not find front matter - skipping rewrite\n");
+      log("   ❌ Could not find front matter - skipping rewrite\n");
       return false;
     }
 
@@ -497,9 +484,7 @@ function rewriteIndexMdx() {
     );
 
     if (introEndIndex === -1) {
-      console.log(
-        "   ❌ Could not find intro content end - skipping rewrite\n"
-      );
+      log("   ❌ Could not find intro content end - skipping rewrite\n");
       return false;
     }
 
@@ -517,10 +502,10 @@ function rewriteIndexMdx() {
     // Write the updated content
     fs.writeFileSync(indexPath, finalContent);
 
-    console.log("   ✅ Updated index.mdx with clean slate instructions\n");
+    log("   ✅ Updated index.mdx with clean slate instructions\n");
     return true;
   } catch (error) {
-    console.error(`   ❌ Error rewriting index.mdx: ${error.message}\n`);
+    logError(`   ❌ Error rewriting index.mdx: ${error.message}\n`);
     return false;
   }
 }
@@ -560,95 +545,85 @@ async function cleanup() {
     const indexUpdated = rewriteIndexMdx();
 
     // Summary
-    console.log("🎉 Cleanup completed!\n");
-    console.log("📊 Summary:");
+    log("🎉 Cleanup completed!\n");
+    log("📊 Summary:");
 
     if (deletedDocs.length > 0) {
-      console.log(
-        `• Deleted docs directories: ${deletedDocs.join(
-          ", "
-        )} (${docsFileCount} files)`
+      log(
+        `• Deleted docs directories: ${deletedDocs.join(", ")} (${docsFileCount} files)`
       );
     } else {
-      console.log("• No docs directories were deleted (none found)");
+      log("• No docs directories were deleted (none found)");
     }
 
     if (apiSchemaFileCount > 0) {
-      console.log(`• Deleted API schema files: ${apiSchemaFileCount} files`);
+      log(`• Deleted API schema files: ${apiSchemaFileCount} files`);
     } else {
-      console.log("• No API schema files were deleted (none found)");
+      log("• No API schema files were deleted (none found)");
     }
 
     if (deletedImageDirs.length > 0) {
-      console.log(
-        `• Deleted image directories: ${deletedImageDirs.join(
-          ", "
-        )} (${imageFileCount} files)`
+      log(
+        `• Deleted image directories: ${deletedImageDirs.join(", ")} (${imageFileCount} files)`
       );
     } else {
-      console.log("• No image directories were deleted (none found)");
+      log("• No image directories were deleted (none found)");
     }
 
     if (navigationUpdated) {
-      console.log("• Navigation updated successfully");
+      log("• Navigation updated successfully");
     } else {
-      console.log("• Navigation update skipped or failed");
+      log("• Navigation update skipped or failed");
     }
 
     if (nextCacheDeleted) {
-      console.log("• Next.js cache cleared successfully");
+      log("• Next.js cache cleared successfully");
     } else {
-      console.log("• Next.js cache clearing skipped (no cache found)");
+      log("• Next.js cache clearing skipped (no cache found)");
     }
 
     if (indexUpdated) {
-      console.log("• Index page updated with clean slate instructions");
+      log("• Index page updated with clean slate instructions");
     } else {
-      console.log("• Index page update skipped or failed");
+      log("• Index page update skipped or failed");
     }
 
-    console.log("\n💡 Next steps:");
-    console.log("   • Review the changes in your editor");
+    log("\n💡 Next steps:");
+    log("   • Review the changes in your editor");
     if (nextCacheDeleted) {
-      console.log("   • Restart your dev server: pnpm dev");
+      log("   • Restart your dev server: pnpm dev");
     } else {
-      console.log("   • Start/restart your dev server: pnpm dev");
+      log("   • Start/restart your dev server: pnpm dev");
     }
     if (indexUpdated) {
-      console.log(
-        "   • Visit http://localhost:3000/admin to start editing content"
-      );
+      log("   • Visit http://localhost:3000/admin to start editing content");
     }
-    console.log("   • Test your documentation site");
-    console.log("   • Commit the changes to version control");
+    log("   • Test your documentation site");
+    log("   • Commit the changes to version control");
   } catch (error) {
-    console.error("\n❌ Cleanup failed:", error.message);
-    console.error("\n🔧 Troubleshooting:");
-    console.error("   • Make sure you're in your TinaDocs project root");
-    console.error("   • Check that you have write permissions");
-    console.error("   • Ensure the content/ directory structure exists");
+    logError("\n❌ Cleanup failed:", error.message);
+    logError("\n🔧 Troubleshooting:");
+    logError("   • Make sure you're in your TinaDocs project root");
+    logError("   • Check that you have write permissions");
+    logError("   • Ensure the content/ directory structure exists");
     process.exit(1);
   }
 }
 
 // Show help if requested
 if (process.argv.includes("--help") || process.argv.includes("-h")) {
-  console.log("TinaDocs API Documentation Cleanup Script\n");
-  console.log("Usage:");
-  console.log("  pnpm run cleanup");
-  console.log("\nOptions:");
-  console.log("  --help, -h    Show this help message");
-  console.log("\nDescription:");
-  console.log(
-    "  Removes all documentation directories while preserving index.mdx"
-  );
-  console.log("  Deletes all folders in content/docs/ and API schema files.");
-  console.log("  Deletes image asset directories.");
-  console.log("  Clears Next.js cache to prevent stale page references.");
-  console.log("  Cleans up navigation to only show the main index page.");
-  console.log(
-    "  Rewrites index.mdx with clean slate instructions and admin link."
-  );
+  log("TinaDocs API Documentation Cleanup Script\n");
+  log("Usage:");
+  log("  pnpm run cleanup");
+  log("\nOptions:");
+  log("  --help, -h    Show this help message");
+  log("\nDescription:");
+  log("  Removes all documentation directories while preserving index.mdx");
+  log("  Deletes all folders in content/docs/ and API schema files.");
+  log("  Deletes image asset directories.");
+  log("  Clears Next.js cache to prevent stale page references.");
+  log("  Cleans up navigation to only show the main index page.");
+  log("  Rewrites index.mdx with clean slate instructions and admin link.");
   process.exit(0);
 }
 

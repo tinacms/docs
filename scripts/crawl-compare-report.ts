@@ -6,9 +6,11 @@ export interface ComparisonRow {
 }
 
 export interface BrokenLink {
-  path: string;
   link: string;
   status: number;
+  // Every page that linked to it; links are HEAD-checked once per run, not
+  // once per referencing page.
+  foundOn: string[];
 }
 
 function escapeCell(value: string): string {
@@ -45,9 +47,11 @@ export function renderReport(
   if (brokenLinks.length === 0) {
     lines.push("No broken links found.");
   } else {
-    lines.push("| Path | Link | Status |", "| --- | --- | --- |");
+    lines.push("| Link | Status | Found on |", "| --- | --- | --- |");
     for (const link of brokenLinks) {
-      lines.push(`| ${link.path} | ${link.link} | ${link.status} |`);
+      lines.push(
+        `| ${link.link} | ${link.status} | ${escapeCell(link.foundOn.join(", "))} |`
+      );
     }
   }
 
