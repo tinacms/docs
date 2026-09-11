@@ -11,7 +11,7 @@ export default async function NotFound() {
             links: [
               {
                 linkText: "Return to docs",
-                linkUrl: "/docs",
+                linkUrl: "/",
               },
             ],
           }}

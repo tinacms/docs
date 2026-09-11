@@ -32,7 +32,7 @@ export const docsCollection = {
         return "/";
       }
       const slug = document._sys.breadcrumbs.join("/");
-      return `/docs/${slug}`;
+      return `/${slug}`;
     },
     filename: {
       slugify: (values) => {

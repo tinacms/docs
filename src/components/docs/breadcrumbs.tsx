@@ -1,5 +1,6 @@
 "use client";
 
+import { getUrl } from "@/utils/get-url";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -19,23 +20,20 @@ export const BreadCrumbs = ({
     if (typeof slug === "string") {
       // Handle special case for docs homepage
       if (slug === "content/docs/index.mdx") {
-        return "/docs";
+        return "/";
       }
       return slug;
     }
     if (slug && typeof slug === "object" && slug._sys?.relativePath) {
       // Handle special case for docs homepage
       if (slug._sys.relativePath === "index.mdx") {
-        return "/docs";
+        return "/";
       }
-      return `/docs/${slug._sys.relativePath.replace(/\.mdx$/, "")}`;
+      return `/${slug._sys.relativePath.replace(/\.mdx$/, "")}`;
     }
     if (slug && typeof slug === "object" && slug.id) {
       // Handle special case for docs homepage
-      if (slug.id === "content/docs/index.mdx") {
-        return "/docs";
-      }
-      return slug.id.replace(/^content\//, "/").replace(/\.mdx$/, "");
+      return getUrl(slug.id);
     }
     return "";
   };

@@ -1,3 +1,4 @@
+import { getUrl } from "@/utils/get-url";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
@@ -51,9 +52,9 @@ export function Pagination() {
 
     // Get current slug from pathname
     const slug =
-      pathname === "/docs"
+      pathname === "/"
         ? "content/docs/index.mdx"
-        : `content${pathname}.mdx`;
+        : `content/docs${pathname}.mdx`;
 
     // Get all pages in sequence
     const allPages = getAllPages();
@@ -79,11 +80,7 @@ export function Pagination() {
   return (
     <div className="flex justify-between mt-2 py-4 rounded-lg gap-4 w-full">
       {prevPage?.slug ? (
-        //Slices to remove content/ and .mdx from the filepath, and removes /index for index pages
-        <DynamicLink
-          href={prevPage.slug.slice(7, -4).replace(/\/index$/, "/")}
-          passHref
-        >
+        <DynamicLink href={getUrl(prevPage.slug)} passHref>
           <div className="group relative block cursor-pointer py-4 text-left transition-all">
             <span className="pl-10 text-sm uppercase opacity-50 group-hover:opacity-100 text-neutral-text-secondary">
               Previous
@@ -101,11 +98,7 @@ export function Pagination() {
         <div />
       )}
       {nextPage?.slug ? (
-        //Slices to remove content/ and .mdx from the filepath, and removes /index for index pages
-        <DynamicLink
-          href={nextPage.slug.slice(7, -4).replace(/\/index$/, "/")}
-          passHref
-        >
+        <DynamicLink href={getUrl(nextPage.slug)} passHref>
           <div className="group relative col-start-2 block cursor-pointer p-4 text-right transition-all">
             <span className="pr-6 text-sm uppercase opacity-50 md:pr-10 group-hover:opacity-100 text-neutral-text-secondary">
               Next

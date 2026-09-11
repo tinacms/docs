@@ -8,7 +8,7 @@ export class SearchHelper {
    * Navigate to the docs page and wait for it to load
    */
   async navigateToDocs() {
-    await this.page.goto(`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/docs`);
+    await this.page.goto(`${process.env.NEXT_PUBLIC_BASE_PATH || "/docs"}/`);
     await this.page.waitForLoadState("networkidle");
     // Wait for the search trigger to be available (client component hydration)
     const searchTrigger = this.getSearchTrigger();
@@ -169,9 +169,9 @@ export class SearchHelper {
     // Check Pagefind JavaScript file
     const pagefindJsResponse = await this.page.request.get(
       isDev
-        ? "http://localhost:3000/pagefind/pagefind.js"
+        ? "http://localhost:3000/docs/pagefind/pagefind.js"
         : `${process.env.BASE_URL}${
-            process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+            process.env.NEXT_PUBLIC_BASE_PATH || "/docs"
           }/_next/static/pagefind/pagefind.js`
     );
     expect(pagefindJsResponse.status()).toBe(200);
@@ -179,9 +179,9 @@ export class SearchHelper {
     // Check Pagefind index file
     const pagefindIndexResponse = await this.page.request.get(
       isDev
-        ? "http://localhost:3000/pagefind/pagefind-ui.js"
+        ? "http://localhost:3000/docs/pagefind/pagefind-ui.js"
         : `${process.env.BASE_URL}${
-            process.env.NEXT_PUBLIC_BASE_PATH ?? ""
+            process.env.NEXT_PUBLIC_BASE_PATH || "/docs"
           }/_next/static/pagefind/pagefind-ui.js`
     );
 

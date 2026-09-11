@@ -24,7 +24,7 @@ export const ApiNavigationItems: React.FC<
         title: titleCase(tag),
         items: (endpoints || []).map((endpoint) => ({
           title: endpoint.summary,
-          slug: `/docs/api-documentation/${getTagSlug(tag)}/${getEndpointSlug(
+          slug: `/api-documentation/${getTagSlug(tag)}/${getEndpointSlug(
             endpoint.method,
             endpoint.path
           )}`,

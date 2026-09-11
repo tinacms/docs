@@ -1,5 +1,5 @@
-import siteConfig from "@/content/siteConfig.json";
 import client from "@/tina/__generated__/client";
+import { getUrl } from "@/utils/get-url";
 
 /**
  * A single navigation item
@@ -112,10 +112,7 @@ const transformReferencesToSlugs = (navItems: NavItem[]): NavItem[] => {
       } else {
         // Handle the docs homepage case as a special case with no slug
         // Otherwise reformat the path from content reference to URL path
-        array[index].slug =
-          array[index].slug === `content${siteConfig.docsHomepage}.mdx`
-            ? "/docs"
-            : item.slug?.replace(/^content\/|\.mdx$/g, "/") || "";
+        array[index].slug = getUrl(item.slug);
       }
     }
   });
