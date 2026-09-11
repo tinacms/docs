@@ -23,6 +23,10 @@ on:
         required: false
         default: ''
         type: string
+    secrets:
+      VERCEL_AUTOMATION_BYPASS_SECRET:
+        description: 'Vercel Protection Bypass for Automation secret, needed when preview deployments are protected'
+        required: false
 
 jobs:
   test-search:
@@ -82,6 +86,7 @@ jobs:
         env:
           BASE_URL: ${{ inputs.base_url }}
           NEXT_PUBLIC_BASE_PATH: ${{ inputs.NEXT_PUBLIC_BASE_PATH || '' }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - name: Upload test results
         if: always()
