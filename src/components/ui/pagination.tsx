@@ -61,16 +61,13 @@ export function Pagination({ previous, next }: PaginationProps) {
       return allPages;
     };
 
-    const currentId =
-      pathname === "/"
-        ? "content/docs/index.mdx"
-        : `content/docs${pathname}.mdx`;
-
     // Get all pages in sequence
     const allPages = getAllPages();
 
     // Find current page index
-    const currentIndex = allPages.findIndex((page) => page.id === currentId);
+    const currentIndex = allPages.findIndex(
+      (page) => getUrl(page.id) === pathname
+    );
 
     if (currentIndex !== -1) {
       setSidebarPrev(currentIndex > 0 ? allPages[currentIndex - 1] : null);

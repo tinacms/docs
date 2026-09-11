@@ -1,3 +1,33 @@
+fragment NavDocParts on Docs {
+  __typename
+  seo {
+    __typename
+    title
+    description
+    canonicalUrl
+    ogImage
+  }
+  title
+  last_edited
+  auto_generated
+  tocIsHidden
+}
+
+fragment NavDocZhParts on DocsZh {
+  __typename
+  seo {
+    __typename
+    title
+    description
+    canonicalUrl
+    ogImage
+  }
+  title
+  last_edited
+  auto_generated
+  tocIsHidden
+}
+
 fragment MinimisedNavigationBarParts on NavigationBar {
   __typename
   lightModeLogo
@@ -25,20 +55,8 @@ fragment MinimisedNavigationBarParts on NavigationBar {
                       __typename
                       ... on NavigationBarTabsDocsTabSupermenuGroupItemsItemsItemsItemsItemsItemsItemsItem {
                         slug {
-                          ... on Docs {
-                            __typename
-                            seo {
-                              __typename
-                              title
-                              description
-                              canonicalUrl
-                              ogImage
-                            }
-                            title
-                            last_edited
-                            auto_generated
-                            tocIsHidden
-                          }
+                          ...NavDocParts
+                          ...NavDocZhParts
                           ... on Document {
                             _sys {
                               filename
@@ -57,20 +75,8 @@ fragment MinimisedNavigationBarParts on NavigationBar {
                   }
                   ... on NavigationBarTabsDocsTabSupermenuGroupItemsItemsItemsItemsItemsItem {
                     slug {
-                      ... on Docs {
-                        __typename
-                        seo {
-                          __typename
-                          title
-                          description
-                          canonicalUrl
-                          ogImage
-                        }
-                        title
-                        last_edited
-                        auto_generated
-                        tocIsHidden
-                      }
+                      ...NavDocParts
+                      ...NavDocZhParts
                       ... on Document {
                         _sys {
                           filename
@@ -89,20 +95,8 @@ fragment MinimisedNavigationBarParts on NavigationBar {
               }
               ... on NavigationBarTabsDocsTabSupermenuGroupItemsItemsItemsItem {
                 slug {
-                  ... on Docs {
-                    __typename
-                    seo {
-                      __typename
-                      title
-                      description
-                      canonicalUrl
-                      ogImage
-                    }
-                    title
-                    last_edited
-                    auto_generated
-                    tocIsHidden
-                  }
+                  ...NavDocParts
+                  ...NavDocZhParts
                   ... on Document {
                     _sys {
                       filename
@@ -121,20 +115,8 @@ fragment MinimisedNavigationBarParts on NavigationBar {
           }
           ... on NavigationBarTabsDocsTabSupermenuGroupItemsItem {
             slug {
-              ... on Docs {
-                __typename
-                seo {
-                  __typename
-                  title
-                  description
-                  canonicalUrl
-                  ogImage
-                }
-                title
-                last_edited
-                auto_generated
-                tocIsHidden
-              }
+              ...NavDocParts
+              ...NavDocZhParts
               ... on Document {
                 _sys {
                   filename
@@ -162,20 +144,8 @@ fragment MinimisedNavigationBarParts on NavigationBar {
             __typename
             ... on NavigationBarTabsApiTabSupermenuGroupDocumentSubMenuItemsItem {
               slug {
-                ... on Docs {
-                  __typename
-                  seo {
-                    __typename
-                    title
-                    description
-                    canonicalUrl
-                    ogImage
-                  }
-                  title
-                  last_edited
-                  auto_generated
-                  tocIsHidden
-                }
+                ...NavDocParts
+                ...NavDocZhParts
                 ... on Document {
                   _sys {
                     filename
@@ -230,5 +200,18 @@ query minimisedNavigationBarFetch($relativePath: String!) {
       id
     }
     ...MinimisedNavigationBarParts
+  }
+}
+
+query navigationBarLocales {
+  navigationBarConnection {
+    edges {
+      node {
+        locale
+        _sys {
+          relativePath
+        }
+      }
+    }
   }
 }

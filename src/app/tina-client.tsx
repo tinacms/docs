@@ -7,7 +7,7 @@ export type UseTinaProps = {
   query: string;
   variables: Record<string, unknown>;
   data: Record<string, unknown>;
-  forceExperimental?: string;
+  formId?: string;
 };
 
 export type TinaClientProps<T> = {
@@ -19,13 +19,13 @@ export type TinaClientProps<T> = {
 };
 
 export function TinaClient<T>({ props, Component }: TinaClientProps<T>) {
-  const { data } = props.forceExperimental
+  const { data } = props.formId
     ? useTina({
         query: props.query,
         variables: props.variables,
         data: props.data,
         experimental___selectFormByFormId() {
-          return `content/docs/${props.forceExperimental}`;
+          return props.formId;
         },
       })
     : useTina({

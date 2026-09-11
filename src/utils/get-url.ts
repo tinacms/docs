@@ -8,12 +8,16 @@ export function getUrl(input: any): string {
     }
   }
 
-  url = url.replace(/^content\/docs/, "");
+  url = url
+    .replace(/^content\/docs-zh(?=\/|$)/, "/zh")
+    .replace(/^content\/docs(?=\/|$)/, "");
 
   url = url.replace(/\.(mdx|md)$/, "");
 
   if (url === "/index") {
     url = "/";
+  } else if (url === "/zh/index") {
+    url = "/zh";
   }
 
   if (!url.startsWith("/")) {
