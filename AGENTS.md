@@ -2,17 +2,19 @@
 
 This file provides guidance to AI coding agents working in this repository.
 
-## About TinaDocs
+## About this repo
 
-TinaDocs is a **public starter/template** — anyone can fork it and deploy their own documentation site. Keep this in mind when making changes:
+This is the **TinaCMS documentation site**, served at `tina.io/docs` (and `tina.io/zh/docs`) through a rewrite from the tina.io Next.js app. It is a deployed instance of the [tina-docs](https://github.com/tinacms/tina-docs) starter, not the starter itself:
 
-- Never hardcode deployment-specific values (URLs, org names, branding). Use environment variables or TinaCMS settings instead.
-- New features that not every user will want must be toggleable via TinaCMS settings or environment variables — don't assume all consumers want the same feature set.
-- Avoid dependencies on specific hosting providers. Support multiple deployment modes (Vercel, GitHub Pages, static export).
+- Hardcoding tina.io values (URLs, branding, redirects, analytics) is fine here.
+- Features only this site needs (tina.io header, `GraphQLCodeBlock`, alias permalinks, zh locale) are built here first. Upstreaming generic pieces to tina-docs is welcome but never blocks work here.
+- Content is being migrated from [tina.io](https://github.com/tinacms/tina.io) `content/docs` and `content/docs-zh`. Progress, decisions, and open tasks live in the epic: https://github.com/tinacms/tinacms/issues/7552. Read it before starting migration work, and comment there with evidence links when you finish a task.
+
+Deployment: Vercel, production branch `main`. TinaCloud project credentials live in Vercel env vars and GitHub Actions secrets.
 
 ## Architecture
 
-TinaDocs is a documentation platform built on **Next.js 15 (App Router)** with **TinaCMS** for git-based content management, **Pagefind** for static search, and **Tailwind CSS** with a 6-theme system.
+Built on **Next.js 15 (App Router)** with **TinaCMS** for git-based content management, **Pagefind** for static search, and **Tailwind CSS**. The site uses the `tina` theme from tina-docs's theme system.
 
 **Content flow:** MDX files in `content/docs/` → TinaCMS schema (`tina/collections/`) → auto-generated GraphQL client (`tina/__generated__/`) → Next.js pages. Never edit files in `tina/__generated__/`.
 
@@ -37,7 +39,10 @@ pnpm test                       # Playwright E2E tests (Chromium)
 pnpm test:ui                    # Playwright interactive UI
 pnpm build-local-pagefind       # Rebuild search index locally
 npx playwright test tests/e2e/some-test.spec.ts  # Run a single test
+pnpm tinacms build --local --skip-cloud-checks   # Validate schema + content offline, no TinaCloud creds needed
 ```
+
+`tinacms build --local --skip-cloud-checks` is the schema gate: run it after changing anything under `tina/` or bulk-editing content. It fails on any MDX that does not match the collection schema.
 
 ## Coding Standards
 
