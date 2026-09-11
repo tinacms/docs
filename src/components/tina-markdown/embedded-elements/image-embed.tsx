@@ -43,16 +43,17 @@ const ImageEmbed = ({
           />
         </span>
       ) : (
-        <span className="relative overflow-hidden rounded-xl block w-full aspect-video">
+        <span className="relative block">
           {isLoading && (
             <span className="absolute inset-0 bg-neutral-background-secondary animate-pulse rounded-xl z-0" />
           )}
           <Image
             src={resolvedSrc}
             alt={alt}
-            fill
+            width={0}
+            height={0}
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
-            className={`object-contain transition-opacity duration-300 ease-in-out ${isLoading ? "opacity-0" : "opacity-100"}`}
+            className={`rounded-xl w-full h-auto transition-opacity duration-300 ease-in-out ${isLoading ? "opacity-0" : "opacity-100"}`}
             onLoad={() => setIsLoading(false)}
           />
         </span>
