@@ -1,0 +1,43 @@
+{
+  "locale": "zh",
+  "lightModeLogo": "/svg/tina-icon-orange.svg",
+  "darkModeLogo": "/svg/tina-icon-orange.svg",
+  "tabs": [
+    {
+      "title": "文档",
+      "supermenuGroup": [
+        {
+          "title": "简介",
+          "items": [
+            {
+              "slug": "content/docs-zh/index.mdx",
+              "_template": "item"
+            }
+          ]
+        },
+        {
+          "title": "使用 TinaCMS",
+          "items": [
+            {
+              "slug": "content/docs-zh/using-tinacms/what-is-tinacms.mdx",
+              "_template": "item"
+            }
+          ]
+        }
+      ],
+      "_template": "docsTab"
+    }
+  ],
+  "ctaButtons": {
+    "button1": {
+      "label": "TinaCMS 文档",
+      "link": "https://tina.io/zh/docs",
+      "variant": "primary-outline"
+    },
+    "button2": {
+      "label": "TinaCloud",
+      "link": "https://app.tina.io",
+      "variant": "primary-background"
+    }
+  }
+}

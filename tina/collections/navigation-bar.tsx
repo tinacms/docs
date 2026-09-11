@@ -99,6 +99,7 @@ export const docsNavigationBarCollection = {
       create: false,
       delete: false,
     },
+    defaultItem: { locale: "en" },
     beforeSubmit: async ({ values }: { values: Record<string, any> }) => {
       try {
         // Generate .mdx files for API endpoints when navigation is saved
@@ -130,6 +131,13 @@ export const docsNavigationBarCollection = {
     },
   },
   fields: [
+    {
+      name: "locale",
+      label: "Locale",
+      type: "string",
+      options: ["en", "zh"],
+      description: "Which language's pages this navigation is shown on.",
+    },
     {
       name: "lightModeLogo",
       label: "Light Mode Logo",
