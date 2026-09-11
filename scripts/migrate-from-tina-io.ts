@@ -34,7 +34,7 @@ const LOCALES = [
 type Locale = (typeof LOCALES)[number];
 
 const TAG_RENAMES = [
-  { from: "WarningCallout", to: 'Callout variant="warning"' },
+  { from: "WarningCallout", to: "Callout", insert: ' variant="warning"' },
   { from: "Youtube", to: "youtube" },
   { from: "scrollBasedShowcase", to: "scrollShowcase" },
   { from: "apiReference", to: "propertyTable" },
@@ -79,9 +79,12 @@ const FRONTMATTER_KEY = /^([A-Za-z_][\w-]*)\s*:/;
 const EMPTY_SCALAR = /^(''|""|)$/;
 const FENCE = /^ {0,3}(`{3,}|~{3,})/;
 const LINE_START_TAG = /^<([A-Za-z][A-Za-z0-9]*)(?=[\s/>]|$)/;
-const MEDIA_REF =
-  /<(\/(?:img|gif|video|uploads)\/[^>\n]+)>|(?<![\w./-])(\/(?:img|gif|video|uploads)\/[^\s"'()<>`\]]+)/g;
-const FILE_EXTENSION = /\.[A-Za-z0-9]+$/;
+const LINE_START_CLOSING_TAG = /^<\/([A-Za-z][A-Za-z0-9]*)>/;
+const MEDIA_EXTENSION = "png|jpe?g|gif|svg|webp|webm|mp4|mov|pdf";
+const MEDIA_REF = new RegExp(
+  `<(\\/(?!\\/)[^>\\n]+?\\.(?:${MEDIA_EXTENSION}))>|(?<![\\w./:-])(\\/(?!\\/)[^\\s"'()<>\`\\]]+?\\.(?:${MEDIA_EXTENSION}))(?!\\w)`,
+  "gi"
+);
 
 type Location = { file: string; line: number };
 type Reference = Location & { field: string; target: string };
@@ -119,6 +122,28 @@ if (!args.source) {
 const SOURCE = path.resolve(args.source);
 const dryRun = args["dry-run"];
 
+const fail = (message: string): never => {
+  process.stderr.write(`${message}\n`);
+  process.exit(1);
+};
+
+const REQUIRED_SOURCE_PATHS = [
+  ...LOCALES.flatMap((locale) => [
+    locale.contentDir,
+    locale.tocs.docs,
+    locale.tocs.learn,
+  ]),
+  "content/settings/config.json",
+];
+const missingSourcePaths = REQUIRED_SOURCE_PATHS.filter(
+  (relativePath) => !fs.existsSync(path.join(SOURCE, relativePath))
+);
+if (missingSourcePaths.length > 0) {
+  fail(
+    `${SOURCE} does not look like a tina.io checkout; missing ${missingSourcePaths.join(", ")}`
+  );
+}
+
 const summary: Summary = {
   files: { en: { in: 0, out: 0 }, zh: { in: 0, out: 0 } },
   renames: {},
@@ -149,20 +174,26 @@ const writeFile = (relativePath: string, content: string) => {
 const writeJson = (relativePath: string, value: unknown) =>
   writeFile(relativePath, `${JSON.stringify(value, null, 2)}\n`);
 
-const readJson = <T>(absolutePath: string): T =>
-  JSON.parse(fs.readFileSync(absolutePath, "utf8"));
+const readJson = <T>(absolutePath: string): T => {
+  try {
+    return JSON.parse(fs.readFileSync(absolutePath, "utf8"));
+  } catch (error) {
+    if (error instanceof Error) {
+      return fail(`Cannot read ${absolutePath}: ${error.message}`);
+    }
+    throw error;
+  }
+};
 
 const mediaReferences = new Map<string, Location[]>();
 
 const collectMedia = (line: string, location: Location) => {
   for (const [, angle, bare] of line.matchAll(MEDIA_REF)) {
-    const ref = (angle ?? bare ?? "").replace(/[.,;:!?]+$/, "");
-    if (!FILE_EXTENSION.test(ref)) continue;
+    const ref = angle ?? bare ?? "";
     const refs = mediaReferences.get(ref) ?? [];
     refs.push(location);
     mediaReferences.set(ref, refs);
   }
-  return line;
 };
 
 const unquote = (scalar: string) => scalar.replace(/^(['"])(.*)\1$/, "$2");
@@ -199,19 +230,33 @@ const migrateFrontmatter = (raw: string, file: string) => {
         }
       }
     }
-    if (keepCurrent) kept.push(collectMedia(line, { file, line: index + 2 }));
+    if (keepCurrent) {
+      collectMedia(line, { file, line: index + 2 });
+      kept.push(line);
+    }
   }
   return { frontmatter: kept.join("\n"), references, title };
 };
 
 const renameTag = (line: string) => {
-  const tagMatch = line.match(LINE_START_TAG);
-  if (!tagMatch) return { line, attributes: undefined };
-  const rule = TAG_RENAMES.find((candidate) => candidate.from === tagMatch[1]);
+  const closing = line.match(LINE_START_CLOSING_TAG);
+  if (closing) {
+    const rule = TAG_RENAMES.find((candidate) => candidate.from === closing[1]);
+    if (!rule) return { line, attributes: undefined };
+    bump(summary.renames, `</${rule.from}> -> </${rule.to}>`);
+    return {
+      line: `</${rule.to}>${line.slice(closing[0].length)}`,
+      attributes: undefined,
+    };
+  }
+  const opening = line.match(LINE_START_TAG);
+  if (!opening) return { line, attributes: undefined };
+  const rule = TAG_RENAMES.find((candidate) => candidate.from === opening[1]);
   if (!rule) return { line, attributes: undefined };
-  bump(summary.renames, `${rule.from} -> ${rule.to}`);
+  const insert = "insert" in rule ? rule.insert : "";
+  bump(summary.renames, `<${rule.from}> -> <${rule.to}${insert}>`);
   return {
-    line: `<${rule.to}${line.slice(tagMatch[0].length)}`,
+    line: `<${rule.to}${insert}${line.slice(opening[0].length)}`,
     attributes: "attributes" in rule ? rule.attributes : undefined,
   };
 };
@@ -269,7 +314,8 @@ const migrateBody = (body: string, file: string, lineOffset: number) => {
       if (ALLOWED_TAGS.has(tag)) bump(summary.embeds, tag);
       else summary.unmappedTags.push({ ...location, tag });
     }
-    out.push(collectMedia(line, location));
+    collectMedia(line, location);
+    out.push(line);
   }
   return out.join("\n");
 };
@@ -306,8 +352,10 @@ const migrateDocs = (locale: Locale) => {
       /\n*$/,
       "\n"
     );
-    writeFile(relativePath, output);
-    summary.files[locale.key].out += 1;
+    if (!dryRun) {
+      writeFile(relativePath, output);
+      summary.files[locale.key].out += 1;
+    }
   }
   return { titles, references };
 };
@@ -342,7 +390,7 @@ type TocEntry =
   | { title: string; items: TocEntry[]; _template?: "items" };
 type Toc = { supermenuGroup: { title: string; items: TocEntry[] }[] };
 type NavEntry =
-  | { title?: string; slug: string; _template: "item" }
+  | { slug: string; title?: string; _template: "item" }
   | { title: string; items: NavEntry[]; _template: "items" };
 
 type NavFile = {
@@ -367,7 +415,7 @@ const migrateNavigation = (locale: Locale, titles: Map<string, string>) => {
     navSlugs.push({ slug, tab });
     if (entry.title === titles.get(slug)) return { slug, _template: "item" };
     bump(summary.navTitleOverrides, locale.key);
-    return { title: entry.title, slug, _template: "item" };
+    return { slug, title: entry.title, _template: "item" };
   };
 
   const tabs = (["docs", "learn"] as const).map((tab) => {
@@ -509,7 +557,7 @@ const printSummary = (gatePassed: boolean) => {
     ])
   );
   section(
-    `Media (${summary.mediaCopied} copied, ${summary.mediaMissing.length} missing)`,
+    `Media (${summary.mediaCopied} copied, ${summary.mediaMissing.length} unresolved)`,
     summary.mediaMissing.map(
       (entry) => `MISSING ${entry.ref} (${formatLocation(entry)})`
     )
