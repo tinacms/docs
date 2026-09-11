@@ -20,7 +20,7 @@ const ErrorWrapper = ({
             <h2 className="bg-gradient-to-r from-brand-secondary-gradient-start to-brand-secondary-gradient-end bg-clip-text font-heading text-6xl leading-normal h-fit text-transparent">
               {errorConfig?.title ?? "Sorry, Friend."}
             </h2>
-            <hr className="block h-[7px] w-full border-none bg-[url('/svg/hr.svg')] bg-[length:auto_100%] bg-no-repeat" />
+            <hr className="block h-1 w-full rounded-full border-none bg-gradient-to-r from-brand-secondary-gradient-start to-brand-secondary-gradient-end" />
             <p className="-mb-1 block text-neutral-text font-thin text-md lg:text-lg lg:leading-normal">
               {errorConfig?.description ??
                 "We couldn't find what you were looking for."}
