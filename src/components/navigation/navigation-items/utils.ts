@@ -24,7 +24,10 @@ export const getTagSlug = (tag: string) => {
 
 export const hasNestedSlug = (navItems: any[], slug: string) => {
   for (const item of Array.isArray(navItems) ? navItems : []) {
-    if (matchActualTarget(getUrl(item.slug || item.href), slug)) {
+    if (
+      (item.slug || item.href) &&
+      matchActualTarget(getUrl(item.slug || item.href), slug)
+    ) {
       return true;
     }
     if (item.items) {
