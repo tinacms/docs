@@ -1,4 +1,5 @@
 import type { ImageMetadata } from "@/tina/collections/image-metadata";
+import { withBasePath } from "@/utils/with-base-path";
 import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -6,8 +7,6 @@ import { tinaField } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { ImageOverlayWrapper } from "../../ui/image-overlay-wrapper";
 import MarkdownComponentMapping from "../markdown-component-mapping";
-
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 interface AccordionProps {
   docText: string;
@@ -75,7 +74,7 @@ const Accordion = (props) => {
                 caption={heading}
               >
                 <Image
-                  src={`${basePath}${imageData.src}`}
+                  src={withBasePath(imageData.src)}
                   alt={imageData.alt || heading || "image"}
                   className="rounded-lg"
                   {...(imageData.width && imageData.height
@@ -216,7 +215,7 @@ export const AccordionBlock = (props) => {
                     caption={item?.heading}
                   >
                     <Image
-                      src={`${basePath}${imageData.src}`}
+                      src={withBasePath(imageData.src)}
                       alt={imageData.alt || item?.heading || "image"}
                       className="rounded-lg"
                       {...(imageData.width && imageData.height

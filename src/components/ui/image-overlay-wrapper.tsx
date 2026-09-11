@@ -1,5 +1,6 @@
 "use client";
 
+import { withBasePath } from "@/utils/with-base-path";
 import Image, { type ImageLoader } from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
@@ -13,8 +14,7 @@ interface ImageOverlayWrapperProps {
 }
 
 const imageLoader: ImageLoader = ({ src, width, quality }) => {
-  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const fullSrc = `${basePath}${src}`;
+  const fullSrc = withBasePath(src);
   const separator = fullSrc.includes("?") ? "&" : "?";
   return `${fullSrc}${separator}w=${width}&q=${quality || 75}`;
 };

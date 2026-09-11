@@ -1,3 +1,4 @@
+import { withBasePath } from "@/utils/with-base-path";
 import Image from "next/image";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
@@ -161,9 +162,7 @@ export function ScrollBasedShowcase(data: {
                     On larger screens, the separate container is used. */}
                 {item.image && (
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}${
-                      item.image
-                    }`}
+                    src={withBasePath(item.image)}
                     alt={item.title}
                     width={500}
                     height={300}
@@ -179,9 +178,7 @@ export function ScrollBasedShowcase(data: {
         <div className="relative hidden w-full flex-1 overflow-hidden md:block">
           {activeImageSrc && (
             <Image
-              src={`${
-                process.env.NEXT_PUBLIC_BASE_PATH || ""
-              }${activeImageSrc}`}
+              src={withBasePath(activeImageSrc)}
               alt=""
               width={500}
               height={300}

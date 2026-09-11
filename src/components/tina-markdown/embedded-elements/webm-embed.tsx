@@ -1,6 +1,5 @@
+import { withBasePath } from "@/utils/with-base-path";
 import { tinaField } from "tinacms/dist/react";
-
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 
 interface WebmEmbedProps {
   embedSrc?: string;
@@ -12,7 +11,7 @@ export default function WebmEmbed(props: WebmEmbedProps) {
 
   if (!embedSrc) return null;
 
-  const src = `${basePath}${embedSrc}`;
+  const src = withBasePath(embedSrc);
 
   return (
     <div
