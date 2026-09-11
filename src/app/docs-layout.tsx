@@ -87,7 +87,7 @@ async function navigationRelativePath(locale: Locale) {
 }
 
 // Renders the tab/nav chrome around a doc page. Called from DocsPage (not DocsLayout)
-// because the language switcher's SSR href needs `siblingExists`, which is only known
+// because the language switcher's SSR target needs `siblingExists`, which is only known
 // once the page has resolved its slug.
 export const DocsMenu = async ({
   locale,

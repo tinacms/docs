@@ -1,44 +1,67 @@
 "use client";
 
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import {
   type Locale,
-  getAlternateLocale,
   getAlternateLocalePath,
   getLocale,
   getLocaleHome,
 } from "@/utils/locale";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { MdLanguage } from "react-icons/md";
+import { withBasePath } from "@/utils/with-base-path";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
+import { LanguageSelect, languages } from "./language-select";
 
-const LABELS: Record<Locale, string> = { en: "English", zh: "中文" };
-
-function setLocaleCookie(locale: Locale) {
-  document.cookie = `NEXT_LOCALE=${locale}; max-age=31536000; path=/; SameSite=Lax`;
+function saveLocaleToCookie(locale: Locale) {
+  const expires = new Date();
+  expires.setFullYear(expires.getFullYear() + 1);
+  document.cookie = `NEXT_LOCALE=${locale}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
 }
 
 // `siblingExists` is resolved server-side (docs-page.tsx already awaits it to render
-// the page) so the switcher's href is correct on first paint, with no client refetch.
+// the page) so the switch target is known on first paint, with no client refetch.
 export function LanguageSwitcher({
   siblingExists,
 }: { siblingExists: boolean }) {
   const pathname = usePathname() ?? "/";
-  const target = getAlternateLocale(getLocale(pathname));
-  const href = siblingExists
-    ? getAlternateLocalePath(pathname)
-    : getLocaleHome(target);
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const current = getLocale(pathname);
+
+  const handleLanguageSelect = (locale: Locale) => {
+    setOpen(false);
+    if (locale === current) return;
+    saveLocaleToCookie(locale);
+    router.push(
+      siblingExists ? getAlternateLocalePath(pathname) : getLocaleHome(locale)
+    );
+  };
 
   return (
-    <Link
-      href={href}
-      hrefLang={target}
-      lang={target}
-      onClick={() => setLocaleCookie(target)}
-      data-testid="language-switcher"
-      className="flex items-center gap-1 whitespace-nowrap rounded-md px-2 py-1 text-sm font-medium text-brand-secondary-contrast transition-colors hover:bg-neutral-background-secondary hover:text-brand-primary"
-    >
-      <MdLanguage className="size-5" aria-hidden="true" />
-      {LABELS[target]}
-    </Link>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <button
+          type="button"
+          aria-label={`Change language (${languages[current].name})`}
+          data-testid="language-switcher"
+          className="cursor-pointer rounded-full outline-none hover:animate-jelly focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
+        >
+          <Image
+            src={withBasePath(languages[current].flag)}
+            alt=""
+            width={32}
+            height={32}
+            className="size-8 rounded-full"
+          />
+        </button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-md" aria-describedby={undefined}>
+        <LanguageSelect
+          currentLanguage={current}
+          onLanguageSelect={handleLanguageSelect}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }

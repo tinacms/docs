@@ -29,10 +29,17 @@ module.exports = {
           "0%": { opacity: "0", transform: "translateY(-8px) scale(0.98)" },
           "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
         },
+        jelly: {
+          "0%, 100%": { transform: "scale(1, 1)" },
+          "25%": { transform: "scale(1.1, 0.9)" },
+          "50%": { transform: "scale(0.9, 1.1)" },
+          "75%": { transform: "scale(1.05, 0.95)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.2s ease-out",
         "zoom-in": "zoom-in 0.2s ease-out",
+        jelly: "jelly 0.6s ease",
       },
       colors: {
         // Brand colors
