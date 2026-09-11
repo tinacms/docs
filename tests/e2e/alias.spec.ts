@@ -12,12 +12,12 @@ test.describe("Alias permalinks", () => {
     await expect(page).toHaveURL(new RegExp(`${basePath}${DOC_PATH}/?$`));
   });
 
-  test("answers with a 308 pointing at the doc page", async ({ request }) => {
+  test("answers with a 307 pointing at the doc page", async ({ request }) => {
     const response = await request.get(`${basePath}/r/${ALIAS}`, {
       maxRedirects: 0,
     });
 
-    expect(response.status()).toBe(308);
+    expect(response.status()).toBe(307);
     expect(response.headers().location).toMatch(
       new RegExp(`${basePath}${DOC_PATH}/?$`)
     );

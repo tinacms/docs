@@ -3,7 +3,7 @@ import client from "@/tina/__generated__/client";
 import { getUrl } from "@/utils/get-url";
 import glob from "fast-glob";
 import matter from "gray-matter";
-import { notFound, permanentRedirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export const dynamicParams = false;
 
@@ -34,5 +34,5 @@ export default async function AliasRedirect({
 
   if (!doc) notFound();
 
-  permanentRedirect(getUrl(doc._sys.path));
+  redirect(getUrl(doc._sys.path));
 }
