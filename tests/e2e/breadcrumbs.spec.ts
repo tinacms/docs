@@ -19,7 +19,7 @@ test.describe("Breadcrumbs", () => {
     const items = trail.locator("[data-slot='breadcrumb-item']");
     await expect(items.first()).toHaveText("Docs");
     await expect(items.first().locator("a")).toHaveAttribute("href", basePath);
-    await expect(items.last()).toHaveAttribute("aria-current", "page");
+    await expect(items.last().locator("[aria-current='page']")).toBeVisible();
     await expect(
       trail.locator("[data-slot='breadcrumb-separator']").first()
     ).toHaveText(">");

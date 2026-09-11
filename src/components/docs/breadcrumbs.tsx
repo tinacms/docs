@@ -177,29 +177,37 @@ export const BreadCrumbs = ({
 
       <div className="hidden sm:block">
         <BreadcrumbList>
-          {nodes.map((node, index) => (
-            <Fragment key={index}>
-              {index > 0 && <BreadcrumbSeparator />}
-              <BreadcrumbItem>
-                {node.kind === "collapsed" ? (
-                  <CollapsedCrumbs crumbs={node.crumbs} />
-                ) : index === nodes.length - 1 ? (
-                  <BreadcrumbPage className="truncate">
-                    {node.crumb.title}
-                  </BreadcrumbPage>
-                ) : node.crumb.url ? (
-                  <BreadcrumbLink
-                    href={node.crumb.url}
-                    className="whitespace-nowrap"
-                  >
-                    {node.crumb.title}
-                  </BreadcrumbLink>
-                ) : (
-                  <span className="whitespace-nowrap">{node.crumb.title}</span>
-                )}
-              </BreadcrumbItem>
-            </Fragment>
-          ))}
+          {nodes.map((node, index) => {
+            const isLast = index === nodes.length - 1;
+            return (
+              <Fragment key={index}>
+                {index > 0 && <BreadcrumbSeparator />}
+                <BreadcrumbItem
+                  className={
+                    index === 0
+                      ? "shrink-0"
+                      : isLast
+                        ? "shrink-0 max-w-1/2"
+                        : ""
+                  }
+                >
+                  {node.kind === "collapsed" ? (
+                    <CollapsedCrumbs crumbs={node.crumbs} />
+                  ) : isLast ? (
+                    <BreadcrumbPage className="truncate">
+                      {node.crumb.title}
+                    </BreadcrumbPage>
+                  ) : node.crumb.url ? (
+                    <BreadcrumbLink href={node.crumb.url} className="truncate">
+                      {node.crumb.title}
+                    </BreadcrumbLink>
+                  ) : (
+                    <span className="truncate">{node.crumb.title}</span>
+                  )}
+                </BreadcrumbItem>
+              </Fragment>
+            );
+          })}
         </BreadcrumbList>
       </div>
     </Breadcrumb>
