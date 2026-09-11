@@ -50,17 +50,13 @@ export function Pagination() {
       return allPages;
     };
 
-    // Get current slug from pathname
-    const slug =
-      pathname === "/"
-        ? "content/docs/index.mdx"
-        : `content/docs${pathname}.mdx`;
-
     // Get all pages in sequence
     const allPages = getAllPages();
 
     // Find current page index
-    const currentIndex = allPages.findIndex((page: any) => page.slug === slug);
+    const currentIndex = allPages.findIndex(
+      (page: any) => getUrl(page.slug) === pathname
+    );
 
     if (currentIndex !== -1) {
       // Set previous page (if exists)

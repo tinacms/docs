@@ -15,29 +15,6 @@ export const BreadCrumbs = ({
 }: {
   navigationDocsData: any;
 }) => {
-  // Helper function to extract a clean URL path from a slug object
-  const getUrlFromSlug = (slug: any): string => {
-    if (typeof slug === "string") {
-      // Handle special case for docs homepage
-      if (slug === "content/docs/index.mdx") {
-        return "/";
-      }
-      return slug;
-    }
-    if (slug && typeof slug === "object" && slug._sys?.relativePath) {
-      // Handle special case for docs homepage
-      if (slug._sys.relativePath === "index.mdx") {
-        return "/";
-      }
-      return `/${slug._sys.relativePath.replace(/\.mdx$/, "")}`;
-    }
-    if (slug && typeof slug === "object" && slug.id) {
-      // Handle special case for docs homepage
-      return getUrl(slug.id);
-    }
-    return "";
-  };
-
   // Find the first page URL in a list of items (recursively)
   const findFirstPageUrl = (items: any[]): string | null => {
     if (!Array.isArray(items)) return null;
@@ -45,7 +22,7 @@ export const BreadCrumbs = ({
     for (const item of items) {
       // If this item has a slug, it's a page - return its URL
       if (item.slug) {
-        return getUrlFromSlug(item.slug);
+        return getUrl(item.slug);
       }
 
       // If this item has nested items, search recursively
@@ -70,7 +47,7 @@ export const BreadCrumbs = ({
 
       // Check if this item has a slug that matches the current page
       if (item.slug) {
-        const itemUrl = getUrlFromSlug(item.slug);
+        const itemUrl = getUrl(item.slug);
         if (itemUrl) {
           // Normalize URLs for comparison (remove trailing slashes)
           const normalizedCurrentPath = currentPath.replace(/\/$/, "") || "/";
