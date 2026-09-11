@@ -21,6 +21,11 @@ export const itemTemplate: Template = {
       type: "reference",
       collections: ["docs", "docsZh"],
     },
+    {
+      name: "title",
+      label: "Title override",
+      type: "string",
+    },
   ],
 };
 

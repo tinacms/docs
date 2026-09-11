@@ -185,6 +185,31 @@ If you encounter issues:
 
 > **Important:** You must restart your development server after running cleanup to ensure Next.js rebuilds the site without cached references to deleted pages.
 
+## Migration from tina.io
+
+`migrate-from-tina-io.ts` imports the TinaCMS documentation from a local checkout of [tinacms/tina.io](https://github.com/tinacms/tina.io) into this instance. It is idempotent: running it twice produces no further diff.
+
+### Usage
+
+```bash
+pnpm tsx scripts/migrate-from-tina-io.ts --source ../tina.io
+pnpm tsx scripts/migrate-from-tina-io.ts --source ../tina.io --dry-run
+```
+
+`--dry-run` computes everything and prints the summary without writing a file. The script refuses to start if `--source` does not contain the tina.io docs, TOC, and settings files it needs.
+
+### What it does
+
+- Wipes `content/docs/` and `content/docs-zh/`, then copies every MDX file from tina.io's `content/docs/` and `content/docs-zh/`.
+- Frontmatter: drops `id` and empty `next`/`previous` values, keeps `title`, `seo`, `alias`, `next`, `previous`, `last_edited`, `tocIsHidden`, and `cmsUsageWarning` verbatim, and drops and reports any other key.
+- Body codemod, applied only to opening and closing tags at the start of a line outside fenced code blocks: `WarningCallout` to `Callout variant="warning"`, `Youtube` to `youtube`, `scrollBasedShowcase` to `scrollShowcase`, `apiReference` to `propertyTable`, and `youtubeEmbed url= description=` to `youtube embedSrc= caption=`. Any remaining tag outside the instance's embed set is reported.
+- Media: copies every root-relative image, video, or PDF reference (`/img/...`, `/landing-assets/...`, `/docs/...`, `/foo.png`) from tina.io's `public/` to the same path here and reports the ones that do not exist there. References stay as written; the renderers add the base path.
+- Navigation: converts the tina.io docs and learn TOCs into `content/navigation-bar/docs-navigation-bar.json` (`locale: "en"`, Docs and Learn tabs) and the ZH pair into `docs-navigation-bar-zh.json` (`locale: "zh"`, 文档 and 学习 tabs). A tina.io label that differs from the document title is kept as the item's `title` override.
+- Redirects: copies every tina.io redirect whose source starts with `/docs` into `content/settings/config.json` with the `/docs` prefix stripped; a destination outside `/docs` is kept verbatim with `basePath: false`.
+- Runs `pnpm tinacms build --local --skip-cloud-checks` as a validation gate and exits non-zero if it fails.
+
+The summary lists files per locale, embeds rewritten by kind, unmapped tags, dropped frontmatter keys, media copied and missing, redirects, navigation item counts, and dangling `next`, `previous`, and navigation references. The most recent real run is recorded in [`migrate-from-tina-io.md`](./migrate-from-tina-io.md).
+
 ---
 
 For more TinaDocs utilities and documentation, visit [TinaDocs GitHub](https://github.com/tinacms/tina-docs).

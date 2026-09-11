@@ -54,6 +54,7 @@ fragment MinimisedNavigationBarParts on NavigationBar {
                     items {
                       __typename
                       ... on NavigationBarTabsDocsTabSupermenuGroupItemsItemsItemsItemsItemsItemsItemsItem {
+                        title
                         slug {
                           ...NavDocParts
                           ...NavDocZhParts
@@ -74,6 +75,7 @@ fragment MinimisedNavigationBarParts on NavigationBar {
                     }
                   }
                   ... on NavigationBarTabsDocsTabSupermenuGroupItemsItemsItemsItemsItemsItem {
+                    title
                     slug {
                       ...NavDocParts
                       ...NavDocZhParts
@@ -94,6 +96,7 @@ fragment MinimisedNavigationBarParts on NavigationBar {
                 }
               }
               ... on NavigationBarTabsDocsTabSupermenuGroupItemsItemsItemsItem {
+                title
                 slug {
                   ...NavDocParts
                   ...NavDocZhParts
@@ -114,6 +117,7 @@ fragment MinimisedNavigationBarParts on NavigationBar {
             }
           }
           ... on NavigationBarTabsDocsTabSupermenuGroupItemsItem {
+            title
             slug {
               ...NavDocParts
               ...NavDocZhParts
@@ -143,6 +147,7 @@ fragment MinimisedNavigationBarParts on NavigationBar {
           items {
             __typename
             ... on NavigationBarTabsApiTabSupermenuGroupDocumentSubMenuItemsItem {
+              title
               slug {
                 ...NavDocParts
                 ...NavDocZhParts
