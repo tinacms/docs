@@ -2,8 +2,8 @@ import { expect, test } from "@playwright/test";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/docs";
 
-const ALIAS = "what-is-tinacms";
-const DOC_PATH = "/using-tinacms/what-is-tinacms";
+const ALIAS = "git-coauthor";
+const DOC_PATH = "/tinacloud/git-co-authoring";
 
 test.describe("Alias permalinks", () => {
   test("redirects /r/<alias> to the doc page", async ({ page }) => {

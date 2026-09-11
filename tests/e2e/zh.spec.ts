@@ -29,12 +29,12 @@ test.describe("Chinese docs", () => {
   });
 
   test("links a nested zh page to its English sibling", async ({ page }) => {
-    await page.goto(`${basePath}/zh/using-tinacms/what-is-tinacms`);
+    await page.goto(`${basePath}/zh/tina-folder/overview`);
 
     await expect(page.locator("html")).toHaveAttribute("lang", "zh");
     await expect(page.getByTestId("language-switcher")).toHaveAttribute(
       "href",
-      `${basePath}/using-tinacms/what-is-tinacms`
+      `${basePath}/tina-folder/overview`
     );
   });
 });
