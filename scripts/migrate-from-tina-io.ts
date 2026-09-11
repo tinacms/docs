@@ -16,7 +16,7 @@ const LOCALES = [
     },
     navFile: "content/navigation-bar/docs-navigation-bar.json",
     tabTitles: { docs: "Docs", learn: "Learn" },
-    locale: undefined,
+    locale: "en",
   },
   {
     key: "zh",
@@ -444,14 +444,11 @@ const migrateNavigation = (locale: Locale, titles: Map<string, string>) => {
     }
   }
 
-  const existingNavFile = fs.existsSync(path.join(ROOT, locale.navFile))
-    ? locale.navFile
-    : LOCALES[0].navFile;
-  const existing = readJson<NavFile>(path.join(ROOT, existingNavFile));
+  const existing = readJson<NavFile>(path.join(ROOT, locale.navFile));
   writeJson(locale.navFile, {
+    locale: locale.locale,
     lightModeLogo: existing.lightModeLogo,
     darkModeLogo: existing.darkModeLogo,
-    ...(locale.locale ? { locale: locale.locale } : {}),
     tabs,
     ctaButtons: existing.ctaButtons,
   });
