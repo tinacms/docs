@@ -6,6 +6,8 @@ import {
 
 type Params = Promise<{ slug: string[] }>;
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return generateDocsStaticParams("en");
 }

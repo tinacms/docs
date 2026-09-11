@@ -20,6 +20,7 @@ module.exports = {
   basePath,
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
   assetPrefix,
+  experimental: { globalNotFound: true },
   images: {
     ...(assetPrefix ? { path: `${assetPrefix}/_next/image` } : {}),
     remotePatterns: [

@@ -26,6 +26,21 @@ test.describe("Server-rendered internal links", () => {
     const response = await page.goto(`${basePath}/this-page-does-not-exist`);
 
     expect(response?.status()).toBe(404);
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page.getByTestId("navbar-logo")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "Sorry, Friend!" })
+    ).toBeVisible();
+  });
+
+  test("a zh 404 page renders the zh nav chrome", async ({ page }) => {
+    const response = await page.goto(`${basePath}/zh/this-page-does-not-exist`);
+
+    expect(response?.status()).toBe(404);
+    await expect(page.locator("html")).toHaveAttribute("lang", "zh");
+    await expect(page.getByTestId("navbar-logo")).toHaveAttribute(
+      "href",
+      `${basePath}/zh`
+    );
   });
 });
