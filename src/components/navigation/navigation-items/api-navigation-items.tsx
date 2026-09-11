@@ -61,6 +61,7 @@ export const ApiNavigationItems: React.FC<
               endpoint_slug={categoryData.items?.map(
                 (item: any) => item.endpoint_slug
               )}
+              defaultOpen={index === 0}
             />
           </div>
         ))}
@@ -75,6 +76,7 @@ export const ApiNavigationItems: React.FC<
             endpoint_slug={categoryData.items?.map(
               (item: any) => item.endpoint_slug
             )}
+            defaultOpen={normalDocs.length === 0 && index === 0}
           />
         </div>
       ))}

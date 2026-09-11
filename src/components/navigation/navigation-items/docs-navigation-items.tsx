@@ -25,11 +25,13 @@ export const DocsNavigationItems: React.FC<
                     ? categoryData.id
                     : `item-${index}`
             }`}
+            data-testid={`nav-group-${index}`}
           >
             <NavLevel
               navListElem={navListElem}
               categoryData={categoryData}
               onNavigate={onNavigate}
+              defaultOpen={index === 0}
             />
           </div>
         ))}

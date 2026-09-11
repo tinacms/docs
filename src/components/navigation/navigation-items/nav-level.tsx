@@ -17,6 +17,7 @@ interface NavLevelProps {
   level?: number;
   onNavigate?: () => void;
   endpoint_slug?: string | string[];
+  defaultOpen?: boolean;
 }
 
 const getEndpointSlug = (endpoint_slug: string | string[] | undefined) => {
@@ -35,6 +36,7 @@ export const NavLevel: React.FC<NavLevelProps> = ({
   level = 0,
   onNavigate,
   endpoint_slug,
+  defaultOpen = false,
 }) => {
   const navLevelElem = React.useRef<HTMLDivElement | null>(null);
   const pathname = usePathname();
@@ -44,10 +46,12 @@ export const NavLevel: React.FC<NavLevelProps> = ({
   // This will be used only when endpoint title is not set
   const defaultTitle = getEndpointSlug(endpoint_slug);
   const slug = getUrl(categoryData.slug).replace(/\/$/, "") || "/";
+  const hasOwnTarget = Boolean(categoryData.slug || categoryData.href);
   const [expanded, setExpanded] = React.useState(
-    matchActualTarget(slug || getUrl(categoryData.href), path) ||
+    (hasOwnTarget &&
+      matchActualTarget(slug || getUrl(categoryData.href), path)) ||
       hasNestedSlug(categoryData.items, path) ||
-      level === 0
+      defaultOpen
   );
 
   const selected = path.split("#")[0] === slug;
