@@ -32,4 +32,11 @@ test.describe("Server-rendered internal links", () => {
       basePath
     );
   });
+
+  test("a 404 page still renders the top nav chrome", async ({ page }) => {
+    const response = await page.goto(`${basePath}/this-page-does-not-exist`);
+
+    expect(response?.status()).toBe(404);
+    await expect(page.getByTestId("navbar-logo")).toBeVisible();
+  });
 });
