@@ -1,7 +1,495 @@
 {
   "selectedTheme": "tina",
-  "redirects": [],
-  "title": "Tina",
+  "redirects": [
+    {
+      "source": "/tinacms-context",
+      "destination": "/contextual-editing/overview",
+      "permanent": true
+    },
+    {
+      "source": "/tinacloud/connecting-site",
+      "destination": "/tinacloud/overview",
+      "permanent": true
+    },
+    {
+      "source": "/errors/faq/:path*",
+      "destination": "/introduction/faq/#common-tinacloud-errors",
+      "permanent": true
+    },
+    {
+      "source": "/tinacloud/faq/:path*",
+      "destination": "/introduction/faq",
+      "permanent": true
+    },
+    {
+      "source": "/tinacloud/faq/:path*",
+      "destination": "/introduction/faq",
+      "permanent": true
+    },
+    {
+      "source": "/drafts/editorial-workflow",
+      "destination": "/tinacloud/editorial-workflow",
+      "permanent": true
+    },
+    {
+      "source": "/extending-tina/customizing-forms",
+      "destination": "/extending-tina/overview/",
+      "permanent": true
+    },
+    {
+      "source": "/tinacloud/alpha-faq/:path*",
+      "destination": "/tinacloud/faq",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/sidebar",
+      "destination": "/cms",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/forms",
+      "destination": "/forms",
+      "permanent": true
+    },
+    {
+      "source": "/plugins/forms",
+      "destination": "/forms",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/fields",
+      "destination": "/fields",
+      "permanent": true
+    },
+    {
+      "source": "/cms/apis",
+      "destination": "/apis",
+      "permanent": true
+    },
+    {
+      "source": "/ui",
+      "destination": "/sidebar-toolbar",
+      "permanent": true
+    },
+    {
+      "source": "/cms/ui",
+      "destination": "/sidebar-toolbar",
+      "permanent": true
+    },
+    {
+      "source": "/cms/alerts",
+      "destination": "/ui/alerts",
+      "permanent": true
+    },
+    {
+      "source": "/cms/events",
+      "destination": "/events",
+      "permanent": true
+    },
+    {
+      "source": "/cms/plugins",
+      "destination": "/plugins",
+      "permanent": true
+    },
+    {
+      "source": "/plugins/fields",
+      "destination": "/reference/fields",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/backends/",
+      "destination": "/cms",
+      "permanent": true
+    },
+    {
+      "source": "/concepts/plugins",
+      "destination": "/cms",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/how-tina-works",
+      "destination": "/setup-overview",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/overview",
+      "destination": "/setup-overview",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/introduction",
+      "destination": "/setup-overview",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/cms-set-up",
+      "destination": "/setup-overview",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/edit-content",
+      "destination": "/setup-overview",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/backends",
+      "destination": "/setup-overview",
+      "permanent": true
+    },
+    {
+      "source": "/inline-editing",
+      "destination": "/ui/inline-editing",
+      "permanent": true
+    },
+    {
+      "source": "/nextjs/inline-editing",
+      "destination": "/ui/inline-editing",
+      "permanent": true
+    },
+    {
+      "source": "/gatsby/inline-editing",
+      "destination": "/ui/inline-editing",
+      "permanent": true
+    },
+    {
+      "source": "/inline-blocks",
+      "destination": "/ui/inline-editing/inline-blocks",
+      "permanent": true
+    },
+    {
+      "source": "/inline-editing/inline-blocks",
+      "destination": "/ui/inline-editing/inline-blocks",
+      "permanent": true
+    },
+    {
+      "source": "/inline-blocks/block-text",
+      "destination": "/ui/inline-editing/inline-text",
+      "permanent": true
+    },
+    {
+      "source": "/inline-blocks/block-textarea",
+      "destination": "/ui/inline-editing/inline-textarea",
+      "permanent": true
+    },
+    {
+      "source": "/inline-blocks/block-image",
+      "destination": "/ui/inline-editing/inline-image",
+      "permanent": true
+    },
+    {
+      "source": "/docs/nextjs/bootstrapping",
+      "destination": "/guides/nextjs/git/getting-started",
+      "permanent": true,
+      "basePath": false
+    },
+    {
+      "source": "/nextjs/adding-backends",
+      "destination": "/reference/self-hosted/tina-backend/nextjs",
+      "permanent": true
+    },
+    {
+      "source": "/docs/nextjs/creating-forms",
+      "destination": "/guides/nextjs/git/creating-git-forms",
+      "permanent": true,
+      "basePath": false
+    },
+    {
+      "source": "/nextjs/markdown",
+      "destination": "/editing/markdown",
+      "permanent": true
+    },
+    {
+      "source": "/gatsby/quickstart",
+      "destination": "/guides/converting-gatsby-to-tina",
+      "permanent": true
+    },
+    {
+      "source": "/gatsby/manual-setup",
+      "destination": "/guides/converting-gatsby-to-tina",
+      "permanent": true
+    },
+    {
+      "source": "/gatsby/markdown",
+      "destination": "/guides/converting-gatsby-to-tina",
+      "permanent": true
+    },
+    {
+      "source": "/gatsby/json",
+      "destination": "/guides/converting-gatsby-to-tina",
+      "permanent": true
+    },
+    {
+      "source": "/git/",
+      "destination": "/reference/self-hosted/git-provider/github",
+      "permanent": true
+    },
+    {
+      "source": "/gatsby/configure-git-plugin",
+      "destination": "/guides/converting-gatsby-to-tina",
+      "permanent": true
+    },
+    {
+      "source": "/gatsby/custom-field",
+      "destination": "/guides/converting-gatsby-to-tina",
+      "permanent": true
+    },
+    {
+      "source": "/nextjs/next-tinacms-github",
+      "destination": "/legacy-redirect",
+      "permanent": true
+    },
+    {
+      "source": "/nextjs/next-tinacms-json",
+      "destination": "/legacy-redirect",
+      "permanent": true
+    },
+    {
+      "source": "/nextjs/next-tinacms-markdown",
+      "destination": "/editing/markdown",
+      "permanent": true
+    },
+    {
+      "source": "/tinacloud/beta-faq/:path*",
+      "destination": "/tinacloud/alpha-faq",
+      "permanent": true
+    },
+    {
+      "source": "/tinacloud/client",
+      "destination": "/contextual-editing/overview",
+      "permanent": true
+    },
+    {
+      "source": "/tinacloud/cli",
+      "destination": "/cli-overview",
+      "permanent": true
+    },
+    {
+      "source": "/tinacms-context-advanced",
+      "destination": "/tinacms-context",
+      "permanent": true
+    },
+    {
+      "source": "/tinacms-reference",
+      "destination": "/tinacms-context",
+      "permanent": true
+    },
+    {
+      "source": "/toolkit",
+      "destination": "/reference/toolkit/cms",
+      "permanent": true
+    },
+    {
+      "source": "/content-management",
+      "destination": "/reference/toolkit/overview",
+      "permanent": true
+    },
+    {
+      "source": "/cms",
+      "destination": "/reference/toolkit/cms",
+      "permanent": true
+    },
+    {
+      "source": "/forms",
+      "destination": "/reference/toolkit/forms",
+      "permanent": true
+    },
+    {
+      "source": "/fields/:path*",
+      "destination": "/reference/toolkit/fields/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/fields/custom-fields",
+      "destination": "/advanced/configuring-field-plugin",
+      "permanent": true
+    },
+    {
+      "source": "/reference/toolkit/fields/custom-fields",
+      "destination": "/advanced/configuring-field-plugin",
+      "permanent": true
+    },
+    {
+      "source": "/plugins/content-creators",
+      "destination": "/legacy-redirect",
+      "permanent": true
+    },
+    {
+      "source": "/media",
+      "destination": "/reference/media/overview",
+      "permanent": true
+    },
+    {
+      "source": "/apis",
+      "destination": "/legacy-redirect",
+      "permanent": true
+    },
+    {
+      "source": "/user-interface",
+      "destination": "/advanced/extending-tina",
+      "permanent": true
+    },
+    {
+      "source": "/sidebar-toolbar",
+      "destination": "/advanced/extending-tina",
+      "permanent": true
+    },
+    {
+      "source": "/extending-tina",
+      "destination": "/advanced/extending-tina",
+      "permanent": true
+    },
+    {
+      "source": "/events",
+      "destination": "/advanced/extending-tina",
+      "permanent": true
+    },
+    {
+      "source": "/plugins(.*)",
+      "destination": "/legacy-redirect",
+      "permanent": true
+    },
+    {
+      "source": "/ui/(.*)",
+      "destination": "/advanced/extending-tina/",
+      "permanent": true
+    },
+    {
+      "source": "/getting-started/faq/:path*",
+      "destination": "/tinacloud/faq/",
+      "permanent": true
+    },
+    {
+      "source": "/integrations(.*)",
+      "destination": "/legacy-redirect",
+      "permanent": true
+    },
+    {
+      "source": "/features/extending-tina",
+      "destination": "/advanced/extending-tina",
+      "permanent": true
+    },
+    {
+      "source": "/mdx",
+      "destination": "/editing/markdown",
+      "permanent": true
+    },
+    {
+      "source": "/tinacms-package",
+      "destination": "/tinacms-context",
+      "permanent": true
+    },
+    {
+      "source": "/cli",
+      "destination": "/cli-overview",
+      "permanent": true
+    },
+    {
+      "source": "/schema-advanced",
+      "destination": "/graphql/",
+      "permanent": true
+    },
+    {
+      "source": "/graphql",
+      "destination": "/graphql/overview",
+      "permanent": true
+    },
+    {
+      "source": "/releases(.*)",
+      "destination": "/legacy-redirect",
+      "permanent": true
+    },
+    {
+      "source": "/advanced/extending-tina",
+      "destination": "/extending-tina/overview",
+      "permanent": true
+    },
+    {
+      "source": "/advanced/configuring-field-plugin",
+      "destination": "/extending-tina/custom-field-components",
+      "permanent": true
+    },
+    {
+      "source": "/advanced/extending-field-plugin",
+      "destination": "/extending-tina/advanced/extending-field-plugin",
+      "permanent": true
+    },
+    {
+      "source": "/advanced/creating-field-component",
+      "destination": "/extending-tina/advanced/creating-field-component",
+      "permanent": true
+    },
+    {
+      "source": "/advanced/customizing-forms",
+      "destination": "/extending-tina/customizing-forms",
+      "permanent": true
+    },
+    {
+      "source": "/advanced/edit-state",
+      "destination": "/extending-tina/edit-state",
+      "permanent": true
+    },
+    {
+      "source": "/media-cloudinary/:path*",
+      "destination": "/reference/media/external/cloudinary",
+      "permanent": true
+    },
+    {
+      "source": "/tinacloud/data-layer",
+      "destination": "/reference/content-api/data-layer",
+      "permanent": true
+    },
+    {
+      "source": "/editing/active-field-indicator/:path*",
+      "destination": "/contextual-editing/react/#click-to-edit-experimental",
+      "permanent": true
+    },
+    {
+      "source": "/editing/mdx",
+      "destination": "/editing/markdown",
+      "permanent": true
+    },
+    {
+      "source": "/media-dos",
+      "destination": "/reference/media/external/do-spaces",
+      "permanent": true
+    },
+    {
+      "source": "/media-s3",
+      "destination": "/reference/media/external/s3",
+      "permanent": true
+    },
+    {
+      "source": "/media",
+      "destination": "/reference/media/overview",
+      "permanent": true
+    },
+    {
+      "source": "/reference/media/external/azure",
+      "destination": "/reference/media/external/s3",
+      "permanent": true
+    },
+    {
+      "source": "/reference/media",
+      "destination": "/reference/media/overview",
+      "permanent": true
+    },
+    {
+      "source": "/tinacms-context",
+      "destination": "/contextual-editing/overview",
+      "permanent": true
+    },
+    {
+      "source": "/introduction/faq",
+      "destination": "/faq",
+      "permanent": true
+    },
+    {
+      "source": "/search",
+      "destination": "/reference/search/overview",
+      "permanent": false
+    }
+  ],
+  "title": "TinaCMS",
   "description": "TinaCMS is a fully open-source headless CMS that supports Git",
   "seoDefaultTitle": "TinaCMS – Headless CMS with GitHub & Markdown Support",
   "publisher": "TinaCMS",

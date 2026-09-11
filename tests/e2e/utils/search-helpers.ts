@@ -218,7 +218,7 @@ export class SearchHelper {
     await this.page.setViewportSize({ width: 375, height: 667 });
     await expect(this.getSearchTrigger()).toBeVisible();
 
-    await this.performSearch("TinaDocs");
+    await this.performSearch(SEARCH_TEST_DATA.knownTerms[0]);
     await this.expectSearchResultsVisible();
   }
 }
@@ -228,13 +228,13 @@ export class SearchHelper {
  */
 export const SEARCH_TEST_DATA = {
   knownTerms: [
-    "TinaDocs",
+    "TinaCMS",
     "documentation",
     "search",
     "API",
-    "TinaCMS",
+    "schema",
     "deployment",
-    "theming",
+    "media",
     "components",
   ],
   nonExistentTerms: [

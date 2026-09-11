@@ -7,19 +7,893 @@
       "title": "文档",
       "supermenuGroup": [
         {
-          "title": "简介",
+          "title": "入门指南",
           "items": [
             {
               "slug": "content/docs-zh/index.mdx",
+              "title": "什么是TinaCMS?",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/setup-overview.mdx",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/using-tina-editor.mdx",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/content-model-intro.mdx",
+              "title": "内容模型",
+              "_template": "item"
+            },
+            {
+              "title": "支持框架",
+              "items": [
+                {
+                  "slug": "content/docs-zh/introduction/using-starter.mdx",
+                  "title": "入门套件",
+                  "_template": "item"
+                },
+                {
+                  "title": "添加到现有站点",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/frameworks/next/app-router.mdx",
+                      "title": "NextJS (App路由)",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/frameworks/next/pages-router.mdx",
+                      "title": "NextJS (Pages路由)",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/frameworks/astro.mdx",
+                      "title": "Astro",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/frameworks/hugo.mdx",
+                      "title": "Hugo",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/frameworks/gatsby.mdx",
+                      "title": "Gatsby",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/frameworks/jekyll.mdx",
+                      "title": "Jekyll",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/frameworks/remix.mdx",
+                      "title": "Remix",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/frameworks/11ty.mdx",
+                      "title": "11ty",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/frameworks/other.mdx",
+                      "title": "其他框架",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "slug": "content/docs-zh/faq.mdx",
               "_template": "item"
             }
           ]
         },
         {
-          "title": "使用 TinaCMS",
+          "title": "配置TinaCMS",
           "items": [
             {
-              "slug": "content/docs-zh/using-tinacms/what-is-tinacms.mdx",
+              "slug": "content/docs-zh/tina-folder/overview.mdx",
+              "title": "/tina目录",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/reference/config.mdx",
+              "title": "配置文件",
+              "_template": "item"
+            },
+            {
+              "title": "内容建模",
+              "items": [
+                {
+                  "slug": "content/docs-zh/reference/collections.mdx",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/reference/fields.mdx",
+                  "title": "字段类型",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/reference/templates.mdx",
+                  "_template": "item"
+                },
+                {
+                  "title": "基础字段",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/reference/types/string.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/types/number.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/types/datetime.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/types/boolean.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/types/image.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/types/reference.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/types/object.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/extending-tina/customize-list-ui.mdx",
+                      "title": "列表自定义渲染 ",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "title": "Markdown字段",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/reference/types/rich-text.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/types/rendering-markdown.mdx",
+                      "title": "渲染MD内容",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/rich-text-usage/mermaid.mdx",
+                      "title": "MD图表(Mermaid)",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/markdown-spec.mdx",
+                      "title": "MD语法指南",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/rich-text-usage/markdown-shortcode.mdx",
+                      "title": "自定义MD语法",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "title": "自定义字段",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/extending-tina/custom-field-components.mdx",
+                      "title": "React组件",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/toolkit/fields/built-in-plugins.mdx",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "媒体存储",
+              "items": [
+                {
+                  "slug": "content/docs-zh/reference/media/repo-based.mdx",
+                  "title": "仓库存储",
+                  "_template": "item"
+                },
+                {
+                  "title": "外部存储服务",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/reference/media/external/authentication.mdx",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/media/external/do-spaces.mdx",
+                      "title": "Digital Ocean Spaces",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/media/external/cloudinary.mdx",
+                      "title": "Cloudinary",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/media/external/s3.mdx",
+                      "title": "AWS S3存储桶",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "可视化编辑",
+              "items": [
+                {
+                  "slug": "content/docs-zh/contextual-editing/react.mdx",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/contextual-editing/tinafield.mdx",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/contextual-editing/router.mdx",
+                  "title": "可视化编辑路由",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            }
+          ]
+        },
+        {
+          "title": "内容查询",
+          "items": [
+            {
+              "slug": "content/docs-zh/features/data-fetching.mdx",
+              "title": "内容API概览",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/data-fetching/overview.mdx",
+              "title": "常用查询",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/data-fetching/custom-queries.mdx",
+              "_template": "item"
+            },
+            {
+              "title": "手动GraphQL查询",
+              "items": [
+                {
+                  "slug": "content/docs-zh/graphql/queries.mdx",
+                  "title": "概览",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/graphql/queries/get-document.mdx",
+                  "title": "获取单个文档",
+                  "_template": "item"
+                },
+                {
+                  "title": "查询文档列表",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/graphql/queries/query-documents.mdx",
+                      "title": "概览",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/graphql/queries/advanced/filter-documents.mdx",
+                      "title": "过滤",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/graphql/queries/advanced/sorting.mdx",
+                      "title": "排序",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/graphql/queries/advanced/pagination.mdx",
+                      "title": "分页",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/graphql/queries/advanced/performance.mdx",
+                      "title": "性能",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/graphql/queries/advanced/limitations.mdx",
+                      "title": "限制",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "slug": "content/docs-zh/graphql/queries/update-document.mdx",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/graphql/queries/add-document.mdx",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/reference/content-api/content-delivery.mdx",
+                  "title": "使用Curl和Fetch",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "深入原理",
+              "items": [
+                {
+                  "slug": "content/docs-zh/reference/content-api/data-layer.mdx",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/graphql/cli.mdx",
+                  "title": "本地GraphQL API",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            }
+          ]
+        },
+        {
+          "title": "TinaCloud",
+          "items": [
+            {
+              "slug": "content/docs-zh/tinacloud.mdx",
+              "title": "什么是TinaCloud?",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/tinacloud/overview.mdx",
+              "title": "连接TinaCloud",
+              "_template": "item"
+            },
+            {
+              "title": "核心功能",
+              "items": [
+                {
+                  "slug": "content/docs-zh/drafts/editorial-workflow.mdx",
+                  "title": "编辑工作流",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/reference/search/overview.mdx",
+                  "title": "内容搜索",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/tinacloud/git-co-authoring.mdx",
+                  "title": "Git协作者",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/tinacloud/api-versioning.mdx",
+                  "title": "API版本控制",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "TinaCloud控制台",
+              "items": [
+                {
+                  "slug": "content/docs-zh/tinacloud/dashboard.mdx",
+                  "title": "概览",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/tinacloud/dashboard/registration.mdx",
+                  "_template": "item"
+                },
+                {
+                  "title": "项目",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/tinacloud/dashboard/projects.mdx",
+                      "title": "概览",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/tinacloud/dashboard/users.mdx",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "slug": "content/docs-zh/tinacloud/dashboard/organizations.mdx",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/tinacloud/github-enterprise-integration.mdx",
+                  "title": "GitHub企业版集成",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "部署配置",
+              "items": [
+                {
+                  "slug": "content/docs-zh/tinacloud/deployment-options/vercel.mdx",
+                  "title": "Vercel",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/tinacloud/deployment-options/netlify.mdx",
+                  "title": "Netlify",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/tinacloud/deployment-options/github-pages.mdx",
+                  "title": "GitHub Pages",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/tinacloud/deployment-options/alibaba-cloud.mdx",
+                  "title": "阿里云",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            }
+          ]
+        },
+        {
+          "title": "自托管",
+          "items": [
+            {
+              "slug": "content/docs-zh/self-hosted/overview.mdx",
+              "title": "概览",
+              "_template": "item"
+            },
+            {
+              "title": "自托管数据层",
+              "items": [
+                {
+                  "title": "开始使用",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/self-hosted/starters/nextjs-vercel.mdx",
+                      "title": "部署(Next.js)示例站点",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/self-hosted/existing-site.mdx",
+                      "title": "CLI快速开始(仅限Next.js)",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/self-hosted/manual-setup.mdx",
+                      "title": "手动设置(通用)",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/self-hosted/migrating-from-tinacloud.mdx",
+                      "title": "从TinaCloud迁移",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "slug": "content/docs-zh/self-hosted/querying-data.mdx",
+                  "title": "查询内容",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/self-hosted/user-management.mdx",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "自托管组件",
+              "items": [
+                {
+                  "title": "后端主机",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/tina-backend/nextjs.mdx",
+                      "title": "Next.js",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/tina-backend/vercel-functions.mdx",
+                      "title": "Vercel无服务函数",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/tina-backend/netlify-functions.mdx",
+                      "title": "Netlify函数",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "title": "Git提供商",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/git-provider/overview.mdx",
+                      "title": "概览",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/git-provider/github.mdx",
+                      "title": "GitHub",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/git-provider/make-your-own.mdx",
+                      "title": "自定义Git提供商",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "title": "数据库适配器",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/database-adapter/overview.mdx",
+                      "title": "概览",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/database-adapter/vercel-kv.mdx",
+                      "title": "Vercel KV",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/database-adapter/mongodb.mdx",
+                      "title": "Mongo DB",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/database-adapter/make-your-own.mdx",
+                      "title": "自定义数据库适配器",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "title": "认证提供商",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/auth-provider/overview.mdx",
+                      "title": "概览",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/auth-provider/authjs.mdx",
+                      "title": "默认(Auth.js)",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/auth-provider/tinacloud.mdx",
+                      "title": "TinaCloud",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/auth-provider/clerk-auth.mdx",
+                      "title": "Clerk",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/reference/self-hosted/auth-provider/bring-your-own.mdx",
+                      "title": "自定义认证",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                }
+              ],
+              "_template": "items"
+            }
+          ]
+        },
+        {
+          "title": "高级",
+          "items": [
+            {
+              "slug": "content/docs-zh/cli-overview.mdx",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/extending-tina/edit-state.mdx",
+              "title": "Tina的编辑状态",
+              "_template": "item"
+            }
+          ]
+        }
+      ],
+      "_template": "docsTab"
+    },
+    {
+      "title": "学习",
+      "supermenuGroup": [
+        {
+          "title": "新手入门系列",
+          "items": [
+            {
+              "slug": "content/docs-zh/beginner-tutorials/tutorial-overview.mdx",
+              "title": "什么是新手入门系列？",
+              "_template": "item"
+            },
+            {
+              "title": "1. 创建你的TinaCMS站点",
+              "items": [
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/nextjs-app.mdx",
+                  "title": "NextJS环境搭建",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/intro-cleanup.mdx",
+                  "title": "清理冗余代码",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/install-tinacms.mdx",
+                  "title": "安装CMS 🦙",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/hello-world.mdx",
+                  "title": "Hello World! 👋🌏",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/display-content.mdx",
+                  "title": "渲染你的内容",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "2. 实时编辑功能",
+              "items": [
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/routing.mdx",
+                  "title": "路由配置到编辑器",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/wiring-content.mdx",
+                  "title": "内容与编辑器连接",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/loading-content.mdx",
+                  "title": "加载你的内容",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "3. 内容模型",
+              "items": [
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/new-field.mdx",
+                  "title": "创建新字段",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/string-to-markdown.mdx",
+                  "title": "从文本到Markdown 🌟",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/rendering-markdown.mdx",
+                  "title": "渲染Markdown内容",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/new-picture.mdx",
+                  "title": "图片上传功能 🖼️",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "4. 网站构建体验",
+              "items": [
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/what-are-blocks.mdx",
+                  "title": "什么是\"区块\"？",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/new-template.mdx",
+                  "title": "创建新模板",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/linking-to-model.mdx",
+                  "title": "关联到内容模型",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/render-templates.mdx",
+                  "title": "渲染你的模板",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/beginner-tutorials/website-builder-experience.mdx",
+                  "title": "网站构建体验 ✨",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            }
+          ]
+        },
+        {
+          "title": "技术指南",
+          "items": [
+            {
+              "slug": "content/docs-zh/editing/markdown.mdx",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/editing/blocks.mdx",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/guides/react-data-fetching.mdx",
+              "title": "运行时查询Tina内容",
+              "_template": "item"
+            },
+            {
+              "title": "配置内容集合",
+              "items": [
+                {
+                  "slug": "content/docs-zh/editing/single-document-collections.mdx",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/drafts/drafts-fields.mdx",
+                  "title": "标记草稿文档",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/extending-tina/before-submit.mdx",
+                  "title": "保存时修改数据",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/extending-tina/filename-customization.mdx",
+                  "title": "自动生成文件名",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/guides/naming-conventions.mdx",
+                  "title": "内容集合命名规范",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "title": "框架专项指南",
+              "items": [
+                {
+                  "slug": "content/docs-zh/integration/frameworks.mdx",
+                  "title": "概述",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/guides/converting-wordpress-to-tina.mdx",
+                  "title": "从WordPress迁移",
+                  "_template": "item"
+                },
+                {
+                  "title": "Gatsby",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/guides/converting-gatsby-to-tina.mdx",
+                      "title": "将现有Gatsby博客迁移到TinaCMS",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "title": "NextJS",
+                  "items": [
+                    {
+                      "slug": "content/docs-zh/guides/nextjs-data-fetching.mdx",
+                      "title": "在NextJS中查询Tina内容",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/guides/nextjs-internationalization.mdx",
+                      "title": "NextJS+Tina国际化实现",
+                      "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs-zh/guides/contextual-drafts.mdx",
+                      "title": "可视化编辑中使用草稿",
+                      "_template": "item"
+                    }
+                  ],
+                  "_template": "items"
+                },
+                {
+                  "slug": "content/docs-zh/guides/docusaurus.mdx",
+                  "title": "Docusaurus",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "slug": "content/docs-zh/drafts/drafts-fields.mdx",
+              "title": "标记草稿页面",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/guides/separate-content-repo.mdx",
+              "title": "独立内容仓库",
+              "_template": "item"
+            },
+            {
+              "title": "全球化",
+              "items": [
+                {
+                  "slug": "content/docs-zh/tinacloud/tinacms-availability-China.mdx",
+                  "title": "TinaCMS在中国地区的可用性",
+                  "_template": "item"
+                },
+                {
+                  "slug": "content/docs-zh/guides/internationalization.mdx",
+                  "_template": "item"
+                }
+              ],
+              "_template": "items"
+            },
+            {
+              "slug": "content/docs-zh/guides/multi-tenancy.mdx",
               "_template": "item"
             }
           ]
