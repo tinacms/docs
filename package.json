@@ -11,11 +11,13 @@
     "build-local-pagefind": "tinacms build && next build && npx pagefind --site .next --output-subdir ../public/pagefind",
     "export": "tinacms build && EXPORT_MODE=static,UNOPTIMIZED_IMAGES=true next build",
     "start": "tinacms build && next start",
-    "lint": "biome check src/ tina/",
-    "lint:fix": "biome check src/ tina/ --fix",
+    "lint": "biome check src/ tina/ scripts/",
+    "lint:fix": "biome check src/ tina/ scripts/ --fix",
     "cleanup": "node scripts/cleanup.js",
+    "crawl:compare": "tsx scripts/crawl-compare.ts",
     "test": "playwright test",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "test:crawl-compare": "tsx --test scripts/crawl-compare.test.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -65,6 +67,7 @@
     "postcss": "^8.5.4",
     "postcss-preset-env": "^10.2.0",
     "tailwindcss": "^4.1.8",
+    "tsx": "^4.23.13",
     "worker-loader": "^3.0.8"
   },
   "packageManager": "pnpm@9.15.2",
