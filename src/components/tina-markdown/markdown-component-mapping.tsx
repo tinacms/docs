@@ -6,10 +6,18 @@ import Callout from "./embedded-elements/callout";
 import { CardGrid } from "./embedded-elements/card-grid";
 import { CodeTabs } from "./embedded-elements/code-tabs";
 import { FileStructure } from "./embedded-elements/file-structure";
+import GraphQLCodeBlock from "./embedded-elements/graphql-code-block";
+import Iframe from "./embedded-elements/iframe";
+import ImageAndText from "./embedded-elements/image-and-text";
 import ImageEmbed from "./embedded-elements/image-embed";
+import PropertyTable, {
+  type PropertyTableProperty,
+} from "./embedded-elements/property-table";
 import RecipeBlock from "./embedded-elements/recipe";
 import { ScrollBasedShowcase } from "./embedded-elements/scroll-showcase";
+import SummaryTab from "./embedded-elements/summary-tab";
 import TypeDefinition from "./embedded-elements/type-definition";
+import WebmEmbed from "./embedded-elements/webm-embed";
 import Youtube from "./embedded-elements/youtube";
 import Blockquote from "./standard-elements/blockquote";
 import { CodeBlock } from "./standard-elements/code-block/code-block";
@@ -115,6 +123,22 @@ type ComponentMapping = {
     caption?: string;
     disableLightbox?: boolean;
   };
+  GraphQLCodeBlock: {
+    query?: string;
+    response?: string;
+    preselectResponse?: boolean;
+    customQueryName?: string;
+    customResponseName?: string;
+  };
+  WebmEmbed: { embedSrc?: string; width?: string };
+  ImageAndText: {
+    heading?: string;
+    docText?: TinaMarkdownContent;
+    image?: string;
+  };
+  Iframe: { iframeSrc?: string; height?: number };
+  SummaryTab: { heading?: string; text?: TinaMarkdownContent };
+  propertyTable: { title?: string; property?: PropertyTableProperty[] };
 };
 
 type CalloutVariant =
@@ -139,6 +163,12 @@ export const MarkdownComponentMapping: Components<ComponentMapping> = {
     <Callout {...props} variant={props.variant as CalloutVariant} />
   ),
   imageEmbed: (props) => <ImageEmbed {...props} />,
+  GraphQLCodeBlock: (props) => <GraphQLCodeBlock {...props} />,
+  WebmEmbed: (props) => <WebmEmbed {...props} />,
+  ImageAndText: (props) => <ImageAndText {...props} />,
+  Iframe: (props) => <Iframe {...props} />,
+  SummaryTab: (props) => <SummaryTab {...props} />,
+  propertyTable: (props) => <PropertyTable {...props} />,
   // Our default markdown components
   h1: (props) => <HeaderFormat level={1} {...props} />,
   h2: (props) => <HeaderFormat level={2} {...props} />,
