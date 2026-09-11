@@ -9,6 +9,7 @@ import { ThemeProvider } from "next-themes";
 import { Inter, Roboto_Flex } from "next/font/google";
 
 import { TabsLayout } from "@/components/docs/layout/tab-layout";
+import { type Locale, locales } from "@/utils/locale";
 import type React from "react";
 import { TinaClient } from "./tina-client";
 
@@ -28,13 +29,15 @@ const isThemeSelectorEnabled =
 const theme = settings.selectedTheme || "default";
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
 
-export default function RootLayout({
+export function DocsLayout({
+  locale,
   children = null,
 }: {
+  locale: Locale;
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`theme-${theme}`} suppressHydrationWarning>
+    <html lang={locale} className={`theme-${theme}`} suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#E6FAF8" />
         <link rel="alternate" type="application/rss+xml" href="/rss.xml" />
@@ -55,7 +58,7 @@ export default function RootLayout({
         >
           {isThemeSelectorEnabled && <ThemeSelector />}
           <Content>
-            <DocsMenu>{children}</DocsMenu>
+            <DocsMenu locale={locale}>{children}</DocsMenu>
           </Content>
         </ThemeProvider>
       </body>
@@ -73,11 +76,15 @@ const Content = ({ children }: { children?: React.ReactNode }) => (
   </>
 );
 
-const DocsMenu = async ({ children }: { children?: React.ReactNode }) => {
-  // Fetch navigation data that will be shared across all docs pages
-
+const DocsMenu = async ({
+  locale,
+  children,
+}: {
+  locale: Locale;
+  children?: React.ReactNode;
+}) => {
   const navigationData = await client.queries.minimisedNavigationBarFetch({
-    relativePath: "docs-navigation-bar.json",
+    relativePath: locales[locale].navigationFile,
   });
 
   return (

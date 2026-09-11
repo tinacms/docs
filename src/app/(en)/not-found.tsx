@@ -1,4 +1,4 @@
-import ErrorWrapper from "./error-wrapper";
+import ErrorWrapper from "@/app/error-wrapper";
 
 export default async function NotFound() {
   return (
