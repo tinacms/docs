@@ -15,6 +15,16 @@ const SECOND_GROUP_ITEM = `a[href="${basePath}/reference/config"]`;
 const UNRELATED_GROUP_ITEM = `a[href="${basePath}/features/data-fetching"]`;
 
 test.describe("Sidebar default expand state", () => {
+  test("only the current page is highlighted on the docs home page", async ({
+    page,
+  }) => {
+    await page.goto(`${basePath}/`);
+
+    const highlighted = page.locator('[data-selected="true"]');
+    await expect(highlighted).toHaveCount(1);
+    await expect(highlighted.first()).toContainText("What is TinaCMS");
+  });
+
   test("only the first top-level group is open on the docs home page", async ({
     page,
   }) => {
