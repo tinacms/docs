@@ -43,15 +43,14 @@ export const NavLevel: React.FC<NavLevelProps> = ({
   // If there is only one endpoint slug, use it as the default title
   // This will be used only when endpoint title is not set
   const defaultTitle = getEndpointSlug(endpoint_slug);
-  const slug = getUrl(categoryData.slug).replace(/\/$/, "");
+  const slug = getUrl(categoryData.slug).replace(/\/$/, "") || "/";
   const [expanded, setExpanded] = React.useState(
     matchActualTarget(slug || getUrl(categoryData.href), path) ||
       hasNestedSlug(categoryData.items, path) ||
       level === 0
   );
 
-  const selected =
-    path.split("#")[0] === slug || (slug === "/docs" && path === "/docs/");
+  const selected = path.split("#")[0] === slug;
 
   const childSelected = hasNestedSlug(categoryData.items, path);
 

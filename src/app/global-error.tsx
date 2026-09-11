@@ -18,7 +18,7 @@ export default function GlobalError({
         links: [
           {
             linkText: "Return to docs",
-            linkUrl: "/docs",
+            linkUrl: "/",
           },
           {
             linkText: "Try again",

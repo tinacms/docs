@@ -19,7 +19,7 @@ export async function generateMetadata() {
   return getSeo(
     {
       ...data.docs.seo,
-      canonicalUrl: data.docs.seo?.canonicalUrl || `${siteUrl}/tinadocs/docs`,
+      canonicalUrl: data.docs.seo?.canonicalUrl || `${siteUrl}/docs`,
     },
     {
       pageTitle: data.docs.title,

@@ -55,7 +55,7 @@ export const hasMatchingApiEndpoint = (items: any[], path: string) => {
           (typeof endpoint === "string" ? endpoint.split(":")[1] : "");
         return (
           path ===
-          `/docs/api-documentation/${getTagSlug(tag)}/${getEndpointSlug(
+          `/api-documentation/${getTagSlug(tag)}/${getEndpointSlug(
             method,
             endpointPath
           )}`

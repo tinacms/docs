@@ -8,14 +8,12 @@ export function getUrl(input: any): string {
     }
   }
 
-  if (url.startsWith("content")) {
-    url = url.replace(/^content/, "");
-  }
+  url = url.replace(/^content\/docs/, "");
 
   url = url.replace(/\.(mdx|md)$/, "");
 
-  if (url === "/docs/index") {
-    url = "/docs";
+  if (url === "/index") {
+    url = "/";
   }
 
   if (!url.startsWith("/")) {
