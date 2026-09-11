@@ -54,7 +54,7 @@ export const NavLevel: React.FC<NavLevelProps> = ({
       defaultOpen
   );
 
-  const selected = path.split("#")[0] === slug;
+  const selected = hasOwnTarget && path.split("#")[0] === slug;
 
   const childSelected = hasNestedSlug(categoryData.items, path);
 
@@ -175,7 +175,11 @@ export const NavLevel: React.FC<NavLevelProps> = ({
             onClick={onNavigate}
             isFullWidth={true}
           >
-            <NavTitle level={level} selected={selected && !childSelected}>
+            <NavTitle
+              level={level}
+              selected={selected && !childSelected}
+              data-selected={selected && !childSelected}
+            >
               <span className="flex items-center justify-between font-body w-full">
                 {categoryData.verb && httpMethod()}
                 <span
@@ -195,6 +199,7 @@ export const NavLevel: React.FC<NavLevelProps> = ({
             level={level}
             selected={selected && !childSelected}
             childSelected={childSelected}
+            data-selected={selected && !childSelected}
             onClick={() => {
               setExpanded(!expanded);
             }}
