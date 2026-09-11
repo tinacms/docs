@@ -32,6 +32,9 @@ importers:
       fast-glob:
         specifier: ^3.3.3
         version: 3.3.3
+      gray-matter:
+        specifier: ^4.0.3
+        version: 4.0.3
       html-to-md:
         specifier: ^0.8.8
         version: 0.8.8
