@@ -10,6 +10,7 @@ import { Inter, Roboto_Flex } from "next/font/google";
 
 import { TabsLayout } from "@/components/docs/layout/tab-layout";
 import type { Locale } from "@/utils/locale";
+import { withBasePath } from "@/utils/with-base-path";
 import type React from "react";
 import { TinaClient } from "./tina-client";
 
@@ -40,8 +41,11 @@ export function DocsLayout({
     <html lang={locale} className={`theme-${theme}`} suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#E6FAF8" />
-        <link rel="alternate" type="application/rss+xml" href="/rss.xml" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link
+          rel="icon"
+          type="image/svg+xml"
+          href={withBasePath("/favicon.svg")}
+        />
       </head>
       <body className={`${body.variable} ${heading.variable}`}>
         {!isDev && gtmId && (

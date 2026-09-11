@@ -500,7 +500,7 @@
   "keywords": "nextjs, react, cms, next, tina, markdown, git, open-source, headless",
   "docsHomepage": "/docs/index",
   "autoApiTitles": true,
-  "defaultOGImage": "/og/tina-og.png",
+  "defaultOGImage": "/docs/og/tina-og.png",
   "social": {
     "twitterHandle": "@tinacms",
     "twitter": "https://twitter.com/tinacms",
