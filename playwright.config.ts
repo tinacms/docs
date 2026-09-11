@@ -22,6 +22,13 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     baseURL: process.env.BASE_URL || "http://localhost:3000",
+    extraHTTPHeaders: process.env.VERCEL_AUTOMATION_BYPASS_SECRET
+      ? {
+          "x-vercel-protection-bypass":
+            process.env.VERCEL_AUTOMATION_BYPASS_SECRET,
+          "x-vercel-set-bypass-cookie": "true",
+        }
+      : undefined,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
