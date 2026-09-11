@@ -49,3 +49,7 @@ yarn-error.log*
 
 # typescript
 tsconfig.tsbuildinfo
+
+# crawl-compare script output
+/urls.txt
+/crawl-report.md
