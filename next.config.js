@@ -61,6 +61,7 @@ module.exports = {
       source: redirect.source,
       destination: redirect.destination,
       permanent: redirect.permanent,
+      ...(redirect.basePath === false ? { basePath: false } : {}),
     }));
   },
 

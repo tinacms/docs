@@ -178,8 +178,8 @@ export const NavLevel: React.FC<NavLevelProps> = ({
                   className="flex-1 min-w-0"
                   style={{ overflowWrap: "anywhere" }}
                 >
-                  {categoryData.slug.title ||
-                    categoryData.title ||
+                  {categoryData.title ||
+                    categoryData.slug.title ||
                     defaultTitle}
                 </span>
                 <ChevronRightIcon className="ml-2 flex-shrink-0 opacity-0 w-5 h-auto" />

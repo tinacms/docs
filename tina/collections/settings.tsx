@@ -82,6 +82,13 @@ export const Settings = {
           label: "Permanent",
           type: "boolean",
         },
+        {
+          name: "basePath",
+          label: "Prefix with base path",
+          description:
+            "Turn off only for redirects whose destination is outside this site's base path; source and destination are then used verbatim.",
+          type: "boolean",
+        },
       ],
     },
     {

@@ -76,6 +76,7 @@ const ZH_TOC_SLUG_PREFIX = "content/zh/docs/";
 
 const FRONTMATTER = /^---\n([\s\S]*?)\n---[ \t]*(?:\n|$)/;
 const FRONTMATTER_KEY = /^([A-Za-z_][\w-]*)\s*:/;
+const EMPTY_SCALAR = /^(''|""|)$/;
 const FENCE = /^ {0,3}(`{3,}|~{3,})/;
 const LINE_START_TAG = /^<([A-Za-z][A-Za-z0-9]*)(?=[\s/>]|$)/;
 const MEDIA_REF =
@@ -91,11 +92,13 @@ type Summary = {
   embeds: Record<string, number>;
   unmappedTags: (Location & { tag: string })[];
   droppedKeys: Record<string, string[]>;
+  emptyReferencesStripped: Record<string, number>;
   mediaCopied: number;
   mediaMissing: (Location & { ref: string })[];
   redirectsWritten: number;
-  redirectsLeavingDocs: { source: string; destination: string }[];
+  redirectsOutsideDocs: { source: string; destination: string }[];
   navItems: Record<Locale["key"], Record<"docs" | "learn", number>>;
+  navTitleOverrides: Record<string, number>;
   dangling: Reference[];
 };
 
@@ -122,11 +125,13 @@ const summary: Summary = {
   embeds: {},
   unmappedTags: [],
   droppedKeys: {},
+  emptyReferencesStripped: {},
   mediaCopied: 0,
   mediaMissing: [],
   redirectsWritten: 0,
-  redirectsLeavingDocs: [],
+  redirectsOutsideDocs: [],
   navItems: { en: { docs: 0, learn: 0 }, zh: { docs: 0, learn: 0 } },
+  navTitleOverrides: {},
   dangling: [],
 };
 
@@ -149,44 +154,54 @@ const readJson = <T>(absolutePath: string): T =>
 
 const mediaReferences = new Map<string, Location[]>();
 
-const rewriteMedia = (line: string, location: Location) =>
-  line.replace(MEDIA_REF, (match, angle?: string, bare?: string) => {
-    const ref = angle ?? bare ?? "";
-    const trimmed = ref.replace(/[.,;:!?]+$/, "");
-    if (!FILE_EXTENSION.test(trimmed)) return match;
-    const refs = mediaReferences.get(trimmed) ?? [];
+const collectMedia = (line: string, location: Location) => {
+  for (const [, angle, bare] of line.matchAll(MEDIA_REF)) {
+    const ref = (angle ?? bare ?? "").replace(/[.,;:!?]+$/, "");
+    if (!FILE_EXTENSION.test(ref)) continue;
+    const refs = mediaReferences.get(ref) ?? [];
     refs.push(location);
-    mediaReferences.set(trimmed, refs);
-    return angle ? `</docs${angle}>` : `/docs${bare}`;
-  });
+    mediaReferences.set(ref, refs);
+  }
+  return line;
+};
+
+const unquote = (scalar: string) => scalar.replace(/^(['"])(.*)\1$/, "$2");
 
 const migrateFrontmatter = (raw: string, file: string) => {
   const kept: string[] = [];
   const references: Reference[] = [];
+  let title: string | undefined;
   let currentKey: string | undefined;
   let keepCurrent = true;
   for (const [index, line] of raw.split("\n").entries()) {
     const keyMatch = line.match(FRONTMATTER_KEY);
     if (keyMatch) {
       currentKey = keyMatch[1];
+      const value = line.slice(keyMatch[0].length).trim();
       keepCurrent = KEPT_FRONTMATTER_KEYS.has(currentKey);
       if (!keepCurrent && currentKey !== "id") {
         const files = summary.droppedKeys[currentKey] ?? [];
         files.push(file);
         summary.droppedKeys[currentKey] = files;
       }
+      if (currentKey === "title") title = unquote(value);
       if (currentKey === "next" || currentKey === "previous") {
-        const target = line
-          .slice(keyMatch[0].length)
-          .trim()
-          .replace(/^(['"])(.*)\1$/, "$2");
-        if (target)
-          references.push({ file, line: 0, field: currentKey, target });
+        if (EMPTY_SCALAR.test(value)) {
+          bump(summary.emptyReferencesStripped, currentKey);
+          keepCurrent = false;
+        } else {
+          references.push({
+            file,
+            line: 0,
+            field: currentKey,
+            target: unquote(value),
+          });
+        }
       }
     }
-    if (keepCurrent) kept.push(rewriteMedia(line, { file, line: index + 2 }));
+    if (keepCurrent) kept.push(collectMedia(line, { file, line: index + 2 }));
   }
-  return { frontmatter: kept.join("\n"), references };
+  return { frontmatter: kept.join("\n"), references, title };
 };
 
 const renameTag = (line: string) => {
@@ -254,7 +269,7 @@ const migrateBody = (body: string, file: string, lineOffset: number) => {
       if (ALLOWED_TAGS.has(tag)) bump(summary.embeds, tag);
       else summary.unmappedTags.push({ ...location, tag });
     }
-    out.push(rewriteMedia(line, location));
+    out.push(collectMedia(line, location));
   }
   return out.join("\n");
 };
@@ -272,6 +287,7 @@ const migrateDocs = (locale: Locale) => {
   }
 
   const references: Reference[] = [];
+  const titles = new Map<string, string>();
   for (const file of files) {
     const relativePath = path.posix.join(locale.contentDir, file);
     const text = fs
@@ -284,6 +300,7 @@ const migrateDocs = (locale: Locale) => {
 
     const migrated = migrateFrontmatter(rawFrontmatter, relativePath);
     references.push(...migrated.references);
+    if (migrated.title !== undefined) titles.set(relativePath, migrated.title);
     const migratedBody = migrateBody(body, relativePath, bodyLineOffset);
     const output = `---\n${migrated.frontmatter}\n---\n${migratedBody}`.replace(
       /\n*$/,
@@ -292,12 +309,7 @@ const migrateDocs = (locale: Locale) => {
     writeFile(relativePath, output);
     summary.files[locale.key].out += 1;
   }
-  return {
-    written: new Set(
-      files.map((file) => path.posix.join(locale.contentDir, file))
-    ),
-    references,
-  };
+  return { titles, references };
 };
 
 const safeDecode = (ref: string) => {
@@ -330,7 +342,7 @@ type TocEntry =
   | { title: string; items: TocEntry[]; _template?: "items" };
 type Toc = { supermenuGroup: { title: string; items: TocEntry[] }[] };
 type NavEntry =
-  | { slug: string; _template: "item" }
+  | { title?: string; slug: string; _template: "item" }
   | { title: string; items: NavEntry[]; _template: "items" };
 
 type NavFile = {
@@ -339,7 +351,7 @@ type NavFile = {
   ctaButtons?: unknown;
 };
 
-const migrateNavigation = (locale: Locale, written: Set<string>) => {
+const migrateNavigation = (locale: Locale, titles: Map<string, string>) => {
   const navSlugs: { slug: string; tab: string }[] = [];
   const convertEntry = (entry: TocEntry, tab: string): NavEntry => {
     if ("items" in entry) {
@@ -353,7 +365,9 @@ const migrateNavigation = (locale: Locale, written: Set<string>) => {
       ? `content/docs-zh/${entry.slug.slice(ZH_TOC_SLUG_PREFIX.length)}`
       : entry.slug;
     navSlugs.push({ slug, tab });
-    return { slug, _template: "item" };
+    if (entry.title === titles.get(slug)) return { slug, _template: "item" };
+    bump(summary.navTitleOverrides, locale.key);
+    return { title: entry.title, slug, _template: "item" };
   };
 
   const tabs = (["docs", "learn"] as const).map((tab) => {
@@ -372,7 +386,7 @@ const migrateNavigation = (locale: Locale, written: Set<string>) => {
   });
 
   for (const { slug, tab } of navSlugs) {
-    if (!written.has(slug)) {
+    if (!titles.has(slug)) {
       summary.dangling.push({
         file: locale.navFile,
         line: 0,
@@ -395,7 +409,12 @@ const migrateNavigation = (locale: Locale, written: Set<string>) => {
   });
 };
 
-type Redirect = { source: string; destination: string; permanent: boolean };
+type Redirect = {
+  source: string;
+  destination: string;
+  permanent: boolean;
+  basePath?: false;
+};
 
 const isDocsRoute = (route: string) =>
   route === "/docs" || route.startsWith("/docs/");
@@ -409,15 +428,16 @@ const migrateRedirects = () => {
   );
   const redirects = sourceConfig.redirects
     .filter(({ source }) => isDocsRoute(source))
-    .map(({ source, destination, permanent }) => {
-      if (!isDocsRoute(destination)) {
-        summary.redirectsLeavingDocs.push({ source, destination });
+    .map(({ source, destination, permanent }): Redirect => {
+      if (isDocsRoute(destination)) {
+        return {
+          source: stripDocsPrefix(source),
+          destination: stripDocsPrefix(destination),
+          permanent,
+        };
       }
-      return {
-        source: stripDocsPrefix(source),
-        destination: stripDocsPrefix(destination),
-        permanent,
-      };
+      summary.redirectsOutsideDocs.push({ source, destination });
+      return { source, destination, permanent, basePath: false };
     });
   summary.redirectsWritten = redirects.length;
 
@@ -428,10 +448,10 @@ const migrateRedirects = () => {
 
 const checkDanglingReferences = (
   references: Reference[],
-  written: Set<string>
+  titles: Map<string, string>
 ) => {
   for (const reference of references) {
-    if (!written.has(reference.target)) summary.dangling.push(reference);
+    if (!titles.has(reference.target)) summary.dangling.push(reference);
   }
 };
 
@@ -478,6 +498,10 @@ const printSummary = (gatePassed: boolean) => {
     )
   );
   section(
+    "Empty next/previous stripped",
+    counts(summary.emptyReferencesStripped)
+  );
+  section(
     "Frontmatter keys dropped besides id",
     Object.entries(summary.droppedKeys).flatMap(([key, files]) => [
       `${key}: ${files.length} file(s)`,
@@ -491,8 +515,8 @@ const printSummary = (gatePassed: boolean) => {
     )
   );
   section(
-    `Redirects (${summary.redirectsWritten} written, ${summary.redirectsLeavingDocs.length} leaving /docs)`,
-    summary.redirectsLeavingDocs.map(
+    `Redirects (${summary.redirectsWritten} written, ${summary.redirectsOutsideDocs.length} outside /docs with basePath: false)`,
+    summary.redirectsOutsideDocs.map(
       ({ source, destination }) => `${source} -> ${destination}`
     )
   );
@@ -500,7 +524,7 @@ const printSummary = (gatePassed: boolean) => {
     "Navigation items",
     LOCALES.map(
       ({ key, navFile, tabTitles }) =>
-        `${navFile}: ${tabTitles.docs} ${summary.navItems[key].docs}, ${tabTitles.learn} ${summary.navItems[key].learn}`
+        `${navFile}: ${tabTitles.docs} ${summary.navItems[key].docs}, ${tabTitles.learn} ${summary.navItems[key].learn}, title overrides ${summary.navTitleOverrides[key] ?? 0}`
     )
   );
   section(
@@ -520,16 +544,16 @@ const printSummary = (gatePassed: boolean) => {
 };
 
 const main = () => {
-  const written = new Set<string>();
+  const titles = new Map<string, string>();
   const references: Reference[] = [];
   for (const locale of LOCALES) {
     const result = migrateDocs(locale);
-    for (const file of result.written) written.add(file);
+    for (const [file, title] of result.titles) titles.set(file, title);
     references.push(...result.references);
   }
   copyMedia();
-  checkDanglingReferences(references, written);
-  for (const locale of LOCALES) migrateNavigation(locale, written);
+  checkDanglingReferences(references, titles);
+  for (const locale of LOCALES) migrateNavigation(locale, titles);
   migrateRedirects();
 
   const gatePassed = runValidationGate();

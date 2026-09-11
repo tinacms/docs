@@ -1,6 +1,6 @@
 # Migration report: tina.io docs to this instance
 
-Output of `pnpm tsx scripts/migrate-from-tina-io.ts --source ../tina.io` run on 2026-09-11 against tina.io commit `bd6eebf1` from instance commit `e325040`. The generated content and media were not committed with this report; the real import lands once the schema, embed templates, and `docsZh` collection are on main. Re-run the script to reproduce these numbers.
+Output of `pnpm tsx scripts/migrate-from-tina-io.ts --source ../tina.io` run on 2026-09-11 against tina.io commit `bd6eebf1`. The generated content and media were not committed with this report; the real import lands once the schema, embed templates, and `docsZh` collection are on main. Re-run the script to reproduce these numbers.
 
 ```
 Migration from tina.io
@@ -28,6 +28,10 @@ Embed tags in output (allowed set)
   accordionBlock: 2
 
 Unmapped tags (0)
+
+Empty next/previous stripped
+  previous: 138
+  next: 135
 
 Frontmatter keys dropped besides id
   consumes: 18 file(s)
@@ -72,13 +76,13 @@ Media (167 copied, 17 missing)
   MISSING /img/docs/SCR-20250310-jybh.png (content/docs/reaching-out.mdx:14)
   MISSING /img/docs/SCR-20250310-jylo.png (content/docs/reaching-out.mdx:16)
 
-Redirects (97 written, 2 leaving /docs)
+Redirects (97 written, 2 outside /docs with basePath: false)
   /docs/nextjs/bootstrapping -> /guides/nextjs/git/getting-started
   /docs/nextjs/creating-forms -> /guides/nextjs/git/creating-git-forms
 
 Navigation items
-  content/navigation-bar/docs-navigation-bar.json: Docs 128, Learn 50
-  content/navigation-bar/docs-navigation-bar-zh.json: 文档 99, 学习 38
+  content/navigation-bar/docs-navigation-bar.json: Docs 128, Learn 50, title overrides 105
+  content/navigation-bar/docs-navigation-bar-zh.json: 文档 99, 学习 38, title overrides 106
 
 Dangling references (0)
 
@@ -90,9 +94,11 @@ Validation gate
 
 - Line numbers point at the tina.io source file, before `id` is stripped from the frontmatter.
 - `content/docs/beginner-tutorials/.gitkeep.mdx` (0 bytes) is excluded by the glob, which is why 229 EN files are listed rather than the 230 on disk.
+- Media references are copied to `public/` at their tina.io path and left as written in the MDX; every renderer in this instance prefixes `NEXT_PUBLIC_BASE_PATH` itself. No tina.io docs page sets `seo.ogImage`, so nothing needed special handling there.
 - Every missing media file is already a 404 on tina.io; nothing that renders today is lost. All 17 are referenced from EN pages and their ZH mirrors.
 - `youtubeEmbed`, `imageEmbed`, and `emailEmbed` only appear inside fenced code blocks (a guide showing example templates), so they are correctly left alone and do not show up as rewrites or unmapped tags.
-- The two redirects leaving `/docs` are written with their destination unchanged. On tina.io they chain through `/guides/nextjs(.*)` to `/docs/guides/`; the import PR should point them at `/guides/` or drop them.
-- tina.io navigation labels differ from the document title on 211 of 315 items (numbering, stars, shortened names). The instance `item` template has no label field, so those labels are dropped and the doc title renders instead.
+- Empty `next: ''` and `previous: ''` values are dropped rather than written as empty references.
+- The two redirects whose destination is outside `/docs` are written with `basePath: false` and their source and destination unchanged, since Next then matches and redirects without the base path.
+- 211 tina.io navigation labels differ from the document title (numbering, stars, shortened names, ZH punctuation). Those are carried as a `title` override on the navigation item; the rest fall back to the document title.
 - ZH tabs are titled 文档 and 学习, matching tina.io's ZH tab labels.
 - The validation gate passed on the pre-Task-1-to-3 schema: `tinacms build --local` does not parse rich-text bodies against templates, ignores `content/docs-zh` while no collection claims it, and accepts the unknown `locale` key on the ZH navigation document. Treat the script's own checks as the authority until the schema lands.
