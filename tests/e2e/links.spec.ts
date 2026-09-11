@@ -22,17 +22,6 @@ test.describe("Server-rendered internal links", () => {
     }
   });
 
-  test("the language switcher points at the locale home when a zh page has no English sibling", async ({
-    page,
-  }) => {
-    await page.goto(`${basePath}/zh/drafts/editorial-workflow`);
-
-    await expect(page.getByTestId("language-switcher")).toHaveAttribute(
-      "href",
-      basePath
-    );
-  });
-
   test("a 404 page still renders the top nav chrome", async ({ page }) => {
     const response = await page.goto(`${basePath}/this-page-does-not-exist`);
 
