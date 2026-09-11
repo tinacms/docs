@@ -62,21 +62,15 @@ function tinaIoUrl(locale: Locale, slug: string) {
 
 export async function generateDocsStaticParams(locale: Locale) {
   const prefix = `${locales[locale].contentDir}/`;
-  try {
-    const paths = await listDocPaths(locale);
-    return paths
-      .filter((path) => path.startsWith(prefix))
-      .map((path) => ({
-        slug: path
-          .slice(prefix.length)
-          .replace(/\.mdx$/, "")
-          .split("/"),
-      }));
-  } catch (error) {
-    // biome-ignore lint/suspicious/noConsole: surface backend failures during static generation
-    console.error("Error in generateStaticParams:", error);
-    return [];
-  }
+  const paths = await listDocPaths(locale);
+  return paths
+    .filter((path) => path.startsWith(prefix))
+    .map((path) => ({
+      slug: path
+        .slice(prefix.length)
+        .replace(/\.mdx$/, "")
+        .split("/"),
+    }));
 }
 
 export async function generateDocsMetadata(
