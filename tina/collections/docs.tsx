@@ -1,3 +1,5 @@
+import { AliasInput } from "@/tina/customFields/alias-input";
+import { CmsUsageWarning } from "@/tina/customFields/cms-usage-warning";
 import AccordionTemplate, {
   AccordionBlockTemplate,
 } from "@/tina/templates/markdown-embeds/accordion.template";
@@ -19,6 +21,99 @@ import WebmEmbedTemplate from "@/tina/templates/markdown-embeds/webm-embed.templ
 import YoutubeTemplate from "@/tina/templates/markdown-embeds/youtube.template";
 import type { Template } from "tinacms";
 import SeoInformation from "./seo-information";
+
+export function docsFields(collection: string) {
+  return [
+    {
+      name: "cmsUsageWarning",
+      label: "CMS Usage Warning",
+      type: "string",
+      ui: {
+        component: CmsUsageWarning,
+      },
+    },
+    SeoInformation,
+    {
+      name: "title",
+      label: "Title",
+      type: "string",
+      isTitle: true,
+      required: true,
+    },
+    {
+      name: "alias",
+      label: "Alias",
+      type: "string",
+      description:
+        "Stable permalink served at /docs/r/<alias>, so links from code and external sites survive a slug or location change.",
+      ui: {
+        component: AliasInput,
+      },
+    },
+    {
+      type: "string",
+      name: "last_edited",
+      label: "Last Edited",
+      ui: {
+        component: "hidden",
+      },
+    },
+    {
+      type: "boolean",
+      name: "auto_generated",
+      label: "Auto Generated",
+      description: "Indicates if this document was automatically generated",
+      ui: {
+        component: "hidden",
+      },
+    },
+    {
+      type: "boolean",
+      name: "tocIsHidden",
+      label: "Hide Table of Contents",
+      description:
+        "Hide the Table of Contents on this page and expand the content window.",
+    },
+    {
+      name: "next",
+      label: "Next page",
+      type: "reference",
+      collections: [collection],
+    },
+    {
+      name: "previous",
+      label: "Previous page",
+      type: "reference",
+      collections: [collection],
+    },
+    {
+      type: "rich-text",
+      name: "body",
+      label: "Body",
+      isBody: true,
+      templates: [
+        ScrollShowcaseTemplate as Template,
+        CardGridTemplate as Template,
+        RecipeTemplate as Template,
+        AccordionTemplate as Template,
+        AccordionBlockTemplate as Template,
+        ApiReferenceTemplate as Template,
+        YoutubeTemplate as Template,
+        CodeTabsTemplate as Template,
+        CalloutTemplate as Template,
+        TypeDefinitionTemplate as Template,
+        FileStructureTemplate as unknown as Template,
+        ImageEmbedTemplate as Template,
+        GraphQLCodeBlockTemplate as Template,
+        WebmEmbedTemplate as Template,
+        ImageAndTextTemplate as Template,
+        IframeTemplate as Template,
+        SummaryTabTemplate as Template,
+        PropertyTableTemplate as Template,
+      ],
+    },
+  ];
+}
 
 export const docsCollection = {
   name: "docs",
@@ -54,66 +149,7 @@ export const docsCollection = {
       },
     },
   },
-  fields: [
-    SeoInformation,
-    {
-      name: "title",
-      label: "Title",
-      type: "string",
-      isTitle: true,
-      required: true,
-    },
-    {
-      type: "string",
-      name: "last_edited",
-      label: "Last Edited",
-      ui: {
-        component: "hidden",
-      },
-    },
-    {
-      type: "boolean",
-      name: "auto_generated",
-      label: "Auto Generated",
-      description: "Indicates if this document was automatically generated",
-      ui: {
-        component: "hidden",
-      },
-    },
-    {
-      type: "boolean",
-      name: "tocIsHidden",
-      label: "Hide Table of Contents",
-      description:
-        "Hide the Table of Contents on this page and expand the content window.",
-    },
-    {
-      type: "rich-text",
-      name: "body",
-      label: "Body",
-      isBody: true,
-      templates: [
-        ScrollShowcaseTemplate as Template,
-        CardGridTemplate as Template,
-        RecipeTemplate as Template,
-        AccordionTemplate as Template,
-        AccordionBlockTemplate as Template,
-        ApiReferenceTemplate as Template,
-        YoutubeTemplate as Template,
-        CodeTabsTemplate as Template,
-        CalloutTemplate as Template,
-        TypeDefinitionTemplate as Template,
-        FileStructureTemplate as unknown as Template,
-        ImageEmbedTemplate as Template,
-        GraphQLCodeBlockTemplate as Template,
-        WebmEmbedTemplate as Template,
-        ImageAndTextTemplate as Template,
-        IframeTemplate as Template,
-        SummaryTabTemplate as Template,
-        PropertyTableTemplate as Template,
-      ],
-    },
-  ],
+  fields: docsFields("docs"),
 };
 
 export default docsCollection;
