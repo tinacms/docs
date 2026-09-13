@@ -26,16 +26,6 @@ const fetchDoc = cache(async (locale: Locale, slug: string) => {
   return { ...result, doc: result.data.docs };
 });
 
-const docExists = cache(async (locale: Locale, slug: string) => {
-  const query = locale === "zh" ? client.queries.docsZh : client.queries.docs;
-  try {
-    await query({ relativePath: `${slug}.mdx` });
-    return true;
-  } catch {
-    return false;
-  }
-});
-
 async function listDocPaths(locale: Locale) {
   const paths: string[] = [];
   let after: string | undefined;
@@ -55,22 +45,38 @@ async function listDocPaths(locale: Locale) {
   return paths;
 }
 
+const docSlugsByLocale = new Map<Locale, Promise<Set<string>>>();
+
+function docSlugs(locale: Locale) {
+  let slugs = docSlugsByLocale.get(locale);
+  if (!slugs) {
+    const prefix = `${locales[locale].contentDir}/`;
+    slugs = listDocPaths(locale).then(
+      (paths) =>
+        new Set(
+          paths
+            .filter((path) => path.startsWith(prefix))
+            .map((path) => path.slice(prefix.length).replace(/\.mdx$/, ""))
+        )
+    );
+    docSlugsByLocale.set(locale, slugs);
+  }
+  return slugs;
+}
+
+async function docExists(locale: Locale, slug: string) {
+  return (await docSlugs(locale)).has(slug);
+}
+
 function tinaIoUrl(locale: Locale, slug: string) {
   const path = slug === "index" ? "" : `/${slug}`;
   return `${siteUrl}${locales[locale].tinaIoDocsPath}${path}`;
 }
 
 export async function generateDocsStaticParams(locale: Locale) {
-  const prefix = `${locales[locale].contentDir}/`;
-  const paths = await listDocPaths(locale);
-  return paths
-    .filter((path) => path.startsWith(prefix))
-    .map((path) => ({
-      slug: path
-        .slice(prefix.length)
-        .replace(/\.mdx$/, "")
-        .split("/"),
-    }));
+  return [...(await docSlugs(locale))].map((slug) => ({
+    slug: slug.split("/"),
+  }));
 }
 
 export async function generateDocsMetadata(
