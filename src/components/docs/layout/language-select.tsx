@@ -53,7 +53,7 @@ export function LanguageSelect({
                   alt=""
                   width={40}
                   height={40}
-                  className="mr-4 size-10 rounded-full"
+                  className="mr-4 size-10 shrink-0 max-w-none rounded-full object-cover"
                 />
                 <div className="grow text-left">
                   <div className="text-lg font-medium text-neutral-text">
