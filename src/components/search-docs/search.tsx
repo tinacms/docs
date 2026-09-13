@@ -49,7 +49,9 @@ export function Search({ className }: { className?: string }) {
           className || ""
         }`}
       >
-        <span className="flex-1 text-neutral-text-secondary">Search...</span>
+        <span className="flex-1 truncate text-neutral-text-secondary">
+          Search...
+        </span>
         {shortcutHint && (
           <kbd className="hidden select-none items-center rounded-md border border-neutral-border/60 bg-neutral-background px-1.5 py-0.5 text-xs font-medium text-neutral-text-secondary sm:flex dark:border-neutral-border-subtle/60">
             {shortcutHint}

@@ -1,10 +1,14 @@
 "use client";
 
+import type { CtaButtons } from "@/components/docs/layout/cta-button";
 import { useEffect, useRef, useState } from "react";
 import { NavigationToggle } from "./navigation-toggle";
 import { NavigationDropdownContent } from "./navigation-toggle";
 
-export const MobileNavSidebar = ({ tocData }: { tocData: any }) => {
+export const MobileNavSidebar = ({
+  tocData,
+  ctaButtons,
+}: { tocData: any; ctaButtons: CtaButtons }) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -34,6 +38,7 @@ export const MobileNavSidebar = ({ tocData }: { tocData: any }) => {
       {isOpen && (
         <NavigationDropdownContent
           tocData={Array.isArray(tocData) ? tocData : []}
+          ctaButtons={ctaButtons}
           onClose={closeDropdown}
         />
       )}
