@@ -1,10 +1,9 @@
 import { MobileNavSidebar } from "@/components/navigation/mobile-navigation-sidebar";
 import * as Tabs from "@radix-ui/react-tabs";
 import type React from "react";
-import { useState } from "react";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import { Search } from "../../search-docs/search";
 import LightDarkSwitch from "../../ui/light-dark-switch";
+import { CtaButton } from "./cta-button";
 import { LanguageSwitcher } from "./language-switcher";
 import { NavbarLogo } from "./navbar-logo";
 
@@ -18,23 +17,7 @@ export const TopNav = ({
   siblingExists: boolean;
 }) => {
   const ctaButtons = navigationDocsData?.ctaButtons;
-  const hasButtons = ctaButtons && (ctaButtons.button1 || ctaButtons.button2);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const getButtonClasses = (variant: string | undefined) => {
-    switch (variant) {
-      case "primary-background":
-        return "bg-brand-primary text-neutral-surface hover:bg-brand-primary-hover";
-      case "secondary-background":
-        return "bg-brand-secondary text-neutral-text hover:bg-brand-secondary-hover";
-      case "primary-outline":
-        return "border border-brand-primary text-brand-primary hover:bg-brand-primary/10";
-      case "secondary-outline":
-        return "border border-brand-secondary text-brand-secondary hover:bg-brand-secondary/10";
-      default:
-        return "bg-brand-primary text-neutral-surface hover:bg-brand-primary-hover";
-    }
-  };
+  const hasButtons = Boolean(ctaButtons?.button1 || ctaButtons?.button2);
 
   return (
     <div className="border border-neutral-border/50 mb-2 md:mb-4 w-full lg:px-8 py-1 dark:bg-glass-gradient-end dark:border-b dark:border-neutral-border-subtle/60 shadow-md/5">
@@ -53,77 +36,18 @@ export const TopNav = ({
             ))}
           </Tabs.List>
         </div>
-        <div className="flex-1 flex justify-center">
+        <div className="flex-1 min-w-0 flex justify-center">
           <Search />
         </div>
         <div className="flex items-center gap-4">
           {hasButtons && (
-            <>
-              <div className="hidden lg:flex gap-2">
-                {ctaButtons.button1?.label && ctaButtons.button1?.link && (
-                  <a
-                    href={ctaButtons.button1.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${getButtonClasses(
-                      ctaButtons.button1.variant
-                    )}`}
-                  >
-                    {ctaButtons.button1.label}
-                  </a>
-                )}
-                {ctaButtons.button2?.label && ctaButtons.button2?.link && (
-                  <a
-                    href={ctaButtons.button2.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors whitespace-nowrap ${getButtonClasses(
-                      ctaButtons.button2.variant
-                    )}`}
-                  >
-                    {ctaButtons.button2.label}
-                  </a>
-                )}
-              </div>
-              <div className="lg:hidden relative">
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="p-2 hover:bg-neutral-background-secondary rounded-md"
-                  type="button"
-                >
-                  <BsThreeDotsVertical className="size-5 text-brand-secondary-contrast" />
-                </button>
-                {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-neutral-background border border-neutral-border-subtle z-10">
-                    <div className="py-1">
-                      {ctaButtons.button1?.label &&
-                        ctaButtons.button1?.link && (
-                          <a
-                            href={ctaButtons.button1.link}
-                            className="block px-4 py-2 text-sm text-neutral-text hover:bg-neutral-background-secondary"
-                            onClick={() => setIsDropdownOpen(false)}
-                          >
-                            {ctaButtons.button1.label}
-                          </a>
-                        )}
-                      {ctaButtons.button2?.label &&
-                        ctaButtons.button2?.link && (
-                          <a
-                            href={ctaButtons.button2.link}
-                            className="block px-4 py-2 text-sm text-neutral-text hover:bg-neutral-background-secondary"
-                            onClick={() => setIsDropdownOpen(false)}
-                          >
-                            {ctaButtons.button2.label}
-                          </a>
-                        )}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </>
+            <div className="hidden lg:flex gap-2">
+              <CtaButton button={ctaButtons.button1} />
+              <CtaButton button={ctaButtons.button2} />
+            </div>
           )}
           <LanguageSwitcher siblingExists={siblingExists} />
-          <MobileNavSidebar tocData={tabs} />
+          <MobileNavSidebar tocData={tabs} ctaButtons={ctaButtons} />
           <div className="w-full hidden lg:flex justify-end">
             <LightDarkSwitch />
           </div>

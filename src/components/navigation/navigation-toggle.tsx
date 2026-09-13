@@ -2,6 +2,7 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { MdArrowDropDown, MdClose } from "react-icons/md";
+import { CtaButton, type CtaButtons } from "../docs/layout/cta-button";
 import { findTabWithPath } from "../docs/layout/utils";
 import {
   ApiNavigationItems,
@@ -10,18 +11,25 @@ import {
 
 export const NavigationToggle = ({ onToggle }: { onToggle: () => void }) => {
   return (
-    <Bars3Icon
+    <button
+      type="button"
       onClick={onToggle}
-      className="size-9 flex items-center justify-center mx-5 md:mr-6 md:ml-0 text-brand-secondary-contrast lg:hidden cursor-pointer"
-    />
+      aria-label="Open navigation"
+      data-testid="mobile-nav-toggle"
+      className="mr-4 md:mr-6 lg:hidden cursor-pointer"
+    >
+      <Bars3Icon className="size-9 text-brand-secondary-contrast" />
+    </button>
   );
 };
 
 export const NavigationDropdownContent = ({
   tocData,
+  ctaButtons,
   onClose,
 }: {
   tocData: any;
+  ctaButtons: CtaButtons;
   onClose: () => void;
 }) => {
   const pathname = usePathname();
@@ -69,7 +77,7 @@ export const NavigationDropdownContent = ({
         className="fixed inset-0 bg-[rgba(0,0,0,0.4)] z-10 lg:hidden"
       />
 
-      <div className="max-w-96 fixed top-0 right-0 z-20 h-screen w-[75%] overflow-y-auto bg-neutral-background border-l border-neutral-border-subtle p-6 shadow-xl lg:hidden">
+      <div className="max-w-96 fixed top-0 right-0 z-20 h-dvh w-[75%] flex flex-col bg-neutral-background border-l border-neutral-border-subtle p-6 shadow-xl lg:hidden">
         <div className="flex justify-end mb-4">
           <MdClose
             onClick={onClose}
@@ -116,7 +124,7 @@ export const NavigationDropdownContent = ({
           )}
         </div>
 
-        <div className="h-[calc(100vh-250px)] overflow-y-auto px-4 pb-4">
+        <div className="flex-1 min-h-0 overflow-y-auto px-4 pb-4">
           {options.find((opt) => opt.value === selectedValue)?.__typename ===
           "NavigationBarTabsApiTab" ? (
             <ApiNavigationItems
@@ -144,6 +152,24 @@ export const NavigationDropdownContent = ({
             />
           )}
         </div>
+
+        {(ctaButtons?.button1 || ctaButtons?.button2) && (
+          <div
+            className="flex flex-col gap-2 pt-4 border-t border-neutral-border-subtle"
+            data-testid="mobile-nav-ctas"
+          >
+            <CtaButton
+              button={ctaButtons.button1}
+              className="text-center"
+              onClick={onClose}
+            />
+            <CtaButton
+              button={ctaButtons.button2}
+              className="text-center"
+              onClick={onClose}
+            />
+          </div>
+        )}
       </div>
     </>
   );
