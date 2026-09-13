@@ -45,14 +45,14 @@ export function LanguageSwitcher({
           type="button"
           aria-label={`Change language (${languages[current].name})`}
           data-testid="language-switcher"
-          className="cursor-pointer rounded-full outline-none hover:animate-jelly focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
+          className="shrink-0 cursor-pointer rounded-full outline-none hover:animate-jelly focus-visible:ring-2 focus-visible:ring-brand-primary focus-visible:ring-offset-2"
         >
           <Image
             src={withBasePath(languages[current].flag)}
             alt=""
             width={32}
             height={32}
-            className="size-8 rounded-full"
+            className="size-8 max-w-none rounded-full object-cover"
           />
         </button>
       </DialogTrigger>
