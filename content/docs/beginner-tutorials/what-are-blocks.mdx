@@ -22,6 +22,25 @@ It would be pretty neat if we could allow our users to dictate which sections a 
 
 Firstly, to make these fields (title, image, body) rearrangeable, we have to change our schema. We will...
 
-* Convert each of our fields into a Template.
-* Update the schema to use our cool templates.
-* Wire them up to our HTML!
+<cardGrid
+  cards={[
+    {
+      title: "Convert each of our fields into a Template.",
+      description: "Create a New Template",
+      link: "/docs/beginner-tutorials/new-template",
+      linkText: "Convert"
+    },
+    {
+      title: "Update the schema to use our cool templates.",
+      description: "Link it to Your Model",
+      link: "/docs/beginner-tutorials/linking-to-model",
+      linkText: "Update"
+    },
+    {
+      title: "Wire them up to our HTML!",
+      description: "Render Your Templates",
+      link: "/docs/beginner-tutorials/render-templates",
+      linkText: "Wire up"
+    }
+  ]}
+/>

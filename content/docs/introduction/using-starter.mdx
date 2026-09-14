@@ -35,12 +35,27 @@ pnpm run dev
 
 ## Which starter should I pick?
 
-**Astro is our default starter.** It is the one we recommend for new projects, and the one we build and test against first. It ships with [React-free visual editing](/docs/contextual-editing/astro/), so editors get a live preview while visitors get plain static HTML. See the [Astro + TinaCMS setup guide](/docs/frameworks/astro/) for what is inside it.
+**Astro is our default starter.** It ships with [React-free visual editing](/docs/contextual-editing/astro/), so editors get a live preview while visitors get plain static HTML. The other starters are still available and still supported, so pick one of those if you are already committed to a framework.
+
+<cardGrid
+  cards={[
+    {
+      title: "Astro",
+      description: "Recommended for new projects, and the one we build and test against first.",
+      link: "/docs/frameworks/astro/",
+      linkText: "Read more"
+    },
+    {
+      title: "Next.js",
+      description: "For teams already building on Next.js.",
+      link: "/docs/frameworks/next/app-router/",
+      linkText: "Read more"
+    }
+  ]}
+/>
 
 To skip the prompt and scaffold the Astro starter directly:
 
 ```bash
 npx create-tina-app@latest --template tina-astro-starter
 ```
-
-The other starters are still available and still supported. Pick one of those if you are already committed to a framework, for example the Next.js starter if you are building on [Next.js](/docs/frameworks/next/app-router/).
