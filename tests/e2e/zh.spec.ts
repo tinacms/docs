@@ -25,7 +25,7 @@ test.describe("Chinese docs", () => {
     await expect(enLinks).toHaveCount(0);
     await expect(page.getByTestId("navbar-logo")).toHaveAttribute(
       "href",
-      `${basePath}/zh`
+      "https://tina.io"
     );
 
     const switcher = page.getByTestId("language-switcher");

@@ -1,10 +1,7 @@
 "use client";
 
-import { getLocale, getLocaleHome } from "@/utils/locale";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface NavbarLogoProps {
@@ -13,7 +10,6 @@ interface NavbarLogoProps {
 
 export const NavbarLogo = ({ navigationDocsData }: NavbarLogoProps) => {
   const { resolvedTheme } = useTheme();
-  const pathname = usePathname() ?? "/";
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,8 +20,8 @@ export const NavbarLogo = ({ navigationDocsData }: NavbarLogoProps) => {
   const darkLogo = navigationDocsData[0]?.darkModeLogo || lightLogo;
 
   return (
-    <Link
-      href={getLocaleHome(getLocale(pathname))}
+    <a
+      href="https://tina.io"
       className="flex items-center"
       data-testid="navbar-logo"
     >
@@ -53,6 +49,6 @@ export const NavbarLogo = ({ navigationDocsData }: NavbarLogoProps) => {
           <div className="w-full h-full animate-pulse opacity-20" />
         )}
       </div>
-    </Link>
+    </a>
   );
 };

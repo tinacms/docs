@@ -906,8 +906,8 @@
   ],
   "ctaButtons": {
     "button1": {
-      "label": "TinaCMS 文档",
-      "link": "https://tina.io/zh/docs",
+      "label": "TinaCMS 主页",
+      "link": "https://tina.io/tinacms",
       "variant": "primary-outline"
     },
     "button2": {

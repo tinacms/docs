@@ -40,7 +40,7 @@ test.describe("Server-rendered internal links", () => {
     await expect(page.locator("html")).toHaveAttribute("lang", "zh");
     await expect(page.getByTestId("navbar-logo")).toHaveAttribute(
       "href",
-      `${basePath}/zh`
+      "https://tina.io"
     );
   });
 });
