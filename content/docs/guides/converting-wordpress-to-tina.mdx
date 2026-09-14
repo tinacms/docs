@@ -69,17 +69,17 @@ This creates an `output` folder that groups your posts and pages into separate f
 
 1\. Navigate to your output's posts folder `output/post`, and run in the terminal:
 
-For MacOS/Linux:
-
-```powershell
-for file in *.md; do mv "$file" "${file%.md}.mdx"; done
-```
-
-For Windows:
-
-```powershell
-ren *.md *.mdx
-```
+<codeTabs
+  tabs={[
+    {
+      name: "MacOS/Linux",
+      language: "shell",
+      content: 'for�file�in�*.md;�do�mv�"$file"�"${file%.md}.mdx";�done'
+    },
+    { name: "Windows", language: "powershell", content: "ren�*.md�*.mdx" }
+  ]}
+  initialSelectedIndex={0}
+/>
 
 Which will convert your files from Markdown to MDX.
 

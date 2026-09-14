@@ -208,63 +208,23 @@ Make the following changes to `content/blog/hello-world/index.mdx`.
 
 > Note: You may need to update other elements on your site. For unsupported markdown elements in TinaCMS, refer to [our guide](https://tina.io/docs/reference/types/rich-text/?#unsupported-elements).
 
-````diff
-- - Red
-+ * Red
-
-- - Green
-+ * Green
-
-- - Blue
-+ * Blue
-
-
-
-* Red
-
-* Green
-
-* Blue
-
-
-
-- - Red
-+ * Red
-
-- - Green
-+* Green
-
-- - Blue
-+* Blue
-
-
-
-+ * Red
-
-- - Green
-+ * Green
-
-- - Blue
-+ * Blue
-
-
-
-* Red
-
-* Green
-
-* Blue
-
-- - Red
-+ * Red
-
-- - Green
-+* Green
-
-- - Blue
-+* Blue
-
-````
+<codeTabs
+  tabs={[
+    {
+      name: "Before",
+      language: "markdown",
+      content:
+        "-�Red\n-�Green\n-�Blue\n\n*�Red\n*�Green\n*�Blue\n\n-�Red\n-�Green\n-�Blue\n\n```markdown\n-�Red\n-�Green\n-�Blue\n\n*�Red\n*�Green\n*�Blue\n\n-�Red\n-�Green\n-�Blue\n```"
+    },
+    {
+      name: "After",
+      language: "markdown",
+      content:
+        "*�Red\n*�Green\n*�Blue\n\n*�Red\n*�Green\n*�Blue\n\n*�Red\n*�Green\n*�Blue\n\n```markdown\n*�Red\n*�Green\n*�Blue\n\n*�Red\n*�Green\n*�Blue\n\n*�Red\n*�Green\n*�Blue\n```"
+    }
+  ]}
+  initialSelectedIndex={0}
+/>
 
 We should be able to read and edit our existing pages in TinaCMS now.
 
