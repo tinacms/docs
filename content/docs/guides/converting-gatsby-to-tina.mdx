@@ -213,63 +213,23 @@ Make the following changes to `content/blog/hello-world/index.mdx`.
   </>}
 />
 
-````diff
-- - Red
-+ * Red
-
-- - Green
-+ * Green
-
-- - Blue
-+ * Blue
-
-
-
-* Red
-
-* Green
-
-* Blue
-
-
-
-- - Red
-+ * Red
-
-- - Green
-+* Green
-
-- - Blue
-+* Blue
-
-
-
-+ * Red
-
-- - Green
-+ * Green
-
-- - Blue
-+ * Blue
-
-
-
-* Red
-
-* Green
-
-* Blue
-
-- - Red
-+ * Red
-
-- - Green
-+* Green
-
-- - Blue
-+* Blue
-
-````
+<codeTabs
+  tabs={[
+    {
+      name: "Before",
+      language: "markdown",
+      content:
+        "-�Red\n-�Green\n-�Blue\n\n*�Red\n*�Green\n*�Blue\n\n-�Red\n-�Green\n-�Blue\n\n```markdown\n-�Red\n-�Green\n-�Blue\n\n*�Red\n*�Green\n*�Blue\n\n-�Red\n-�Green\n-�Blue\n```"
+    },
+    {
+      name: "After",
+      language: "markdown",
+      content:
+        "*�Red\n*�Green\n*�Blue\n\n*�Red\n*�Green\n*�Blue\n\n*�Red\n*�Green\n*�Blue\n\n```markdown\n*�Red\n*�Green\n*�Blue\n\n*�Red\n*�Green\n*�Blue\n\n*�Red\n*�Green\n*�Blue\n```"
+    }
+  ]}
+  initialSelectedIndex={0}
+/>
 
 We should be able to read and edit our existing pages in TinaCMS now.
 

@@ -21,38 +21,20 @@ Where `myClientId` is the client id of your project and `myBranch` is the branch
 
 Here is an example curl request that will query the Content API for the list of collections:
 
-### Curl
-
-```bash
-curl --location --request POST 'https://content.tinajs.io/<TinaGraphQLVersion>/content/<ClientId>/github/main' \
---header 'X-API-KEY: <Your API KEY>' \
---header 'Content-Type: application/json' \
---data-raw '{"query":"{\n        collections{\n            name\n        }\n}","variables":{}}'
-```
-
-### Fetch
-
-```js
-var myHeaders = new Headers()
-myHeaders.append('X-API-KEY', '5f47d1d1c89755aba3b54684dd25f580ec6bb0d3')
-myHeaders.append('Content-Type', 'application/json')
-
-var graphql = JSON.stringify({
-  query: '{\n        collections{\n            name\n        }\n}',
-  variables: {},
-})
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: graphql,
-  redirect: 'follow',
-}
-
-fetch(
-  'https://content.tinajs.io/<TinaGraphQLVersion>/content/<ClientId>/github/main',
-  requestOptions
-)
-  .then((response) => response.text())
-  .then((result) => console.log(result))
-  .catch((error) => console.log('error', error))
-```
+<codeTabs
+  tabs={[
+    {
+      name: "curl",
+      language: "shell",
+      content:
+        "curl�--location�--request�POST�'https://content.tinajs.io/<TinaGraphQLVersion>/content/<ClientId>/github/main'�\\\n--header�'X-API-KEY:�<Your�API�KEY>'�\\\n--header�'Content-Type:�application/json'�\\\n--data-raw�'{\"query\":\"{\\n��������collections{\\n������������name\\n��������}\\n}\",\"variables\":{}}'"
+    },
+    {
+      name: "fetch",
+      language: "javascript",
+      content:
+        "var�myHeaders�=�new�Headers()\nmyHeaders.append('X-API-KEY',�'5f47d1d1c89755aba3b54684dd25f580ec6bb0d3')\nmyHeaders.append('Content-Type',�'application/json')\n\nvar�graphql�=�JSON.stringify({\n��query:�'{\\n��������collections{\\n������������name\\n��������}\\n}',\n��variables:�{},\n})\nvar�requestOptions�=�{\n��method:�'POST',\n��headers:�myHeaders,\n��body:�graphql,\n��redirect:�'follow',\n}\n\nfetch(\n��'https://content.tinajs.io/<TinaGraphQLVersion>/content/<ClientId>/github/main',\n��requestOptions\n)\n��.then((response)�=>�response.text())\n��.then((result)�=>�console.log(result))\n��.catch((error)�=>�console.log('error',�error))"
+    }
+  ]}
+  initialSelectedIndex={0}
+/>

@@ -22,27 +22,23 @@ By clicking "Configure" on the action it's created for us, we can then tweak the
 
 Add the following step **before** your site's build step:
 
-If you are using npm as your package name, you can use the following:
-
-```yml
-- name: Build TinaCMS
-  env:
-    TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINA_PUBLIC_CLIENT_ID }}
-    TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-  run: npx tinacms build
-```
-
-or if you are using yarn:
-
-```yml
-- name: Build TinaCMS
-  env:
-    TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINA_PUBLIC_CLIENT_ID }}
-    TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-  run: yarn build
-  # This assumes that your "build" script in your
-  # package.json is "tinacms build"
-```
+<codeTabs
+  tabs={[
+    {
+      name: "npm",
+      language: "yaml",
+      content:
+        "-�name:�Build�TinaCMS\n��env:\n����TINA_PUBLIC_CLIENT_ID:�${{�secrets.TINA_PUBLIC_CLIENT_ID�}}\n����TINA_TOKEN:�${{�secrets.TINA_TOKEN�}}\n��run:�npx�tinacms�build"
+    },
+    {
+      name: "yarn",
+      language: "yaml",
+      content:
+        '-�name:�Build�TinaCMS\n��env:\n����TINA_PUBLIC_CLIENT_ID:�${{�secrets.TINA_PUBLIC_CLIENT_ID�}}\n����TINA_TOKEN:�${{�secrets.TINA_TOKEN�}}\n��run:�yarn�build\n��#�This�assumes�that�your�"build"�script�in�your\n��#�package.json�is�"tinacms�build"'
+    }
+  ]}
+  initialSelectedIndex={0}
+/>
 
 Your GitHub Action will look something like:
 

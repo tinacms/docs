@@ -37,120 +37,54 @@ TinaCMS requires connections to several services for authentication, content del
 
 ## Implementation Examples
 
-### Next.js Configuration
+* **Next.js App Router (Next.js 13+)**: Add CSP headers in your `next.config.js`.
+* **Next.js Pages Router**: You can also configure CSP in `next.config.js` using the same approach shown in the App Router tab. Alternatively, set CSP headers in your middleware.
+* **Netlify**: Add CSP headers in your `netlify.toml`.
+* **Vercel**: Add headers in your `vercel.json`.
+* **Apache**: Add to your `.htaccess` file.
+* **Nginx**: Add to your nginx configuration.
 
-#### App Router (Next.js 13+)
-
-Add CSP headers in your `next.config.js`:
-
-```javascript
-const baseCsp = [
-    "default-src 'self';",
-    "img-src 'self' data: assets.tina.io;",
-    "font-src 'self' data: fonts.gstatic.com;",
-    "object-src 'none';",
-    "frame-src 'none';",
-    "worker-src 'self' blob:;",
-    "frame-ancestors 'none';",
-    "base-uri 'self';",
-    "connect-src 'self' identity.tinajs.io identity-v2.tinajs.io content.tinajs.io assets.tinajs.io s3.us-east-1.amazonaws.com us.i.posthog.com us-assets.i.posthog.com;"
-];
-
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: baseCsp.join(' '),
-          },
-        ],
-      },
-    ];
-  },
-};
-
-module.exports = nextConfig;
-```
-
-#### Pages Router
-
-For the Pages Router, you can also configure CSP in `next.config.js` using the same approach shown above.
-
-Alternatively, set CSP headers in your middleware:
-
-```typescript
-// middleware.ts
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-
-export function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-  
-  const csp = [
-    "default-src 'self'",
-    "img-src 'self' data: assets.tina.io",
-    "connect-src 'self' identity.tinajs.io identity-v2.tinajs.io content.tinajs.io assets.tinajs.io s3.us-east-1.amazonaws.com us.i.posthog.com us-assets.i.posthog.com",
-    // ... other directives
-  ].join('; ');
-  
-  response.headers.set('Content-Security-Policy', csp);
-  
-  return response;
-}
-```
-
-### Netlify Configuration
-
-Add CSP headers in your `netlify.toml`:
-
-```toml
-[[headers]]
-  for = "/*"
-  [headers.values]
-    Content-Security-Policy = "default-src 'self'; img-src 'self' data: assets.tina.io; connect-src 'self' identity.tinajs.io identity-v2.tinajs.io content.tinajs.io assets.tinajs.io s3.us-east-1.amazonaws.com us.i.posthog.com us-assets.i.posthog.com; font-src 'self' data: fonts.gstatic.com; object-src 'none'; frame-src 'none'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self';"
-```
-
-### Vercel Configuration
-
-Add headers in your `vercel.json`:
-
-```json
-{
-  "headers": [
+<codeTabs
+  tabs={[
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; img-src 'self' data: assets.tina.io; connect-src 'self' identity.tinajs.io identity-v2.tinajs.io content.tinajs.io assets.tinajs.io s3.us-east-1.amazonaws.com us.i.posthog.com us-assets.i.posthog.com; font-src 'self' data: fonts.gstatic.com; object-src 'none'; frame-src 'none'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self';"
-        }
-      ]
+      name: "App Router",
+      language: "javascript",
+      content:
+        "const�baseCsp�=�[\n����\"default-src�'self';\",\n����\"img-src�'self'�data:�assets.tina.io;\",\n����\"font-src�'self'�data:�fonts.gstatic.com;\",\n����\"object-src�'none';\",\n����\"frame-src�'none';\",\n����\"worker-src�'self'�blob:;\",\n����\"frame-ancestors�'none';\",\n����\"base-uri�'self';\",\n����\"connect-src�'self'�identity.tinajs.io�identity-v2.tinajs.io�content.tinajs.io�assets.tinajs.io�s3.us-east-1.amazonaws.com�us.i.posthog.com�us-assets.i.posthog.com;\"\n];\n\n/**�@type�{import('next').NextConfig}�*/\nconst�nextConfig�=�{\n��async�headers()�{\n����return�[\n������{\n��������source:�'/:path*',\n��������headers:�[\n����������{\n������������key:�'Content-Security-Policy',\n������������value:�baseCsp.join('�'),\n����������},\n��������],\n������},\n����];\n��},\n};\n\nmodule.exports�=�nextConfig;"
+    },
+    {
+      name: "Pages Router",
+      language: "typescript",
+      content:
+        "//�middleware.ts\nimport�{�NextResponse�}�from�'next/server';\nimport�type�{�NextRequest�}�from�'next/server';\n\nexport�function�middleware(request:�NextRequest)�{\n��const�response�=�NextResponse.next();\n��\n��const�csp�=�[\n����\"default-src�'self'\",\n����\"img-src�'self'�data:�assets.tina.io\",\n����\"connect-src�'self'�identity.tinajs.io�identity-v2.tinajs.io�content.tinajs.io�assets.tinajs.io�s3.us-east-1.amazonaws.com�us.i.posthog.com�us-assets.i.posthog.com\",\n����//�...�other�directives\n��].join(';�');\n��\n��response.headers.set('Content-Security-Policy',�csp);\n��\n��return�response;\n}"
+    },
+    {
+      name: "Netlify",
+      language: "toml",
+      content:
+        "[[headers]]\n��for�=�\"/*\"\n��[headers.values]\n����Content-Security-Policy�=�\"default-src�'self';�img-src�'self'�data:�assets.tina.io;�connect-src�'self'�identity.tinajs.io�identity-v2.tinajs.io�content.tinajs.io�assets.tinajs.io�s3.us-east-1.amazonaws.com�us.i.posthog.com�us-assets.i.posthog.com;�font-src�'self'�data:�fonts.gstatic.com;�object-src�'none';�frame-src�'none';�worker-src�'self'�blob:;�frame-ancestors�'none';�base-uri�'self';\""
+    },
+    {
+      name: "Vercel",
+      language: "json",
+      content:
+        "{\n��\"headers\":�[\n����{\n������\"source\":�\"/(.*)\",\n������\"headers\":�[\n��������{\n����������\"key\":�\"Content-Security-Policy\",\n����������\"value\":�\"default-src�'self';�img-src�'self'�data:�assets.tina.io;�connect-src�'self'�identity.tinajs.io�identity-v2.tinajs.io�content.tinajs.io�assets.tinajs.io�s3.us-east-1.amazonaws.com�us.i.posthog.com�us-assets.i.posthog.com;�font-src�'self'�data:�fonts.gstatic.com;�object-src�'none';�frame-src�'none';�worker-src�'self'�blob:;�frame-ancestors�'none';�base-uri�'self';\"\n��������}\n������]\n����}\n��]\n}"
+    },
+    {
+      name: "Apache",
+      language: "apache",
+      content:
+        "<IfModule�mod_headers.c>\n��Header�set�Content-Security-Policy�\"default-src�'self';�img-src�'self'�data:�assets.tina.io;�connect-src�'self'�identity.tinajs.io�identity-v2.tinajs.io�content.tinajs.io�assets.tinajs.io�s3.us-east-1.amazonaws.com�us.i.posthog.com�us-assets.i.posthog.com;�font-src�'self'�data:�fonts.gstatic.com;�object-src�'none';�frame-src�'none';�worker-src�'self'�blob:;�frame-ancestors�'none';�base-uri�'self';\"\n</IfModule>"
+    },
+    {
+      name: "Nginx",
+      language: "nginx",
+      content:
+        "add_header�Content-Security-Policy�\"default-src�'self';�img-src�'self'�data:�assets.tina.io;�connect-src�'self'�identity.tinajs.io�identity-v2.tinajs.io�content.tinajs.io�assets.tinajs.io�s3.us-east-1.amazonaws.com�us.i.posthog.com�us-assets.i.posthog.com;�font-src�'self'�data:�fonts.gstatic.com;�object-src�'none';�frame-src�'none';�worker-src�'self'�blob:;�frame-ancestors�'none';�base-uri�'self';\"�always;"
     }
-  ]
-}
-```
-
-### Apache Configuration
-
-Add to your `.htaccess` file:
-
-```apache
-<IfModule mod_headers.c>
-  Header set Content-Security-Policy "default-src 'self'; img-src 'self' data: assets.tina.io; connect-src 'self' identity.tinajs.io identity-v2.tinajs.io content.tinajs.io assets.tinajs.io s3.us-east-1.amazonaws.com us.i.posthog.com us-assets.i.posthog.com; font-src 'self' data: fonts.gstatic.com; object-src 'none'; frame-src 'none'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self';"
-</IfModule>
-```
-
-### Nginx Configuration
-
-Add to your nginx configuration:
-
-```nginx
-add_header Content-Security-Policy "default-src 'self'; img-src 'self' data: assets.tina.io; connect-src 'self' identity.tinajs.io identity-v2.tinajs.io content.tinajs.io assets.tinajs.io s3.us-east-1.amazonaws.com us.i.posthog.com us-assets.i.posthog.com; font-src 'self' data: fonts.gstatic.com; object-src 'none'; frame-src 'none'; worker-src 'self' blob:; frame-ancestors 'none'; base-uri 'self';" always;
-```
+  ]}
+  initialSelectedIndex={0}
+/>
 
 ## Self-Hosted Considerations
 
