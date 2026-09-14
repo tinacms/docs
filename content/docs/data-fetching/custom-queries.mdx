@@ -25,7 +25,11 @@ The client can be extended to perform more advanced queries (including querying 
 
 TinaCMS generates custom [GraphQL fragments](https://graphql.org/learn/queries/#fragments) to be used in custom queries so that the queries will not have to be updated when the schema is updated.
 
-> Note: These fragments can be seen in `tina/__generated__/frags.gql`
+<Callout variant="info"
+  body={<>
+    These fragments can be seen in `tina/__generated__/frags.gql`
+  </>}
+/>
 
 Example of `tina/queries/postWithNav.gql`:
 
@@ -42,7 +46,11 @@ query postWithNav($relativePath: String!) {
 
 To get autocomplete in your GraphQL files add a [`graphql.config.js`](https://github.com/tinacms/tina-cloud-starter/blob/main/graphql.config.js) that points to `tina/__generated__/schema.gql` and `tina/__generated__/frags.gql`.
 
-> Note: fragments are named by using the collection name (capitalized) followed by "Parts"
+<Callout variant="info"
+  body={<>
+    Fragments are named by using the collection name (capitalized) followed by "Parts"
+  </>}
+/>
 
 We are using a `PostParts` & `NavParts` Fragment here. For each collection, this fragment is generated and updated when the schema is updated. You can view any available Fragments for your schema in `/tina/__generated__/frags.gql`.
 

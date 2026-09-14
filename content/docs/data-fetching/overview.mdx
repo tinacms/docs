@@ -60,7 +60,11 @@ The following operator types are available for querying
 | after      | After                    | datetime                         |
 | before     | Before                   | datetime                         |
 
-> Only `gt`, `gte`, `lt`, `lte`, `after`, `before` may be used in ternary conditions.
+<Callout variant="info"
+  body={<>
+    Only `gt`, `gte`, `lt`, `lte`, `after`, `before` may be used in ternary conditions.
+  </>}
+/>
 
 #### Filtering on Filename (\_sys)
 
@@ -74,7 +78,11 @@ const allPosts = posts?.data?.postConnection?.edges.filter(
 );
 ```
 
-> Note: When using the auto-generated `<collection-name>Connection`, the query will only apply to the document's fields, not the `_sys` properties. Filtering in code as shown above is a suitable alternative.
+<Callout variant="info"
+  body={<>
+    When using the auto-generated `<collection-name>Connection`, the query will only apply to the document's fields, not the `_sys` properties. Filtering in code as shown above is a suitable alternative.
+  </>}
+/>
 
 ### Sorting
 
