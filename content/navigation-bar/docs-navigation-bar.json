@@ -1073,8 +1073,8 @@
   ],
   "ctaButtons": {
     "button1": {
-      "label": "TinaCMS Docs",
-      "link": "https://tina.io/docs",
+      "label": "TinaCMS Home",
+      "link": "https://tina.io/tinacms",
       "variant": "primary-outline"
     },
     "button2": {

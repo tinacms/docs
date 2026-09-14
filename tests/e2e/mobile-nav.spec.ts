@@ -26,8 +26,8 @@ test.describe("Mobile navigation", () => {
     const ctas = page.getByTestId("mobile-nav-ctas");
     await expect(ctas).toBeVisible();
     await expect(
-      ctas.getByRole("link", { name: "TinaCMS Docs" })
-    ).toHaveAttribute("href", "https://tina.io/docs");
+      ctas.getByRole("link", { name: "TinaCMS Home" })
+    ).toHaveAttribute("href", "https://tina.io/tinacms");
     await expect(ctas.getByRole("link", { name: "TinaCloud" })).toHaveAttribute(
       "href",
       "https://app.tina.io"
