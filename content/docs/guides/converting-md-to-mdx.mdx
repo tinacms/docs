@@ -72,7 +72,25 @@ These reflect common patterns we used in the original Markdown content.
   initialSelectedIndex={0}
 />
 
-**Rendered email template:**![](/img/docs/converting-md-to-mdx/nice-email-template.png)
+
+<imageEmbed
+  alt="Image"
+  size="large"
+  showBorder={true}
+  figureEmbed={{
+    preset: "goodExample",
+    figure: 'Well-structured diagram',
+    shouldDisplay: true
+  }}
+  src="diagram.png"
+/>
+
+<youtubeEmbed url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" description="Watch this classic hit" />
+
+
+```
+
+<imageEmbed image={{ src: "/img/docs/converting-md-to-mdx/nice-email-template.png", alt: "" }} caption="Rendered email template" />
 
 ## Running the Script
 
