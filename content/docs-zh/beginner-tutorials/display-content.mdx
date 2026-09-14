@@ -8,19 +8,20 @@ previous: content/docs-zh/beginner-tutorials/hello-world.mdx
 
 现在我们已经在 TinaCMS 中创建了惊人的“Hello world”内容，我们需要在我们的网站上显示它！
 
-> 我们有几种方法可以将内容渲染到屏幕上。目前，我们将使用[客户端数据获取]()，这意味着页面将在用户访问页面时直接从浏览器查询 TinaCMS 的内容。还有其他方法，例如 SSR 和 SSG，我们将在后面探索。
+> 我们有几种方法可以将内容渲染到屏幕上。目前，我们将使用[客户端数据获取]()，这意味着页面将在用户访问页面时直接从浏览器查询 TinaCMS 获取内容。还有其他方法，例如 SSR 和 SSG，我们将在后面探索。
 
 ### 更新您的主页代码
 
-前往 `app/page.tsx` 并添加以下代码：
+转到 `app/page.tsx` 并添加以下代码：
 
 ```typescript
 "use client";
-// 需要这样做是因为 NextJS 默认是 SSR，而我们现在想要进行客户端渲染。
+// 需要这样做，因为 NextJS 默认是 SSR，而我们现在想要进行客户端渲染。
 import { useState, useEffect } from "react";
 import { client } from "../tina/__generated__/client";
 // 这将用于查询我们的 TinaCMS 以获取我们惊人的标题
-// 您可能需要根据您的设置更新相对导入
+// 根据您的设置，您可能需要更新相对导入
+
 
 export default function Home() {
   const [amazingTitle, setAmazingTitle] = useState("");
@@ -47,13 +48,13 @@ return (
 
 ### 这段代码做了什么？
 
-这里有一些事情正在进行中，所以让我们更详细地看看 `fetchContent` 方法...
+这里有一些事情正在发生，所以让我们更详细地看看 `fetchContent` 方法...
 
-首先，也是最重要的事情是我们正在使用 TinaCMS 的 **`client`**，这是我们进入 TinaCMS 内容的网关。您可以[阅读更多关于客户端的信息]()，但现在，只需将其视为一个基础的“API 服务”，我们在需要从 TinaCMS 检索数据时使用它。
+首先，也是最重要的事情是，我们正在使用 TinaCMS 的 **`client`**，这是我们进入 TinaCMS 内容的门户。您可以[阅读更多关于客户端的信息]()，但现在，只需将其视为一个基础的“API 服务”，我们在需要从 TinaCMS 检索数据时使用它。
 
-然后我们使用 `client.queries`，这使我们可以访问在 TinaCMS 架构中定义的所有集合。目前，我们有 1 个集合 - `my_first_collection` - 而 TinaCMS 为我们提供了对这些集合的强类型访问。这非常棒！
+然后我们使用 `client.queries`，它使我们能够访问在 TinaCMS 模式中定义的所有集合。目前，我们有 1 个集合 - `my_first_collection` - 而 TinaCMS 为我们提供了对这些集合的强类型访问。这非常棒！
 
-> 当运行 `tinacms build` 命令时，这些强类型扩展方法由 TinaCMS 自动生成。默认情况下，当您运行 `npm run dev` 时会包含此命令，但了解这一点很重要，因为如果您没有正在运行应用程序，您可能会想知道为什么新集合没有立即出现在 `client.queries` 对象上。
+> 当运行 `tinacms build` 命令时，这些强类型扩展方法由 TinaCMS 自动生成。默认情况下，当您运行 `npm run dev` 时会包含此命令，但了解这一点很重要，因为如果您没有运行应用程序，可能会想知道为什么新集合没有立即出现在 `client.queries` 对象上。
 
 ### 显示您的数据
 

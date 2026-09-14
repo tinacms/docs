@@ -52,7 +52,7 @@ export default defineConfig({
 {
   "users": [
     {
-      "name": "TinaCMS User",
+      "name": "Tina User",
       "email": "user@tina.io",
       "username": "admin",
       "password": "admin"
@@ -96,7 +96,7 @@ export default (req, res) => {
 
 ## 测试
 
-现在您已经设置了 Auth.js 认证提供者，您可以进行测试。
+现在您已经设置了 Auth.js 认证提供者，可以进行测试。
 
 ### 本地测试认证
 
@@ -186,7 +186,7 @@ export default defineConfig({
 {
   "users": [
     {
-      "name": "TinaCMS Discord User",
+      "name": "Tina Discord User",
       "email": "user@tina.io",
       "username": "mydiscorduser"
     }
@@ -239,13 +239,13 @@ export default (req, res) => {
 }
 ```
 
-请注意，这是从另一个端点导入 NextAuthOptions。
+请注意，这是从另一个端点导入的 NextAuthOptions。
 
 ### 配置 Discord OAuth 应用程序
 
-要配置 Discord OAuth 应用程序，您需要在 [Discord 开发者门户](https://discord.com/developers/applications) 中创建一个新应用程序。
+要配置 Discord OAuth 应用程序，您需要在 [Discord 开发者门户](https://discord.com/developers/applications)中创建一个新应用程序。
 
-应用程序创建后，转到 OAuth2 选项卡并复制客户端 ID 和客户端密钥。这些将用作环境变量。为本地主机 `http://localhost:3000/api/auth/callback/discord` 和您的生产域添加重定向。
+应用程序创建完成后，转到 OAuth2 选项卡并复制客户端 ID 和客户端密钥。这些将用作环境变量。为本地主机 `http://localhost:3000/api/auth/callback/discord` 和您的生产域添加重定向。
 
 添加以下环境变量：
 

@@ -256,6 +256,7 @@
                 },
                 {
                   "slug": "content/docs-zh/contextual-editing/tinafield.mdx",
+                  "title": "点击编辑API",
                   "_template": "item"
                 },
                 {
@@ -777,6 +778,7 @@
             },
             {
               "slug": "content/docs-zh/editing/blocks.mdx",
+              "title": "使用Tina作为网站构建器",
               "_template": "item"
             },
             {
