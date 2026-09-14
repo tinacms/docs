@@ -19,7 +19,7 @@ previous: content/docs-zh/beginner-tutorials/hello-world.mdx
 // 需要这样做，因为 NextJS 默认是 SSR，而我们现在想要进行客户端渲染。
 import { useState, useEffect } from "react";
 import { client } from "../tina/__generated__/client";
-// 这将用于查询我们的 Tina CMS 以获取我们惊人的标题
+// 这将用于查询我们的 TinaCMS 以获取我们惊人的标题
 // 根据您的设置，您可能需要更新相对导入
 
 
@@ -50,7 +50,7 @@ return (
 
 这里有一些事情正在发生，所以让我们更详细地看看 `fetchContent` 方法...
 
-首先，也是最重要的事情是，我们正在使用 TinaCMS 的 **`client`**，这是我们进入 Tina CMS 内容的门户。您可以[阅读更多关于客户端的信息]()，但现在，只需将其视为一个基础的“API 服务”，我们在需要从 TinaCMS 检索数据时使用它。
+首先，也是最重要的事情是，我们正在使用 TinaCMS 的 **`client`**，这是我们进入 TinaCMS 内容的门户。您可以[阅读更多关于客户端的信息]()，但现在，只需将其视为一个基础的“API 服务”，我们在需要从 TinaCMS 检索数据时使用它。
 
 然后我们使用 `client.queries`，它使我们能够访问在 TinaCMS 模式中定义的所有集合。目前，我们有 1 个集合 - `my_first_collection` - 而 TinaCMS 为我们提供了对这些集合的强类型访问。这非常棒！
 
