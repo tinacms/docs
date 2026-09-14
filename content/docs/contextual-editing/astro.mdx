@@ -23,6 +23,25 @@ The flow:
 4. Each editable region in the page is wrapped in `<TinaIsland>`, which emits a `<… data-tina-island="/tina-island/<name>?<params>">` marker. On every store update, the bridge POSTs the current overlay to that endpoint.
 5. The endpoint re-renders the matching Astro component against the overlay data and returns an HTML fragment. The bridge swaps it into the live DOM.
 
+```mermaid
+sequenceDiagram
+    participant Admin as Admin (parent window)
+    participant Iframe as Editor iframe
+    participant Middleware as tina() middleware
+    participant Island as /tina-island/[name]
+
+    Iframe->>Middleware: Page request (edit mode)
+    Middleware-->>Iframe: HTML with bridge bootstrap and data-tina-form payloads
+    Iframe->>Admin: open
+    Note over Iframe: Bridge seeds its in-memory store
+    loop Every edit
+        Admin->>Iframe: updateData
+        Iframe->>Island: POST current overlay
+        Island-->>Iframe: Re-rendered HTML fragment
+        Note over Iframe: Bridge swaps the fragment into the live DOM
+    end
+```
+
 In production (no admin parent), the middleware injects nothing and `init()` exits immediately — production HTML is byte-identical to a TinaCMS-free Astro app. (Exception: pages that use `<TinaIsland>` carry a one-line inline bootstrap so editing still works when the page is statically built.)
 
 <Callout variant="warning"
