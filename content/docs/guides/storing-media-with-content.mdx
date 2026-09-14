@@ -20,14 +20,16 @@ The current way to solve the issue is to store both Markdown and static assets i
 
 Say you want to build a blog with posts, your file structure for the content would then look like this:
 
-```plaintext
-public/
-└── uploads/
-    └── posts/
-        ├── post-a/
-        │   ├── index.md
-        │   └── image.png
-```
+<fileStructure
+  fileStructure={[
+    { id: "smc-public", name: "public", type: "folder", parentId: null },
+    { id: "smc-uploads", name: "uploads", type: "folder", parentId: "smc-public" },
+    { id: "smc-posts", name: "posts", type: "folder", parentId: "smc-uploads" },
+    { id: "smc-post-a", name: "post-a", type: "folder", parentId: "smc-posts" },
+    { id: "smc-index", name: "index.md", type: "file", parentId: "smc-post-a" },
+    { id: "smc-image", name: "image.png", type: "file", parentId: "smc-post-a" }
+  ]}
+/>
 
 > **Note:** `public/uploads` is the default Media folder, you can change it to be whatever suits your project.\
 > See this for more information: [Repo-based Media](https://tina.io/docs/reference/media/repo-based#configuration)

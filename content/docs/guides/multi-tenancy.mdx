@@ -75,13 +75,14 @@ Or find a more advanced middleware on the [SSW Products Repository.](https://git
 
 Structure your app/ folder like so:
 
-```javascript
-|- app /
-|   |- [tenant] /
-|         |- [slug] /
-|             |- page.tsx
-
-```
+<fileStructure
+  fileStructure={[
+    { id: "mt1-app", name: "app", type: "folder", parentId: null },
+    { id: "mt1-tenant", name: "[tenant]", type: "folder", parentId: "mt1-app" },
+    { id: "mt1-slug", name: "[slug]", type: "folder", parentId: "mt1-tenant" },
+    { id: "mt1-page", name: "page.tsx", type: "file", parentId: "mt1-slug" }
+  ]}
+/>
 
 Inside page.tsx, load content from the appropriate tenant folder:
 
@@ -97,15 +98,16 @@ const Page = async ({ params }: { params: { tenant: string; slug: string } }) =>
 
 Create tenant-specific folders in content/:
 
-```javascript
-|- content /
-|     |- docs /
-|         |- tenant1 /
-|         |     |- intro.mdx
-|         |- tenant2 /
-|               |- intro.mdx
-
-```
+<fileStructure
+  fileStructure={[
+    { id: "mt2-content", name: "content", type: "folder", parentId: null },
+    { id: "mt2-docs", name: "docs", type: "folder", parentId: "mt2-content" },
+    { id: "mt2-tenant1", name: "tenant1", type: "folder", parentId: "mt2-docs" },
+    { id: "mt2-tenant1-intro", name: "intro.mdx", type: "file", parentId: "mt2-tenant1" },
+    { id: "mt2-tenant2", name: "tenant2", type: "folder", parentId: "mt2-docs" },
+    { id: "mt2-tenant2-intro", name: "intro.mdx", type: "file", parentId: "mt2-tenant2" }
+  ]}
+/>
 
 ### 5. Enable TinaCMS Admin Panel Per Domain
 

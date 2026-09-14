@@ -91,16 +91,18 @@ The path is resolved relative to the `tina/` folder. The most common layout is *
 
 Check both repos out as siblings on disk:
 
-```bash
-parent/
-├── my-generator-repo/
-│   └── tina/
-│       └── config.tsx
-└── my-content-repo/
-    └── content/
-        └── posts/
-            └── hello.mdx
-```
+<fileStructure
+  fileStructure={[
+    { id: "scr-parent", name: "parent", type: "folder", parentId: null },
+    { id: "scr-generator", name: "my-generator-repo", type: "folder", parentId: "scr-parent" },
+    { id: "scr-generator-tina", name: "tina", type: "folder", parentId: "scr-generator" },
+    { id: "scr-generator-config", name: "config.tsx", type: "file", parentId: "scr-generator-tina" },
+    { id: "scr-content-repo", name: "my-content-repo", type: "folder", parentId: "scr-parent" },
+    { id: "scr-content", name: "content", type: "folder", parentId: "scr-content-repo" },
+    { id: "scr-posts", name: "posts", type: "folder", parentId: "scr-content" },
+    { id: "scr-hello", name: "hello.mdx", type: "file", parentId: "scr-posts" }
+  ]}
+/>
 
 From the generator repo, run your usual dev command:
 

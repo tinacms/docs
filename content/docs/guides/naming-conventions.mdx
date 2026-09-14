@@ -24,33 +24,36 @@ There are two primary reasons for following naming conventions in your TinaCMS p
 
 The typical convention is to add the schema for a given React component to an accompanying file of the same name with the suffix `schema.tsx`. This ensures your index is only rebuilt when changes are made to your data model and not to the component.
 
-```javascript
-src/
-├── app/
-│   ├── components/
-│   │   ├── events-list.schema.tsx
-│   │   ├── events-list.tsx
-```
+<fileStructure
+  fileStructure={[
+    { id: "nc1-src", name: "src", type: "folder", parentId: null },
+    { id: "nc1-app", name: "app", type: "folder", parentId: "nc1-src" },
+    { id: "nc1-components", name: "components", type: "folder", parentId: "nc1-app" },
+    { id: "nc1-schema", name: "events-list.schema.tsx", type: "file", parentId: "nc1-components" },
+    { id: "nc1-component", name: "events-list.tsx", type: "file", parentId: "nc1-components" }
+  ]}
+/>
 
 ### Shared Fields
 
 Code shared between multiple collections, including field definitions and lists of field definitions are also typically stored in files ending in `.schema.tsx`. In the Example below assume we are sharing the `title` field between the `hero-image` and image-text-block. Component.
 
-```javascript
-src/
-├── tina/
-│   ├── collections/
-│   │   ├── shared-fields/
-│   │   │   ├── title.schema.tsx
-├── app/
-│   ├── components/
-│   │   ├── blocks/
-│   │   │   ├── hero-image.schema.tsx
-│   │   │   ├── hero-image.tsx
-│   │   │   ├── image-text-block.schema.tsx
-│   │   │   ├── image-text-block.tsx
-
-```
+<fileStructure
+  fileStructure={[
+    { id: "nc2-src", name: "src", type: "folder", parentId: null },
+    { id: "nc2-tina", name: "tina", type: "folder", parentId: "nc2-src" },
+    { id: "nc2-collections", name: "collections", type: "folder", parentId: "nc2-tina" },
+    { id: "nc2-shared-fields", name: "shared-fields", type: "folder", parentId: "nc2-collections" },
+    { id: "nc2-title-schema", name: "title.schema.tsx", type: "file", parentId: "nc2-shared-fields" },
+    { id: "nc2-app", name: "app", type: "folder", parentId: "nc2-src" },
+    { id: "nc2-components", name: "components", type: "folder", parentId: "nc2-app" },
+    { id: "nc2-blocks", name: "blocks", type: "folder", parentId: "nc2-components" },
+    { id: "nc2-hero-schema", name: "hero-image.schema.tsx", type: "file", parentId: "nc2-blocks" },
+    { id: "nc2-hero", name: "hero-image.tsx", type: "file", parentId: "nc2-blocks" },
+    { id: "nc2-itb-schema", name: "image-text-block.schema.tsx", type: "file", parentId: "nc2-blocks" },
+    { id: "nc2-itb", name: "image-text-block.tsx", type: "file", parentId: "nc2-blocks" }
+  ]}
+/>
 
 ### Naming conventions for blocks
 
@@ -60,16 +63,18 @@ If you're re-using the template for a block component between multiple collectio
 
 In the example below, assume we are using the `image-carousel` block template in the our block renderer. The `image-carousel` template can be shared between the `home` and `about` collections.
 
-```javascript
-src/
-├── tina/
-│   ├── collections/
-│   │   ├── home.tsx
-│   │   ├── about.tsx
-├── app/
-│   ├── components/
-│   │   ├── blocks/
-│   │   │   ├── image-carousel.tsx
-│   │   │   ├── image-carousel.template.tsx
-│   │   │   ├── blocks-renderer.tsx
-```
+<fileStructure
+  fileStructure={[
+    { id: "nc3-src", name: "src", type: "folder", parentId: null },
+    { id: "nc3-tina", name: "tina", type: "folder", parentId: "nc3-src" },
+    { id: "nc3-collections", name: "collections", type: "folder", parentId: "nc3-tina" },
+    { id: "nc3-home", name: "home.tsx", type: "file", parentId: "nc3-collections" },
+    { id: "nc3-about", name: "about.tsx", type: "file", parentId: "nc3-collections" },
+    { id: "nc3-app", name: "app", type: "folder", parentId: "nc3-src" },
+    { id: "nc3-components", name: "components", type: "folder", parentId: "nc3-app" },
+    { id: "nc3-blocks", name: "blocks", type: "folder", parentId: "nc3-components" },
+    { id: "nc3-carousel", name: "image-carousel.tsx", type: "file", parentId: "nc3-blocks" },
+    { id: "nc3-carousel-template", name: "image-carousel.template.tsx", type: "file", parentId: "nc3-blocks" },
+    { id: "nc3-renderer", name: "blocks-renderer.tsx", type: "file", parentId: "nc3-blocks" }
+  ]}
+/>

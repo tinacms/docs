@@ -145,11 +145,13 @@ Adding file at pages/demo/blog/[filename].tsx... ✅
 
 Now, let's go back and check what was created. You will see a `/content` folder with your new post saved as a `.md` file. This path is defined in the `tina/config.ts` files post collection!
 
-```bash
-content
-    └── posts
-        └── hello-world.md
-```
+<fileStructure
+  fileStructure={[
+    { id: "ar-content", name: "content", type: "folder", parentId: null },
+    { id: "ar-posts", name: "posts", type: "folder", parentId: "ar-content" },
+    { id: "ar-hello-world", name: "hello-world.md", type: "file", parentId: "ar-posts" }
+  ]}
+/>
 
 ## Rendering the Post Collection
 

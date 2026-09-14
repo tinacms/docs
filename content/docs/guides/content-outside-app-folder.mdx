@@ -13,21 +13,23 @@ TinaCMS supports this layout using the `localContentPath` config option. This gu
 
 ## Example Structure
 
-```plaintext
-my-monorepo/
-├── content/               ← your markdown/MDX content
-│   ├── tina/              ← required (TinaCMS writes generated files here)
-│   ├── pages/
-│   │   └── home.mdx
-│   └── posts/
-│       └── hello.md
-└── packages/
-    └── website/           ← your Next.js app
-        ├── tina/
-        │   └── config.ts  ← TinaCMS config lives here
-        ├── package.json
-        └── ...
-```
+<fileStructure
+  fileStructure={[
+    { id: "co-monorepo", name: "my-monorepo", type: "folder", parentId: null },
+    { id: "co-content", name: "content (your markdown/MDX content)", type: "folder", parentId: "co-monorepo" },
+    { id: "co-content-tina", name: "tina (required, TinaCMS writes generated files here)", type: "folder", parentId: "co-content" },
+    { id: "co-pages", name: "pages", type: "folder", parentId: "co-content" },
+    { id: "co-home", name: "home.mdx", type: "file", parentId: "co-pages" },
+    { id: "co-posts", name: "posts", type: "folder", parentId: "co-content" },
+    { id: "co-hello", name: "hello.md", type: "file", parentId: "co-posts" },
+    { id: "co-packages", name: "packages", type: "folder", parentId: "co-monorepo" },
+    { id: "co-website", name: "website (your Next.js app)", type: "folder", parentId: "co-packages" },
+    { id: "co-website-tina", name: "tina", type: "folder", parentId: "co-website" },
+    { id: "co-config", name: "config.ts (TinaCMS config lives here)", type: "file", parentId: "co-website-tina" },
+    { id: "co-package-json", name: "package.json", type: "file", parentId: "co-website" },
+    { id: "co-ellipsis", name: "...", type: "file", parentId: "co-website" }
+  ]}
+/>
 
 ## Step 1: Configure `localContentPath`
 

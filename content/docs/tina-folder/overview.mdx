@@ -9,19 +9,21 @@ The `/tina` folder is where you configure the **content models**, **datalayer** 
 
 ## File Structure
 
-```markdown
-tina/
-├── config.{ts,tsx,js}
-├── queries/ <!--optional-->
-├── ߺߺgeneratedߺߺ/ <!--created at runtime-->
-│ ├── ߺgraphql.json
-│ ├── ߺlookup.json
-│ ├── ߺschema.json
-│ ├── frags.gql
-│ ├── queries.gql
-│ └── schema.gql
-└── tina-lock.json <!--created at runtime-->
-```
+<fileStructure
+  fileStructure={[
+    { id: "tf-tina", name: "tina", type: "folder", parentId: null },
+    { id: "tf-config", name: "config.{ts,tsx,js}", type: "file", parentId: "tf-tina" },
+    { id: "tf-queries", name: "queries", type: "folder", parentId: "tf-tina" },
+    { id: "tf-generated", name: "__generated__", type: "folder", parentId: "tf-tina" },
+    { id: "tf-graphql-json", name: "_graphql.json", type: "file", parentId: "tf-generated" },
+    { id: "tf-lookup-json", name: "_lookup.json", type: "file", parentId: "tf-generated" },
+    { id: "tf-schema-json", name: "_schema.json", type: "file", parentId: "tf-generated" },
+    { id: "tf-frags", name: "frags.gql", type: "file", parentId: "tf-generated" },
+    { id: "tf-queries-gql", name: "queries.gql", type: "file", parentId: "tf-generated" },
+    { id: "tf-schema-gql", name: "schema.gql", type: "file", parentId: "tf-generated" },
+    { id: "tf-lock", name: "tina-lock.json", type: "file", parentId: "tf-tina" }
+  ]}
+/>
 
 <Callout variant="warning"
   body={<>

@@ -40,14 +40,16 @@ Our block is pretty basic right now - we only have 1 field. But you can see how,
 
 You should end up with something like this:
 
-```plaintext
-src/
-├── app/
-│   ├── amazing-header/
-│   │   ├── amazing-header.template.tsx
-│   ├── beautiful-image/
-│   │   ├── beautiful-image.template.tsx
-│   ├── incredible-body/
-│   │   ├── incredible-body.template.tsx
-│   ├── ...etc.
-```
+<fileStructure
+  fileStructure={[
+    { id: "nt-src", name: "src", type: "folder", parentId: null },
+    { id: "nt-app", name: "app", type: "folder", parentId: "nt-src" },
+    { id: "nt-amazing-header", name: "amazing-header", type: "folder", parentId: "nt-app" },
+    { id: "nt-amazing-header-tsx", name: "amazing-header.template.tsx", type: "file", parentId: "nt-amazing-header" },
+    { id: "nt-beautiful-image", name: "beautiful-image", type: "folder", parentId: "nt-app" },
+    { id: "nt-beautiful-image-tsx", name: "beautiful-image.template.tsx", type: "file", parentId: "nt-beautiful-image" },
+    { id: "nt-incredible-body", name: "incredible-body", type: "folder", parentId: "nt-app" },
+    { id: "nt-incredible-body-tsx", name: "incredible-body.template.tsx", type: "file", parentId: "nt-incredible-body" },
+    { id: "nt-etc", name: "...etc.", type: "file", parentId: "nt-app" }
+  ]}
+/>

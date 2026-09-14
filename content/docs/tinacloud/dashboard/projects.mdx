@@ -90,17 +90,16 @@ For example, if you have a project named `northwind-docs`, and it is located in 
 
 Example setup for Path to Tina Field = projects/northwind-docs
 
-```plaintext
-- projects
-     |
-     |- northwind-docs
-     |     |- tina
-     |         |- config.ts
-     |         |- __generated__              
-     |
-     |     
-     |- cat-photos
-```
+<fileStructure
+  fileStructure={[
+    { id: "tp-projects", name: "projects", type: "folder", parentId: null },
+    { id: "tp-northwind", name: "northwind-docs", type: "folder", parentId: "tp-projects" },
+    { id: "tp-northwind-tina", name: "tina", type: "folder", parentId: "tp-northwind" },
+    { id: "tp-config", name: "config.ts", type: "file", parentId: "tp-northwind-tina" },
+    { id: "tp-generated", name: "__generated__", type: "folder", parentId: "tp-northwind-tina" },
+    { id: "tp-cat-photos", name: "cat-photos", type: "folder", parentId: "tp-projects" }
+  ]}
+/>
 
 ![](/docs/path-to-tina-folder.png "Path to Tina Folder UI under Advanced Settings")
 

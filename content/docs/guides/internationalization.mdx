@@ -20,19 +20,20 @@ Managing multilingual content is essential for global reach. TinaCMS provides ve
 
 With directory-based localization, your content should be structured in a directory-based manner, where the locale (e.g., en, fr) lives underneath the collection root (e.g., blog, docs). For example:
 
-```text
-.
-├── /blog/
-│   ├── /en/
-│   │   └── hello-world.md
-│   └── /fr/
-│       └── hello-world.md
-└── /docs/
-    ├── /en/
-    │   └── my-doc.md
-    └── /fr/
-        └── my-doc.md
-```
+<fileStructure
+  fileStructure={[
+    { id: "i18n-blog", name: "blog", type: "folder", parentId: null },
+    { id: "i18n-blog-en", name: "en", type: "folder", parentId: "i18n-blog" },
+    { id: "i18n-blog-en-hello", name: "hello-world.md", type: "file", parentId: "i18n-blog-en" },
+    { id: "i18n-blog-fr", name: "fr", type: "folder", parentId: "i18n-blog" },
+    { id: "i18n-blog-fr-hello", name: "hello-world.md", type: "file", parentId: "i18n-blog-fr" },
+    { id: "i18n-docs", name: "docs", type: "folder", parentId: null },
+    { id: "i18n-docs-en", name: "en", type: "folder", parentId: "i18n-docs" },
+    { id: "i18n-docs-en-doc", name: "my-doc.md", type: "file", parentId: "i18n-docs-en" },
+    { id: "i18n-docs-fr", name: "fr", type: "folder", parentId: "i18n-docs" },
+    { id: "i18n-docs-fr-doc", name: "my-doc.md", type: "file", parentId: "i18n-docs-fr" }
+  ]}
+/>
 
 #### Steps to Implement Directory-Based Localization
 
