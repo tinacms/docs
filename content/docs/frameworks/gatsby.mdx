@@ -9,7 +9,11 @@ previous: content/docs/frameworks/hugo.mdx
 
 TinaCMS can be added to your Gatsby site locally. In this doc, we'll guide through the local setup, as well as editing on your production site.
 
-> You can reference our [TinaCMS Gatsby Starter](https://github.com/tinacms/tina-gatsby-starter) for an example.
+<Callout variant="info"
+  body={<>
+    You can reference our [TinaCMS Gatsby Starter](https://github.com/tinacms/tina-gatsby-starter) for an example.
+  </>}
+/>
 
 ## Getting Started
 
@@ -23,7 +27,11 @@ This will ask you a few setup questions.
 
 When prompted for the "**public assets directory**", enter: **static**.
 
-> If you are importing your site from Forestry.io CMS, some models & config will be auto-imported.
+<Callout variant="info"
+  body={<>
+    If you are importing your site from Forestry.io CMS, some models & config will be auto-imported.
+  </>}
+/>
 
 ### Workaround for GraphQL Mismatch issue
 
@@ -44,7 +52,11 @@ To work around this, add the following lines to your **package.json** file.
 
 That way you can force the graphql version to be the one TinaCMS needs.
 
-> To be sure which version you need, you can run `npm list graphql` in your project folder
+<Callout variant="info"
+  body={<>
+    To be sure which version you need, you can run `npm list graphql` in your project folder
+  </>}
+/>
 
 ### Allowing static `/admin/index.html` file in dev-mode
 
@@ -78,7 +90,11 @@ With TinaCMS running, navigate to `http://localhost:8000/admin/index.html`
 
 > ^ The above default port may differ depending on your framework.
 
-> Hint: One common error is caused by running `gatsby clean` **after** `tinacms build`. This causes your admin html file to be wiped out. For more common errors, please see the [Common Errors](/docs/forestry/common-errors) page.
+<Callout variant="warning"
+  body={<>
+    One common error is caused by running `gatsby clean` **after** `tinacms build`. This causes your admin html file to be wiped out. For more common errors, please see the [Common Errors](/docs/forestry/common-errors) page.
+  </>}
+/>
 
 At this point, you should be able to see the TinaCMS admin, select a post, save changes, and see the changes persisted to your local markdown files.
 
@@ -92,7 +108,11 @@ If you want to power your pages with TinaCMS's API, you'll be able to leverage T
 
 Read more about [data fetching](/docs/features/data-fetching/) and [visual editing](/docs/contextual-editing/overview/).
 
-> Note: Visual Editing with Gatsby is considered experimental.
+<Callout variant="warning"
+  body={<>
+    Visual Editing with Gatsby is considered experimental.
+  </>}
+/>
 
 ## Next Steps
 
