@@ -7,7 +7,11 @@ TinaCMS's "click to edit" feature allows editors to select the **HTML element** 
 
 We can implement this with the `data-tina-field` API.
 
-> `[data-tina-field]` must be applied to HTML elements, not React components like [TinaMarkdown](https://tina.io/docs/editing/markdown#rendering-content-with-tinamarkdown).
+<Callout variant="warning"
+  body={<>
+    `[data-tina-field]` must be applied to HTML elements, not React components like [TinaMarkdown](https://tina.io/docs/editing/markdown#rendering-content-with-tinamarkdown).
+  </>}
+/>
 
 ## API Reference
 
@@ -28,7 +32,11 @@ We can implement this with the `data-tina-field` API.
   ]}
 />
 
-> **Note**: The `object` property only needs to contain the nearest ancestor of the field you're trying to access.
+<Callout variant="info"
+  body={<>
+    The `object` property only needs to contain the nearest ancestor of the field you're trying to access.
+  </>}
+/>
 
 ## Basic Usage
 
