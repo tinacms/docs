@@ -88,7 +88,11 @@ To fix this, you'll need to select the "GitHub Actions" source, and build the ti
 
 Check to make sure that the build command is running and not failing
 
-> Note: If you are using [the github pages setup from hugo](https://gohugo.io/hosting-and-deployment/hosting-on-github/) you will need to make sure that a `package-lock.json` exists in the root of your repo.
+<Callout variant="info"
+  body={<>
+    If you are using [the github pages setup from hugo](https://gohugo.io/hosting-and-deployment/hosting-on-github/) you will need to make sure that a `package-lock.json` exists in the root of your repo.
+  </>}
+/>
 
 ### Common Issue: The root URL is giving a 404
 
