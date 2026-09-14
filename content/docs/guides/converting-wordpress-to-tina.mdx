@@ -29,7 +29,11 @@ Other conversion options that are not covered in this guide include:
 
 1\. Export your Wordpress content by going to [https://wordpress.com/export/](https://wordpress.com/export/) and select **Export All**
 
-> Name it **export.xml** to make it easier for you in the next step
+<Callout variant="idea"
+  body={<>
+    Name it **export.xml** to make it easier for you in the next step
+  </>}
+/>
 
 Use [wordpress-export-to-markdown](https://github.com/lonekorean/wordpress-export-to-markdown) to convert your WordPress content into Markdown.
 
@@ -49,9 +53,17 @@ This creates an `output` folder that groups your posts and pages into separate f
 
 1\. In the output folder, drag the image folders `output/post/images` and `output/page/images` to your TinaCMS app's `public/uploads` folder.
 
-> You can rename the folder before dragging to prevent duplicate image names being replaced
+<Callout variant="idea"
+  body={<>
+    You can rename the folder before dragging to prevent duplicate image names being replaced
+  </>}
+/>
 
-> You can also set up alternative hosting with your preferred media manager.
+<Callout variant="idea"
+  body={<>
+    You can also set up alternative hosting with your preferred media manager.
+  </>}
+/>
 
 #### Migrating Posts
 
@@ -73,11 +85,15 @@ Which will convert your files from Markdown to MDX.
 
 2\. Drag all the MDX files in `output/post` to your TinaCMS app's `content/posts` folder, now your posts have been migrated to TinaCMS!
 
-> For ease of use the format of TinaCMS Starter posts matches the format that WordPress uses.
+<Callout variant="idea"
+  body={<>
+    For ease of use the format of TinaCMS Starter posts matches the format that WordPress uses.
+  </>}
+/>
 
 #### Migrating Pages
 
-<Callout variant="warning"
+<Callout variant="info"
   body={<>
     If you are having trouble with this step, feel free to contact a developer for assistance through our [Community Discord Server](https://discord.com/invite/zumN63Ybpf).
   </>}
@@ -191,7 +207,11 @@ fields: [
 
 3\. In `app/posts/[...filename]/client-page.tsx`, add the `coverImage` field so that it can be rendered with [TinaMarkdown](https://tina.io/docs/editing/markdown#rendering-content-with-tinamarkdown).
 
-> You can also copy or rename the `heroImg` code snippet and edit to fit your needs
+<Callout variant="idea"
+  body={<>
+    You can also copy or rename the `heroImg` code snippet and edit to fit your needs
+  </>}
+/>
 
 ```typescript
 return (
