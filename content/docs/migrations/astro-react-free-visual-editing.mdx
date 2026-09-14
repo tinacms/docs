@@ -154,7 +154,11 @@ For each `tina/pages/*.tsx` file, create a matching `.astro` component under `sr
 
 The render shape is the same. The only difference: no `useTina()`; the bridge handles re-rendering by re-fetching this island.
 
-> Import `TinaMarkdown` from the `/TinaMarkdown.astro` subpath, not from the bare `@tinacms/astro`. The bare-package default resolves through the `types` condition to a placeholder that Astro doesn't recognize as a renderable component.
+<Callout variant="warning"
+  body={<>
+    Import `TinaMarkdown` from the `/TinaMarkdown.astro` subpath, not from the bare `@tinacms/astro`. The bare-package default resolves through the `types` condition to a placeholder that Astro doesn't recognize as a renderable component.
+  </>}
+/>
 
 ## 8. Update each page
 
