@@ -10,50 +10,62 @@ As you can see, there's no way for us to edit our amazing title from this page. 
 
 1\. Change `app/page.tsx` to have the following code:
 
-```typescript
-"use client";
-import { useState, useEffect } from "react";
-import { client } from "../tina/__generated__/client";
-import { useTina } from "tinacms/dist/react";
+<recipe
+  description="There are a couple of small, but significant changes here. Let's go through them."
+  code="&#x22;use�client&#x22;;
+  import�{�useState,�useEffect�}�from�&#x22;react&#x22;;
+  import�{�client�}�from�&#x22;../tina/__generated__/client&#x22;;
+  import�{�useTina�}�from�&#x22;tinacms/dist/react&#x22;;
 
-export default function Home() {
+  export�default�function�Home()�{
 
-  const[graphQLresponse, setGraphQLresponse] = useState<any>();
+  ��const[graphQLresponse,�setGraphQLresponse]�=�useState<any>();
 
-  useEffect(() => {
-    const fetchContent = async () => {
-      const result = await client.queries.my_first_collection({
-        relativePath: "Hello-World.md",
-      });
-      setGraphQLresponse(result);
-    };
+  ��useEffect(()�=>�{
+  ����const�fetchContent�=�async�()�=>�{
+  ������const�result�=�await�client.queries.my_first_collection({
+  ��������relativePath:�&#x22;Hello-World.md&#x22;,
+  ������});
+  ������setGraphQLresponse(result);
+  ����};
 
-    fetchContent();
-    
-  }, []);
+  ����fetchContent();
+  ����
+  ��},�[]);
 
-  const pageData = useTina({
-    data: graphQLresponse?.data,
-    query: graphQLresponse?.query,
-    variables: graphQLresponse?.variables,
-  });
+  ��const�pageData�=�useTina({
+  ����data:�graphQLresponse?.data,
+  ����query:�graphQLresponse?.query,
+  ����variables:�graphQLresponse?.variables,
+  ��});
 
-  const amazingTitle = pageData?.data?.my_first_collection?.title;
+  ��const�amazingTitle�=�pageData?.data?.my_first_collection?.title;
 
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-(family-name:--font-geist-sans)">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1>{amazingTitle}</h1>
-      </main>
-    </div>
-  );
-}
-```
-
-There are a couple of small, but significant changes here. Let's go through them.
-
-* We are changing out our `setAmazingTitle` state setter for a new `setGraphQLresponse` state setter. This is so we have access to the entire GraphQL object for our visual editor.
-* We are introducing the `useTina` method, which is how TinaCMS "wires up" the content we see on the page with the inputs in visual editor. `useTina` takes an object that includes a few properties from our GraphQL response, so TinaCMS's visual editor can populate its inputs with the same values.
+  ��return�(
+  ����<div�className=&#x22;grid�grid-rows-[20px_1fr_20px]�items-center�justify-items-center�min-h-screen�p-8�pb-20�gap-16�sm:p-20�font-(family-name:--font-geist-sans)&#x22;>
+  ������<main�className=&#x22;flex�flex-col�gap-8�row-start-2�items-center�sm:items-start&#x22;>
+  ��������<h1>{amazingTitle}</h1>
+  ������</main>
+  ����</div>
+  ��);
+  }"
+  instruction={[
+    {
+      header: "Swap the state setter",
+      itemDescription:
+        "We are changing out our `setAmazingTitle` state setter for a new `setGraphQLresponse` state setter. This is so we have access to the entire GraphQL object for our visual editor.",
+      codeLineStart: 8,
+      codeLineEnd: 15
+    },
+    {
+      header: "Introduce useTina",
+      itemDescription:
+        'We are introducing the `useTina` method, which is how TinaCMS "wires up" the content we see on the page with the inputs in visual editor. `useTina` takes an object that includes a few properties from our GraphQL response, so TinaCMS\'s visual editor can populate its inputs with the same values.',
+      codeLineStart: 22,
+      codeLineEnd: 28
+    }
+  ]}
+/>
 
 We aren't quite done here. If you open up your browser's Dev Tools and navigate to `http://localhost:3000/admin/index.html`, you'll see an error appear in your console.
 
