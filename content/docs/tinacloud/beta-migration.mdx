@@ -35,13 +35,13 @@ Since we're changing how user accounts work within TinaCloud, existing alpha use
 
 1. Remove the `tina-graphql-gateway` and `tina-graphql-gateway-cli` dependencies.
 
-```
+```bash
 yarn remove tina-graphql-gateway-cli tina-graphql-gateway
 ```
 
 1. Add the new TinaCMS dependencies.
 
-```
+```bash
 yarn add tinacms @tinacms/auth
 yarn add -D @tinacms/cli
 ```
