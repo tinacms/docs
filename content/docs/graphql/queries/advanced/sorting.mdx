@@ -11,7 +11,11 @@ To sort collection results by a collection field, pass the `sort` argument to th
 
 To sort collection results by multiple fields, we need to define a multi-field "index" in our schema. An index definition determines which fields in a collection are included in the index and the order of the fields when sorting results.
 
-> In addition to determining the sort order of query results, indexes also impact query [performance](/docs/graphql/queries/advanced/performance/).
+<Callout variant="info"
+  body={<>
+    In addition to determining the sort order of query results, indexes also impact query [performance](/docs/graphql/queries/advanced/performance/).
+  </>}
+/>
 
 Here is an example index definition for our posts collection:
 

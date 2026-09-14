@@ -7,7 +7,11 @@ last_edited: '2025-03-26T03:57:55.697Z'
 
 The `addPendingDocument` mutation will take in the collection name as a parameter, as well as the new relative path.
 
-> Note: `addPendingDocument` does not currently support fields of any kind, just creating the record.
+<Callout variant="info"
+  body={<>
+    `addPendingDocument` does not currently support fields of any kind, just creating the record.
+  </>}
+/>
 
 <GraphQLCodeBlock
   query="mutation#{
