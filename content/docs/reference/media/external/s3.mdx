@@ -150,7 +150,11 @@ TinaCMS's "external media provider" support requires a light backend media handl
 
 ### Next.js
 
-> **NOTE:** this step will show you how to set up an API route for Next.js. If you are using a different framework, you will need to set up your own API route.
+<Callout variant="info"
+  body={<>
+    This step will show you how to set up an API route for Next.js. If you are using a different framework, you will need to set up your own API route.
+  </>}
+/>
 
 Set up a new API route in the `pages` directory of your Next.js app, e.g. `pages/api/s3/[...media].ts`.
 Then add a new catch-all API route for media.
