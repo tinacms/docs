@@ -841,107 +841,11 @@ Since each blog post is stored in its own folder within the `content` directory,
 
 ## (Optional) Adding React components
 
-You can also add custom React components in Gatsby. First, update the schema for your blog posts to define the new React component you plan to add.
-
-```diff
-  schema: {
-    collections: [
-      {
-        ui: {
-          router: ({ document }) => {
-            return document._sys.breadcrumbs[0]
-          },
-        },
-        name: "post",
-        label: "Posts",
-        format: "mdx",
-        path: "content/blog",
-        fields: [
-          {
-            type: "string",
-            name: "title",
-            label: "Title",
-            isTitle: true,
-            required: true,
-          },
-          {
-            type: "datetime",
-            name: "date",
-            label: "Date",
-          },
-          {
-            type: "rich-text",
-            name: "body",
-            label: "Body",
-            isBody: true,
-+           templates: [
-+           {
-+             name: "RichBlockQuote",
-+             label: "Rich Block Quote",
-+             fields: [
-+               {
-+                 name: "children",
-+                 label: "Body",
-+                 type: "rich-text",
-+               },
-+             ],
-+           },
-+         ],
-          },
-        ],
-      },
-    ],
-  },
-```
-
-Next, we'll define how the custom component will look in `blog-post.tsx`. We'll be parsing the child of the component into our `TinaMarkdown` renderer to give us rich text editing capabilities.
-
-```diff
-+ const components = {
-+ RichBlockQuote: props => {
-+ return (
-+     <blockquote>
-+       <TinaMarkdown content={props.children} />
-+     </blockquote>
-+     )
-+   },
-+ }
-```
-
-Setting the body to the built-in `children` property in React allows us to use the children of our React component as a value.
-
-This has the added benefit of making our markdown easy to read. For example, check out the example below.
-
-```markdown
-<RichBlockQuote>
-  ### TinaCMS Rocks!
-
-Go check out the starter template on [tina.io](https://tina.io/docs/introduction/using-starter/)
-</RichBlockQuote>
-```
-
-The last thing you'll need to do is pass our component list to the `components` prop of our `TinaMarkdown` component.
-
-```diff
-return (
-    <Layout location={location} title={siteTitle}>
-      <article
-        className="blog-post"
-        itemScope
-        itemType="http://schema.org/Article"
-      >
-        <header>
-          <h1
-            data-tina-field={tinaField(tinaData.post, "title")}
-            itemProp="headline"
-          >
-            {tinaData.post.title}
-          </h1>
-          <p data-tina-field={tinaField(tinaData.post, "date")}>
-            {formattedDate}
-          </p>
-        </header>
-        <main data-tina-field={tinaField(tinaData.post, "body")}>
-          <TinaMarkdown content={tinaMarkdownContent} />
-+        <TinaMarkdown content={tinaMarkdownContent} components={components} />
-```
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "Adding custom React components to your MDX body",
+      docText: "You can also add custom React components in Gatsby. First, update the schema for your blog posts to define the new React component you plan to add.\n\n```diff\n  schema: {\n    collections: [\n      {\n        ui: {\n          router: ({ document }) => {\n            return document._sys.breadcrumbs[0]\n          },\n        },\n        name: \"post\",\n        label: \"Posts\",\n        format: \"mdx\",\n        path: \"content/blog\",\n        fields: [\n          {\n            type: \"string\",\n            name: \"title\",\n            label: \"Title\",\n            isTitle: true,\n            required: true,\n          },\n          {\n            type: \"datetime\",\n            name: \"date\",\n            label: \"Date\",\n          },\n          {\n            type: \"rich-text\",\n            name: \"body\",\n            label: \"Body\",\n            isBody: true,\n+           templates: [\n+           {\n+             name: \"RichBlockQuote\",\n+             label: \"Rich Block Quote\",\n+             fields: [\n+               {\n+                 name: \"children\",\n+                 label: \"Body\",\n+                 type: \"rich-text\",\n+               },\n+             ],\n+           },\n+         ],\n          },\n        ],\n      },\n    ],\n  },\n```\n\nNext, we'll define how the custom component will look in `blog-post.tsx`. We'll be parsing the child of the component into our `TinaMarkdown` renderer to give us rich text editing capabilities.\n\n```diff\n+ const components = {\n+ RichBlockQuote: props => {\n+ return (\n+     <blockquote>\n+       <TinaMarkdown content={props.children} />\n+     </blockquote>\n+     )\n+   },\n+ }\n```\n\nSetting the body to the built-in `children` property in React allows us to use the children of our React component as a value.\n\nThis has the added benefit of making our markdown easy to read. For example, check out the example below.\n\n```markdown\n<RichBlockQuote>\n  ### TinaCMS Rocks!\n\nGo check out the starter template on [tina.io](https://tina.io/docs/introduction/using-starter/)\n</RichBlockQuote>\n```\n\nThe last thing you'll need to do is pass our component list to the `components` prop of our `TinaMarkdown` component.\n\n```diff\nreturn (\n    <Layout location={location} title={siteTitle}>\n      <article\n        className=\"blog-post\"\n        itemScope\n        itemType=\"http://schema.org/Article\"\n      >\n        <header>\n          <h1\n            data-tina-field={tinaField(tinaData.post, \"title\")}\n            itemProp=\"headline\"\n          >\n            {tinaData.post.title}\n          </h1>\n          <p data-tina-field={tinaField(tinaData.post, \"date\")}>\n            {formattedDate}\n          </p>\n        </header>\n        <main data-tina-field={tinaField(tinaData.post, \"body\")}>\n          <TinaMarkdown content={tinaMarkdownContent} />\n+        <TinaMarkdown content={tinaMarkdownContent} components={components} />\n```\n"
+    }
+  ]}
+/>

@@ -276,35 +276,18 @@ export default function Post(props: ClientPageProps) {
 
 ## FAQs
 
-### Updates Not Reflecting Correctly on Page
-
-When working with TinaCMS in a Next.js project using the App Router, you might encounter situations where Vercel is aggressively caching content causing certain updates to not reflect correctly.
-
-The root cause is that the [Vercel Data Cache](https://vercel.com/docs/data-cache) is caching responses from TinaCloud's content API. This can be confirmed by either querying the GraphQL API and looking for the updated content, or by checking the [cache's usage in Vercel](https://vercel.com/docs/data-cache/manage-data-cache).
-
-There are 2 ways to modify your site to best work with the Vercel Data Cache:
-
-1. Manually updating the default re-validation time for route segments. This will cause Incremental Static Regeneration to rebuild the pages whilst re-validating cached content API responses at runtime with updated content. Find more information here: [https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#revalidate](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#revalidate)
-2. Add an extra parameter to your query (TinaCMS generated) e.g. \
-   `const response = await client.queries.page({ relativePath: 'pages/home.mdx'}, { fetchOptions: { next: { revalidate: 60 } })})`\
-   This will be passed to the underlying `fetch` request. Find more information about how Next.js extends `fetch`: [https://nextjs.org/docs/app/api-reference/functions/fetch](https://nextjs.org/docs/app/api-reference/functions/fetch)
-
-### Newly Created Content Items Not Appearing on Page
-
-When working with TinaCMS in a Next.js project using the App Router, you might encounter situations where newly created content items do not immediately appear on the corresponding page. This behavior is typically caused by the aggressive caching mechanisms employed by Next.js and the browser.
-
-To ensure you see the most up-to-date content during local development, you can disable browser caching in your browser's Developer Tools:
-
-1. Open Developer Tools in your browser (e.g., Chrome, Firefox).
-2. Navigate to the Network tab.
-3. Check the option to Disable Cache (this setting is effective while Developer Tools is open).
-
-\
-![Disable caching in DevTools](/img/docs/frameworks/next/app-router/devtools-disabling-cache.png)
-
-\
-For more detailed information about caching in Next.js, refer to the official Next.js documentation:
-[Next.js Caching Documentation](https://nextjs.org/docs/app/building-your-application/caching)
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "Updates Not Reflecting Correctly on Page",
+      docText: "When working with TinaCMS in a Next.js project using the App Router, you might encounter situations where Vercel is aggressively caching content causing certain updates to not reflect correctly.\n\nThe root cause is that the [Vercel Data Cache](https://vercel.com/docs/data-cache) is caching responses from TinaCloud's content API. This can be confirmed by either querying the GraphQL API and looking for the updated content, or by checking the [cache's usage in Vercel](https://vercel.com/docs/data-cache/manage-data-cache).\n\nThere are 2 ways to modify your site to best work with the Vercel Data Cache:\n\n1. Manually updating the default re-validation time for route segments. This will cause Incremental Static Regeneration to rebuild the pages whilst re-validating cached content API responses at runtime with updated content. Find more information here: [https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#revalidate](https://nextjs.org/docs/app/api-reference/file-conventions/route-segment-config#revalidate)\n2. Add an extra parameter to your query (TinaCMS generated) e.g. \\\n   `const response = await client.queries.page({ relativePath: 'pages/home.mdx'}, { fetchOptions: { next: { revalidate: 60 } })})`\\\n   This will be passed to the underlying `fetch` request. Find more information about how Next.js extends `fetch`: [https://nextjs.org/docs/app/api-reference/functions/fetch](https://nextjs.org/docs/app/api-reference/functions/fetch)\n"
+    },
+    {
+      heading: "Newly Created Content Items Not Appearing on Page",
+      docText: "When working with TinaCMS in a Next.js project using the App Router, you might encounter situations where newly created content items do not immediately appear on the corresponding page. This behavior is typically caused by the aggressive caching mechanisms employed by Next.js and the browser.\n\nTo ensure you see the most up-to-date content during local development, you can disable browser caching in your browser's Developer Tools:\n\n1. Open Developer Tools in your browser (e.g., Chrome, Firefox).\n2. Navigate to the Network tab.\n3. Check the option to Disable Cache (this setting is effective while Developer Tools is open).\n\n\\\n![Disable caching in DevTools](/img/docs/frameworks/next/app-router/devtools-disabling-cache.png)\n\n\\\nFor more detailed information about caching in Next.js, refer to the official Next.js documentation:\n[Next.js Caching Documentation](https://nextjs.org/docs/app/building-your-application/caching)\n"
+    }
+  ]}
+/>
 
 ## Next Steps
 
