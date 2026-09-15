@@ -115,7 +115,7 @@ const baseCsp = [
     },
     {
       heading: "TinaCMS Editor Not Loading",
-      docText: "If the TinaCMS editor fails to load:\n\n1. Verify all required domains are included in `connect-src`\n2. Check for CSP violations in the browser console\n3. Ensure `frame-src` allows the TinaCMS admin interface if using iframe mode\n\n<Callout variant=\"warning\"\n  body={<>\n    Having issues when authenticating with GitHub? It could be your CSP configuration!\n\n    Check out [this GitHub issue on how it was resolved](https://github.com/tinacms/tina.io/issues/3978).\n  </>}\n/>\n"
+      docText: "If the TinaCMS editor fails to load:\n\n1. Verify all required domains are included in `connect-src`\n2. Check for CSP violations in the browser console\n3. Ensure `frame-src` allows the TinaCMS admin interface if using iframe mode\n"
     },
     {
       heading: "Testing CSP Configuration",
@@ -125,6 +125,14 @@ const baseCsp = [
 />
 
 You can also use online tools like [CSP Evaluator](https://csp-evaluator.withgoogle.com/) to validate your policy.
+
+<Callout variant="warning"
+  body={<>
+    Having issues when authenticating with GitHub? It could be your CSP configuration!
+
+    Check out [this GitHub issue on how it was resolved](https://github.com/tinacms/tina.io/issues/3978).
+  </>}
+/>
 
 ## Additional Resources
 
