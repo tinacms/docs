@@ -54,74 +54,23 @@ These reflect common patterns we used in the original Markdown content.
 
 ## Example Conversion (Before & After)
 
-**Before (Markdown):**
-
-```md
-::: email-template  
-| | |
-| -------- | --- |
-| To: | XXX |
-| Cc: | YYY |
-| Bcc: | ZZZ |
-| Subject: | {{ EMAIL SUBJECT }} |  
-::: email-content
-### Hi XXX,
-{{ EMAIL CONTENT }}
-:::  
-:::  
-::: good  
-Figure: Good example - Nice email template  
-:::
-
-
-
-::: good
-![Figure: Well-structured diagram](diagram.png)
-:::
-
-`youtube: https://www.youtube.com/watch?v=dQw4w9WgXcQ`
-**Watch this classic hit**
-
-```
-
-**After (MDX):**
-
-```jsx
-
-<emailEmbed
-  from=""
-  to="XXX"
-  cc="YYY"
-  bcc="ZZZ"
-  subject="&#123;&#123; EMAIL SUBJECT &#125;&#125;"
-  body={<>
-    ## Hi XXX,
-&#123;&#123; EMAIL CONTENT &#125;&#125;
-  </>}
-  figureEmbed={{
-    preset: "goodExample",
-    figure: "Good example - Nice email template",
-    shouldDisplay: true
-  }}
+<codeTabs
+  tabs={[
+    {
+      name: "Before (Markdown)",
+      language: "markdown",
+      content:
+        ":::�email-template��\n|�|�|\n|�--------�|�---�|\n|�To:�|�XXX�|\n|�Cc:�|�YYY�|\n|�Bcc:�|�ZZZ�|\n|�Subject:�|�{{�EMAIL�SUBJECT�}}�|��\n:::�email-content\n###�Hi�XXX,\n{{�EMAIL�CONTENT�}}\n:::��\n:::��\n:::�good��\nFigure:�Good�example�-�Nice�email�template��\n:::\n\n\n\n:::�good\n![Figure:�Well-structured�diagram](diagram.png)\n:::\n\n`youtube:�https://www.youtube.com/watch?v=dQw4w9WgXcQ`\n**Watch�this�classic�hit**\n"
+    },
+    {
+      name: "After (MDX)",
+      language: "jsx",
+      content:
+        '\n<emailEmbed\n��from=""\n��to="XXX"\n��cc="YYY"\n��bcc="ZZZ"\n��subject="&#123;&#123;�EMAIL�SUBJECT�&#125;&#125;"\n��body={<>\n����##�Hi�XXX,\n&#123;&#123;�EMAIL�CONTENT�&#125;&#125;\n��</>}\n��figureEmbed={{\n����preset:�"goodExample",\n����figure:�"Good�example�-�Nice�email�template",\n����shouldDisplay:�true\n��}}\n/>\n\n\n<imageEmbed\n��alt="Image"\n��size="large"\n��showBorder={true}\n��figureEmbed={{\n����preset:�"goodExample",\n����figure:�\'Well-structured�diagram\',\n����shouldDisplay:�true\n��}}\n��src="diagram.png"\n/>\n\n<youtubeEmbed�url="https://www.youtube.com/watch?v=dQw4w9WgXcQ"�description="Watch�this�classic�hit"�/>\n\n'
+    }
+  ]}
+  initialSelectedIndex={0}
 />
-
-
-<imageEmbed
-  alt="Image"
-  size="large"
-  showBorder={true}
-  figureEmbed={{
-    preset: "goodExample",
-    figure: 'Well-structured diagram',
-    shouldDisplay: true
-  }}
-  src="diagram.png"
-/>
-
-<youtubeEmbed url="https://www.youtube.com/watch?v=dQw4w9WgXcQ" description="Watch this classic hit" />
-
-
-```
 
 **Rendered email template:**![](/img/docs/converting-md-to-mdx/nice-email-template.png)
 
