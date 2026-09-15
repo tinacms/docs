@@ -107,44 +107,22 @@ const baseCsp = [
 
 ## Troubleshooting
 
-### CSP Violations in Browser Console
-
-If you see CSP violation errors in your browser console:
-
-1. Check the error message to identify the blocked resource
-2. Add the appropriate domain to the relevant CSP directive
-3. Test thoroughly to ensure TinaCMS functionality works
-
-Common violations:
-
-* **Blocked image loads**: Add the domain to `img-src`
-* **Blocked API calls**: Add the domain to `connect-src`
-* **Blocked inline styles**: You may need `style-src 'unsafe-inline'` for certain TinaCMS features
-
-### TinaCMS Editor Not Loading
-
-If the TinaCMS editor fails to load:
-
-1. Verify all required domains are included in `connect-src`
-2. Check for CSP violations in the browser console
-3. Ensure `frame-src` allows the TinaCMS admin interface if using iframe mode
-
-<Callout variant="warning"
-  body={<>
-    Having issues when authenticating with GitHub? It could be your CSP configuration!
-    
-    Check out [this GitHub issue on how it was resolved](https://github.com/tinacms/tina.io/issues/3978).
-  </>}
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "CSP Violations in Browser Console",
+      docText: "If you see CSP violation errors in your browser console:\n\n1. Check the error message to identify the blocked resource\n2. Add the appropriate domain to the relevant CSP directive\n3. Test thoroughly to ensure TinaCMS functionality works\n\nCommon violations:\n\n* **Blocked image loads**: Add the domain to `img-src`\n* **Blocked API calls**: Add the domain to `connect-src`\n* **Blocked inline styles**: You may need `style-src 'unsafe-inline'` for certain TinaCMS features\n"
+    },
+    {
+      heading: "TinaCMS Editor Not Loading",
+      docText: "If the TinaCMS editor fails to load:\n\n1. Verify all required domains are included in `connect-src`\n2. Check for CSP violations in the browser console\n3. Ensure `frame-src` allows the TinaCMS admin interface if using iframe mode\n\n<Callout variant=\"warning\"\n  body={<>\n    Having issues when authenticating with GitHub? It could be your CSP configuration!\n\n    Check out [this GitHub issue on how it was resolved](https://github.com/tinacms/tina.io/issues/3978).\n  </>}\n/>\n"
+    },
+    {
+      heading: "Testing CSP Configuration",
+      docText: "Use browser developer tools to verify your CSP configuration:\n\n1. Open DevTools → Console\n2. Look for CSP violation warnings\n3. Click on violations to see which resources are blocked\n4. Update your CSP accordingly\n\nYou can also use online tools like [CSP Evaluator](https://csp-evaluator.withgoogle.com/) to validate your policy.\n"
+    }
+  ]}
 />
-
-### Testing CSP Configuration
-
-Use browser developer tools to verify your CSP configuration:
-
-1. Open DevTools → Console
-2. Look for CSP violation warnings
-3. Click on violations to see which resources are blocked
-4. Update your CSP accordingly
 
 You can also use online tools like [CSP Evaluator](https://csp-evaluator.withgoogle.com/) to validate your policy.
 

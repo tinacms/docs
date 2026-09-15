@@ -89,109 +89,19 @@ export default defineConfig({
 
 ## Examples
 
-### Adding a last updated field
-
-```js
-// tina/config.{ts.js}
-
-export default defineConfig({
-  schema: {
-    collections: [
-      {
-        ui: {
-          // Example of beforeSubmit
-          beforeSubmit: async ({
-            form,
-            cms,
-            values,
-          }: {
-            form: Form
-            cms: TinaCMS
-            values: Record<string, any>
-          }) => {
-            return {
-              ...values,
-              lastUpdated: new Date().toISOString(),
-            }
-          },
-          //...
-        },
-        //...
-      },
-      //...
-    ],
-  },
-  //...
-})
-```
-
-### Adding a created at field
-
-```js
-export default defineConfig({
-  schema: {
-    collections: [
-      {
-        ui: {
-          beforeSubmit: async ({
-            form,
-            cms,
-            values,
-          }: {
-            form: Form
-            cms: TinaCMS
-            values: Record<string, any>
-          }) => {
-            if (form.crudType === 'create') {
-              return {
-                ...values,
-                createdAt: new Date().toISOString(),
-              }
-            }
-          },
-          //...
-        },
-        //...
-      },
-      //...
-    ],
-  },
-  //...
-})
-```
-
-### Adding a slug field
-
-```js
-export default defineConfig({
-  schema: {
-    collections: [
-      {
-        ui: {
-          beforeSubmit: async ({
-            form,
-            cms,
-            values,
-          }: {
-            form: Form
-            cms: TinaCMS
-            values: Record<string, any>
-          }) => {
-            return {
-              ...values,
-              slug: values.title
-                .toLowerCase()
-                .replace(/ /g, '-')
-                .replace(/[^\w-]+/g, ''),
-            }
-          },
-          //...
-        },
-        //...
-      },
-      //...
-    ],
-  },
-  //...
-})
-```
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "Adding a last updated field",
+      docText: "```js\n// tina/config.{ts.js}\n\nexport default defineConfig({\n  schema: {\n    collections: [\n      {\n        ui: {\n          // Example of beforeSubmit\n          beforeSubmit: async ({\n            form,\n            cms,\n            values,\n          }: {\n            form: Form\n            cms: TinaCMS\n            values: Record<string, any>\n          }) => {\n            return {\n              ...values,\n              lastUpdated: new Date().toISOString(),\n            }\n          },\n          //...\n        },\n        //...\n      },\n      //...\n    ],\n  },\n  //...\n})\n```\n"
+    },
+    {
+      heading: "Adding a created at field",
+      docText: "```js\nexport default defineConfig({\n  schema: {\n    collections: [\n      {\n        ui: {\n          beforeSubmit: async ({\n            form,\n            cms,\n            values,\n          }: {\n            form: Form\n            cms: TinaCMS\n            values: Record<string, any>\n          }) => {\n            if (form.crudType === 'create') {\n              return {\n                ...values,\n                createdAt: new Date().toISOString(),\n              }\n            }\n          },\n          //...\n        },\n        //...\n      },\n      //...\n    ],\n  },\n  //...\n})\n```\n"
+    },
+    {
+      heading: "Adding a slug field",
+      docText: "```js\nexport default defineConfig({\n  schema: {\n    collections: [\n      {\n        ui: {\n          beforeSubmit: async ({\n            form,\n            cms,\n            values,\n          }: {\n            form: Form\n            cms: TinaCMS\n            values: Record<string, any>\n          }) => {\n            return {\n              ...values,\n              slug: values.title\n                .toLowerCase()\n                .replace(/ /g, '-')\n                .replace(/[^\\w-]+/g, ''),\n            }\n          },\n          //...\n        },\n        //...\n      },\n      //...\n    ],\n  },\n  //...\n})\n```\n"
+    }
+  ]}
+/>

@@ -219,8 +219,27 @@ This setup requires:
 
 ## Troubleshooting
 
-* **"GitHub App not installed on this repository's organisation"** when picking a content repo. The TinaCloud GitHub App must be installed on the *organisation* (or user account) that owns the repo. If your generator and content repos live under different GitHub orgs, install the app on each separately.
-* **The content repo's picker is missing repos you expect to see.** GitHub Apps grant per-repo access. Open the GitHub App's settings on the relevant org and grant access to the specific repo you want to use, then refresh the dashboard.
-* **Stale `tina/` folder in the content repo after upgrading.** Pre-upgrade builds committed `tina/__generated__/*` and `tina/tina-lock.json` to the content repo. Nothing updates or reads those files in the new model. Safe, and recommended, to delete from the content repo in a single cleanup commit.
-* **Old `tina/meta.json` file in the content repo.** This was the connector for the old two-projects pattern. No longer used; delete it.
-* **Content edits aren't appearing in builds.** Confirm the generator repo's `tina/config.tsx` has `localContentPath` set, and that you have the content repo checked out as a sibling on disk.
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "\"GitHub App not installed on this repository's organisation\" when picking a content repo.",
+      docText: "The TinaCloud GitHub App must be installed on the *organisation* (or user account) that owns the repo. If your generator and content repos live under different GitHub orgs, install the app on each separately.\n"
+    },
+    {
+      heading: "The content repo's picker is missing repos you expect to see.",
+      docText: "GitHub Apps grant per-repo access. Open the GitHub App's settings on the relevant org and grant access to the specific repo you want to use, then refresh the dashboard.\n"
+    },
+    {
+      heading: "Stale `tina/` folder in the content repo after upgrading.",
+      docText: "Pre-upgrade builds committed `tina/__generated__/*` and `tina/tina-lock.json` to the content repo. Nothing updates or reads those files in the new model. Safe, and recommended, to delete from the content repo in a single cleanup commit.\n"
+    },
+    {
+      heading: "Old `tina/meta.json` file in the content repo.",
+      docText: "This was the connector for the old two-projects pattern. No longer used; delete it.\n"
+    },
+    {
+      heading: "Content edits aren't appearing in builds.",
+      docText: "Confirm the generator repo's `tina/config.tsx` has `localContentPath` set, and that you have the content repo checked out as a sibling on disk.\n"
+    }
+  ]}
+/>

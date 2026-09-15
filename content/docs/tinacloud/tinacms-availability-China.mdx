@@ -18,22 +18,30 @@ This document evaluates the accessibility of key TinaCMS services and tools when
 
 ### Service Availability Assessment
 
-1. **TinaCMS CLI Installation**
-   * Command: `npx create-tina-app@latest`
-   * Status: ✅ Accessible - The npm registry and TinaCMS CLI can be accessed without issues.
-2. **TinaCloud Service**
-   * Service: TinaCloud Dashboard and API
-   * Status: ✅ Accessible - Both the TinaCloud dashboard and API services are fully accessible from China.
-3. **GitHub**
-   * Service: GitHub repository hosting
-   * Status: ⚠️ Accessible but slow - GitHub is accessible but with reduced performance and occasional connectivity issues.
-4. **Tina.io and Documentation**
-   * Service: Tina.io documentation website
-   * Status: ✅ Accessible\*\* \*\*- The official TinaCMS documentation is fully accessible.
-5. **Static Site Hosting Platforms**
-
-* Services: Vercel, Netlify, GitHub Pages
-* Status: ❌ Not usable - Platform websites are accessible, but deployed instances cannot be reached from China due to the DNS issue.
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "TinaCMS CLI Installation",
+      docText: "* Command: `npx create-tina-app@latest`\n* Status: ✅ Accessible - The npm registry and TinaCMS CLI can be accessed without issues.\n"
+    },
+    {
+      heading: "TinaCloud Service",
+      docText: "* Service: TinaCloud Dashboard and API\n* Status: ✅ Accessible - Both the TinaCloud dashboard and API services are fully accessible from China.\n"
+    },
+    {
+      heading: "GitHub",
+      docText: "* Service: GitHub repository hosting\n* Status: ⚠️ Accessible but slow - GitHub is accessible but with reduced performance and occasional connectivity issues.\n"
+    },
+    {
+      heading: "Tina.io and Documentation",
+      docText: "* Service: Tina.io documentation website\n* Status: ✅ Accessible\\*\\* \\*\\*- The official TinaCMS documentation is fully accessible.\n"
+    },
+    {
+      heading: "Static Site Hosting Platforms",
+      docText: "* Services: Vercel, Netlify, GitHub Pages\n* Status: ❌ Not usable - Platform websites are accessible, but deployed instances cannot be reached from China due to the DNS issue.\n"
+    }
+  ]}
+/>
 
 ### Summary
 
