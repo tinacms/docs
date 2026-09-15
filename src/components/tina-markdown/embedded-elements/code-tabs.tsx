@@ -94,7 +94,7 @@ export const CodeTabs = ({ tabs, initialSelectedIndex = 0 }: CodeTabsProps) => {
       <div className="flex flex-col z-10 w-full rounded-xl py-0 bg-neutral-background shadow-lg border border-neutral-border">
         {/* TOP SECTION w/ Buttons */}
         <div className="flex items-center w-full border-b border-neutral-border ">
-          <div className="flex flex-1 ">
+          <div className="flex min-w-0 flex-1 overflow-x-auto">
             {tabs?.map((tab, index) => (
               <button
                 key={tab.id || index}
@@ -117,7 +117,7 @@ export const CodeTabs = ({ tabs, initialSelectedIndex = 0 }: CodeTabsProps) => {
           </div>
 
           {/* Copy Button */}
-          <div className="flex pr-2">
+          <div className="flex shrink-0 pr-2">
             <button
               type="button"
               onClick={handleCopy}
