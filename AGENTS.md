@@ -7,7 +7,7 @@ This file provides guidance to AI coding agents working in this repository.
 This is the **TinaCMS documentation site**, served at `tina.io/docs` (and `tina.io/zh/docs`) through a rewrite from the tina.io Next.js app. It is a deployed instance of the [tina-docs](https://github.com/tinacms/tina-docs) starter, not the starter itself:
 
 - Hardcoding tina.io values (URLs, branding, redirects, analytics) is fine here.
-- Features only this site needs (tina.io header, `GraphQLCodeBlock`, alias permalinks, zh locale) are built here first. Generic component or template fixes must also be sent to tina-docs in a linked PR so the starter does not drift.
+- Features only this site needs (tina.io header, `GraphQLCodeBlock`, alias permalinks, zh locale) are built here first. Upstreaming generic pieces to tina-docs is welcome but never blocks work here.
 - Content is being migrated from [tina.io](https://github.com/tinacms/tina.io) `content/docs` and `content/docs-zh`. Progress, decisions, and open tasks live in the epic: https://github.com/tinacms/tinacms/issues/7552. Read it before starting migration work, and comment there with evidence links when you finish a task.
 
 Deployment: Vercel, production branch `main`. TinaCloud project credentials live in Vercel env vars and GitHub Actions secrets.
@@ -53,22 +53,14 @@ After changing a Tina collection, template, or any other schema input, regenerat
 3. Commit `tina/tina-lock.json` with the schema change.
 4. Run the schema gate and verify CI. `tinacms build` does not regenerate the lockfile.
 
-## Migration and review checklist
+## Pull request best practices
 
-For bulk content migrations and embed conversions:
-
-- Preserve meaning and presentation. Keep literal examples and CLI errors in code fences, retain warning severity, and do not drop links, headings, captions, or media silently.
-- Verify every referenced asset exists and renders. If an asset was already dead at the source, remove the embed and explain that decision in the PR.
-- Keep component defaults aligned with their Tina template defaults. Changing runtime behavior without changing newly inserted CMS content is incomplete.
-- After rebasing or restacking, rerun the schema gate and recheck the affected pages. Conflict resolution can produce valid Git with broken MDX.
-
-For UI or component work:
-
-- Run `pnpm dev` and inspect every affected route at desktop and mobile widths. Include long content, code blocks, tables, and nested embeds where relevant.
-- Capture and upload screenshots for changed UI and visual review feedback. Add before/after images when the change is visual.
-- Check keyboard interaction and accessible names for new or expanded interactive UI.
-- Run `pnpm lint`, relevant tests, and the schema gate when `tina/` or content changed.
-- For generic fixes shared with tina-docs, open the linked tina-docs PR before treating this repository's work as complete.
+- Keep each PR focused. Explain the problem, the change, and how it was validated; link related issues and upstream PRs.
+- For UI work, run `pnpm dev` and independently inspect every affected route at desktop and mobile widths. Do not rely only on screenshots or claims supplied by the author.
+- Capture before/after screenshots when the change is visual. Upload them to the PR with `gh pr edit <number> --attach './before.png#Before the change' --attach './after.png#After the change'`.
+- Attach visual-review evidence or feedback with `gh pr comment <number> --body 'Visual review' --attach './desktop.png#Desktop view' --attach './mobile.png#Mobile view'`.
+- Run `pnpm lint`, relevant tests, and the schema gate when `tina/` or content changed. Confirm required CI checks pass before approving.
+- Submit the review separately after visual inspection: `gh pr review <number> --approve --body 'LGTM'` or `gh pr review <number> --request-changes --body '<required changes>'`.
 
 ## Coding Standards
 
