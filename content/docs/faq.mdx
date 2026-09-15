@@ -65,7 +65,7 @@ last_edited: '2026-02-09T05:31:49.762Z'
     },
     {
       heading: "9. What is \"Local Mode\" vs \"Prod Mode\"?",
-      docText: "### Local Mode\n\nWhen developers are developing locally, it's often convenient to load/save content from their local filesystem rather than connecting to the content on TinaCloud.\n\nWhen in local-mode, you **will not** need to login to enter edit-mode.\n\n<Callout variant=\"warning\"\n  body={<>\n    **Note:** Local-mode is meant for developing locally, and will not work when your site is hosted on production. When in local-mode, TinaCMS tries to hit `http://localhost:4001`, which isn't available at runtime on your production site (and neither is the underlying filesystem content).\n  </>}\n/>\n\n### Prod Mode\n\nOnce you are ready to host your site in production and put editing behind authentication, you can self-host the CMS backend yourself or you can use TinaCloud's hosted backend.\n\nWhether you're [self-hosting](/docs/self-hosted/overview) TinaCMS or using [TinaCloud](/docs/tinacloud/dashboard/), TinaCMS's Content API authenticates directly with GitHub removing the need for users to create GitHub accounts. Any changes that are saved by your editors will be committed to the configured branch in your GitHub repository.\n"
+      docText: "### Local Mode\n\nWhen developers are developing locally, it's often convenient to load/save content from their local filesystem rather than connecting to the content on TinaCloud.\n\nWhen in local-mode, you **will not** need to login to enter edit-mode.\n\n> **Note:** Local-mode is meant for developing locally, and will not work when your site is hosted on production. When in local-mode, TinaCMS tries to hit `http://localhost:4001`, which isn't available at runtime on your production site (and neither is the underlying filesystem content).\n\n### Prod Mode\n\nOnce you are ready to host your site in production and put editing behind authentication, you can self-host the CMS backend yourself or you can use TinaCloud's hosted backend.\n\nWhether you're [self-hosting](/docs/self-hosted/overview) TinaCMS or using [TinaCloud](/docs/tinacloud/dashboard/), TinaCMS's Content API authenticates directly with GitHub removing the need for users to create GitHub accounts. Any changes that are saved by your editors will be committed to the configured branch in your GitHub repository.\n"
     },
     {
       heading: "10. Does TinaCloud only work with GitHub repositories?",
@@ -96,48 +96,35 @@ last_edited: '2026-02-09T05:31:49.762Z'
     ### Your site is served on a different base path
 
     If your site is served at a sub-directory, ensure that your `build.basePath` is [configured appropriately](/docs/reference/config/#definition)
+  </>}
+/>
 
 <youtube embedSrc="https://www.youtube.com/embed/9O6gCsxV4Ms?si=451MBmVoTsxXu7X7" caption="FAQ - Setting a base path for TinaCMS" minutes="3" />
 
-## 14. What are the common TinaCloud errors?
-
-See the TinaCloud [troubleshooting](/docs/tinacloud/troubleshooting) page for more information.
-
-## 15. How to to access local GraphQL server when it's not running or in prod?
-
-### In production
-
-Make sure your API URL isn't set to point at your local GraphQL server when in production. You should be pointing to the ContentAPI.
-
-### Locally
-
-If you are working locally, make sure your [GraphQL server is running](/docs/graphql/cli/).
-
-## 16. Vercel Deployment Issues -  What are the common issues when deploying starter templates?
-
-### 1. Popup blocker prevents Vercel from installing their GitHub app
-
-After choosing which starter template to deploy and being redirected to Vercel, a popup for Vercel to add their GitHub app may fail to open. Look in the bottom left corner for a toast message saying "The popup to install the GitHub App could not be opened."
-
-<imageEmbed image={{ src: "/img/docs/introduction/vercel-popup-blocked_ogt6fr.png", alt: "" }} caption="Popup blocked" />
-
-To fix, check your browser's address bar for blocked popups, allow them, and retry.
-
-## 17. Is TinaCMS LLM-friendly?
-
-Yes. TinaCMS is designed to be highly LLM-friendly, mainly because it uses Markdown for structuring content.
-
-Markdown gives Large Language Models (LLMs) clear advantages:
-
-* Clear structure – headings, lists, and code blocks are easier to parse
-* Semantic meaning – formatting adds clarity and context
-* Prompt-friendly – consistent markup reduces ambiguity
-* Readable for humans & machines – raw Markdown works well for both
-* Aligned with LLM trends – Markdown fits naturally with the shift toward LLM-optimized content, as highlighted in [SEO is Dead, Long Live LLMO](https://web.archive.org/web/2024/https://jina.ai/news/seo-is-dead-long-live-llmo)
-
-## 18. Do you support Git LFS?
-
-Unfortunately we do not support Git LFS at this time due to limitations with the GitHub API.
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "14. What are the common TinaCloud errors?",
+      docText: "See the TinaCloud [troubleshooting](/docs/tinacloud/troubleshooting) page for more information.\n"
+    },
+    {
+      heading: "15. How to to access local GraphQL server when it's not running or in prod?",
+      docText: "### In production\n\nMake sure your API URL isn't set to point at your local GraphQL server when in production. You should be pointing to the ContentAPI.\n\n### Locally\n\nIf you are working locally, make sure your [GraphQL server is running](/docs/graphql/cli/).\n"
+    },
+    {
+      heading: "16. Vercel Deployment Issues -  What are the common issues when deploying starter templates?",
+      docText: "### 1. Popup blocker prevents Vercel from installing their GitHub app\n\nAfter choosing which starter template to deploy and being redirected to Vercel, a popup for Vercel to add their GitHub app may fail to open. Look in the bottom left corner for a toast message saying \"The popup to install the GitHub App could not be opened.\"\n\n![](/img/docs/introduction/vercel-popup-blocked_ogt6fr.png)\\\n**Figure: Popup blocked**\n\nTo fix, check your browser's address bar for blocked popups, allow them, and retry.\n"
+    },
+    {
+      heading: "17. Is TinaCMS LLM-friendly?",
+      docText: "Yes. TinaCMS is designed to be highly LLM-friendly, mainly because it uses Markdown for structuring content.\n\nMarkdown gives Large Language Models (LLMs) clear advantages:\n\n* Clear structure – headings, lists, and code blocks are easier to parse\n* Semantic meaning – formatting adds clarity and context\n* Prompt-friendly – consistent markup reduces ambiguity\n* Readable for humans & machines – raw Markdown works well for both\n* Aligned with LLM trends – Markdown fits naturally with the shift toward LLM-optimized content, as highlighted in [SEO is Dead, Long Live LLMO](https://web.archive.org/web/2024/https://jina.ai/news/seo-is-dead-long-live-llmo)\n"
+    },
+    {
+      heading: "18. Do you support Git LFS?",
+      docText: "Unfortunately we do not support Git LFS at this time due to limitations with the GitHub API.\n"
+    }
+  ]}
+/>
 
 ## 18. Getting a 503 Service Unavailable error when loading the reference field.
 
@@ -147,6 +134,8 @@ Unfortunately we do not support Git LFS at this time due to limitations with the
     When using the reference field on a collection with a large number of items, you may find the network requests time out. Currently, we do not have anything in place to paginate the reference field.
 
     The alternative would be to add a [custom field component](https://tina.io/docs/extending-tina/custom-field-components) with pagination. To retrieve the paginated results, you can use a [custom query](https://tina.io/docs/data-fetching/custom-queries).
+  </>}
+/>
 
 <youtube embedSrc="https://www.youtube.com/embed/6FVpOvLK51s" caption="FAQ - Getting a 503 Service Unavailable error when loading the reference field" />
 
