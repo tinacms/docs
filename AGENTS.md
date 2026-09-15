@@ -7,7 +7,7 @@ This file provides guidance to AI coding agents working in this repository.
 This is the **TinaCMS documentation site**, served at `tina.io/docs` (and `tina.io/zh/docs`) through a rewrite from the tina.io Next.js app. It is a deployed instance of the [tina-docs](https://github.com/tinacms/tina-docs) starter, not the starter itself:
 
 - Hardcoding tina.io values (URLs, branding, redirects, analytics) is fine here.
-- Features only this site needs (tina.io header, `GraphQLCodeBlock`, alias permalinks, zh locale) are built here first. Upstreaming generic pieces to tina-docs is welcome but never blocks work here.
+- Features only this site needs (tina.io header, `GraphQLCodeBlock`, alias permalinks, zh locale) are built here first. Generic component or template fixes must also be sent to tina-docs in a linked PR so the starter does not drift.
 - Content is being migrated from [tina.io](https://github.com/tinacms/tina.io) `content/docs` and `content/docs-zh`. Progress, decisions, and open tasks live in the epic: https://github.com/tinacms/tinacms/issues/7552. Read it before starting migration work, and comment there with evidence links when you finish a task.
 
 Deployment: Vercel, production branch `main`. TinaCloud project credentials live in Vercel env vars and GitHub Actions secrets.
@@ -43,6 +43,23 @@ pnpm tinacms build --local --skip-cloud-checks   # Validate schema + content off
 ```
 
 `tinacms build --local --skip-cloud-checks` is the schema gate: run it after changing anything under `tina/` or bulk-editing content. It fails on any MDX that does not match the collection schema.
+
+## Migration and review checklist
+
+For bulk content migrations and embed conversions:
+
+- Preserve meaning and presentation. Keep literal examples and CLI errors in code fences, retain warning severity, and do not drop links, headings, captions, or media silently.
+- Verify every referenced asset exists and renders. If an asset was already dead at the source, remove the embed and explain that decision in the PR.
+- Keep component defaults aligned with their Tina template defaults. Changing runtime behavior without changing newly inserted CMS content is incomplete.
+- After rebasing or restacking, rerun the schema gate and recheck the affected pages. Conflict resolution can produce valid Git with broken MDX.
+
+For UI or component work:
+
+- Run `pnpm dev` and inspect every affected route at desktop and mobile widths. Include long content, code blocks, tables, and nested embeds where relevant.
+- Capture and upload screenshots for changed UI and visual review feedback. Add before/after images when the change is visual.
+- Check keyboard interaction and accessible names for new or expanded interactive UI.
+- Run `pnpm lint`, relevant tests, and the schema gate when `tina/` or content changed.
+- For generic fixes shared with tina-docs, open the linked tina-docs PR before treating this repository's work as complete.
 
 ## Coding Standards
 
