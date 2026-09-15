@@ -24,16 +24,45 @@ next: content/docs/reference/media/overview.mdx
 
 Here are some common options that can be used in both `tinacms dev` and `tinacms build`
 
-| Argument                  | Description                                                                                                                                                                  |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `-c`                      | `-c` allows you to optionally run a command as a child process. For example, you could run your Next.js project alongside the graphQL server `yarn tinacms dev -c next dev`. |
-| `--port <port>`           | Specify a port to run the server on. (default 4001)                                                                                                                          |
-| `--datalayer-port <port>` | Specify a port to run the local level server. (default 9000)                                                                                                                 |
-| `--noWatch`               | Don't regenerate config on file changes. This option is good to add when building in CI or if you do not want to watch the file system for changes.                          |
-| `--noSDK`                 | Don't generate the generated client SDK. [Read here](/docs/graphql/cli/) for more details about the SDK.                                                                  |
-| `-v`,`--verbose`          | increase verbosity of logged output (default: false)                                                                                                                         |
-| `--rootPath`              | Specify the root directory to run the CLI from (defaults to current working directory)                                                                                       |
-| `--noTelemetry`           | don't report anonymous telemetry                                                                                                                                             |
+<propertyTable
+  property={[
+    {
+      name: "-c",
+      description: "`-c` allows you to optionally run a command as a child process. For example, you could run your Next.js project alongside the graphQL server `yarn tinacms dev -c next dev`.\n"
+    },
+    {
+      name: "--port <port>",
+      description: "Specify a port to run the server on.\n",
+      default: "4001"
+    },
+    {
+      name: "--datalayer-port <port>",
+      description: "Specify a port to run the local level server.\n",
+      default: "9000"
+    },
+    {
+      name: "--noWatch",
+      description: "Don't regenerate config on file changes. This option is good to add when building in CI or if you do not want to watch the file system for changes.\n"
+    },
+    {
+      name: "--noSDK",
+      description: "Don't generate the generated client SDK. [Read here](/docs/graphql/cli/) for more details about the SDK.\n"
+    },
+    {
+      name: "-v, --verbose",
+      description: "increase verbosity of logged output\n",
+      default: "false"
+    },
+    {
+      name: "--rootPath",
+      description: "Specify the root directory to run the CLI from (defaults to current working directory)\n"
+    },
+    {
+      name: "--noTelemetry",
+      description: "don't report anonymous telemetry\n"
+    }
+  ]}
+/>
 
 ## Basic Usage:
 
@@ -73,14 +102,34 @@ This command compiles and validates the schema and generates the client and type
 
 This command takes all the common [options](#common-options) as well as a few others:
 
-| Argument                  | Description                                                                                                                    |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| `--tina-graphql-version`  | Specify the version of `@tinacms/graphql` that the backend will use. (Only needed in advanced cases)                           |
-| `--local`                 | Will start the local Graphql server and generate the local client. This is useful for static builds but will not work with SSR |
-| `--content=local`         | Source content from the local filesystem during the build so no TinaCloud Content API calls are made, while the generated client still points at TinaCloud at runtime. Recommended for SSG sites with many pages. |
-| `--skip-cloud-checks`     | Skip the TinaCloud checks (dangerous and not recommended)                                                                      |
-| `--skip-search-indexing`  | Skip the search indexing                                                                                                       |
-| `--no-client-build-cache` | Disables automatic caching of queries by local client                                                                          |
+<propertyTable
+  property={[
+    {
+      name: "--tina-graphql-version",
+      description: "Specify the version of `@tinacms/graphql` that the backend will use. (Only needed in advanced cases)\n"
+    },
+    {
+      name: "--local",
+      description: "Will start the local Graphql server and generate the local client. This is useful for static builds but will not work with SSR\n"
+    },
+    {
+      name: "--content=local",
+      description: "Source content from the local filesystem during the build so no TinaCloud Content API calls are made, while the generated client still points at TinaCloud at runtime. Recommended for SSG sites with many pages.\n"
+    },
+    {
+      name: "--skip-cloud-checks",
+      description: "Skip the TinaCloud checks (dangerous and not recommended)\n"
+    },
+    {
+      name: "--skip-search-indexing",
+      description: "Skip the search indexing\n"
+    },
+    {
+      name: "--no-client-build-cache",
+      description: "Disables automatic caching of queries by local client\n"
+    }
+  ]}
+/>
 
 #### Examples:
 
@@ -154,9 +203,14 @@ This will:
 
 #### Options
 
-| Argument        | Description                    |
-| --------------- | ------------------------------ |
-| `--noTelemetry` | Disables Open Source Telemetry |
+<propertyTable
+  property={[
+    {
+      name: "--noTelemetry",
+      description: "Disables Open Source Telemetry\n"
+    }
+  ]}
+/>
 
 ### "tinacms audit"
 
@@ -169,10 +223,19 @@ By default the mutation will not change the content of the files.
 
 #### Options
 
-| Argument         | Description                                                                                                                                                                                                                                                                |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--clean`        | When this flag is used, it submits actual Graphql mutations to the file system. This means that it will clean out any fields that are not defined in your schema. It is a good practice to do a `git commit` before doing this so unintended changes can be easily undone. |
-| `-v`,`--verbose` | increase verbosity of logged output (default: false)                                                                                                                                                                                                                       |
+<propertyTable
+  property={[
+    {
+      name: "--clean",
+      description: "When this flag is used, it submits actual Graphql mutations to the file system. This means that it will clean out any fields that are not defined in your schema. It is a good practice to do a `git commit` before doing this so unintended changes can be easily undone.\n"
+    },
+    {
+      name: "-v, --verbose",
+      description: "increase verbosity of logged output\n",
+      default: "false"
+    }
+  ]}
+/>
 
 ### "tinacms search-index"
 
@@ -196,8 +259,20 @@ pnpm tinacms doctor
 
 #### Options
 
-| Argument            | Description                                                                            |
-| ------------------- | -------------------------------------------------------------------------------------- |
-| `--rootPath <path>` | Specify the root directory to inspect (defaults to current working directory)          |
-| `--json`            | Print machine-readable JSON output instead of the formatted table                      |
-| `--timeout <ms>`    | npm registry request timeout in milliseconds (default: 5000)                           |
+<propertyTable
+  property={[
+    {
+      name: "--rootPath <path>",
+      description: "Specify the root directory to inspect (defaults to current working directory)\n"
+    },
+    {
+      name: "--json",
+      description: "Print machine-readable JSON output instead of the formatted table\n"
+    },
+    {
+      name: "--timeout <ms>",
+      description: "npm registry request timeout in milliseconds\n",
+      default: "5000"
+    }
+  ]}
+/>

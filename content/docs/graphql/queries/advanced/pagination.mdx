@@ -19,12 +19,30 @@ A `pageInfo` object is available for collection queries and can be used for forw
 
 The table below describes the properties available on the `pageInfo` object:
 
-| Field           | Type    | Description                                                                   |
-| --------------- | ------- | ----------------------------------------------------------------------------- |
-| hasNextPage     | boolean | During forward pagination, indicates if another page of results is available. |
-| hasPreviousPage | boolean | During reverse pagination, indicates if another page of results is available. |
-| startCursor     | string  | The cursor of the first item in the result set.                               |
-| endCursor       | string  | The cursor of the last item in the result set.                                |
+<propertyTable
+  property={[
+    {
+      name: "hasNextPage",
+      type: "boolean",
+      description: "During forward pagination, indicates if another page of results is available.\n"
+    },
+    {
+      name: "hasPreviousPage",
+      type: "boolean",
+      description: "During reverse pagination, indicates if another page of results is available.\n"
+    },
+    {
+      name: "startCursor",
+      type: "string",
+      description: "The cursor of the first item in the result set.\n"
+    },
+    {
+      name: "endCursor",
+      type: "string",
+      description: "The cursor of the last item in the result set.\n"
+    }
+  ]}
+/>
 
 ## Forward pagination
 

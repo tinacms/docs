@@ -32,17 +32,54 @@ export default isLocal ? createLocalDatabase() ? createDatabase({
 
 ### Required Parameters
 
-| Option   | Description                                                                               |
-| -------- | ----------------------------------------------------------------------------------------- |
-| `branch` | The branch to save content to.                                                            |
-| `owner`  | The owner of the repo.                                                                    |
-| `repo`   | The repo to save content to.                                                              |
-| `token`  | A [GitHub Personal Access Token](https://github.com/settings/personal-access-tokens/new). |
+<propertyTable
+  property={[
+    {
+      name: "branch",
+      type: "string",
+      description: "The branch to save content to.\n",
+      required: true
+    },
+    {
+      name: "owner",
+      type: "string",
+      description: "The owner of the repo.\n",
+      required: true
+    },
+    {
+      name: "repo",
+      type: "string",
+      description: "The repo to save content to.\n",
+      required: true
+    },
+    {
+      name: "token",
+      type: "string",
+      description: "A [GitHub Personal Access Token](https://github.com/settings/personal-access-tokens/new).\n",
+      required: true
+    }
+  ]}
+/>
 
 ### Optional Parameters
 
-| Option           | Description                                                                                                                |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `commitMessage`  | The commit message to use when saving content. Defaults to `Edited with TinaCMS`.                                          |
-| `rootPath`       | This path will be prefixed to all paths. Usually only used in monorepos. Optional.                                         |
-| `octokitOptions` | Options passed to the [Octokit constructor](https://github.com/octokit/octokit.js/blob/main/README.md#constructor-options) |
+<propertyTable
+  property={[
+    {
+      name: "commitMessage",
+      type: "string",
+      description: "The commit message to use when saving content.\n",
+      default: "Edited with TinaCMS"
+    },
+    {
+      name: "rootPath",
+      type: "string",
+      description: "This path will be prefixed to all paths. Usually only used in monorepos.\n"
+    },
+    {
+      name: "octokitOptions",
+      type: "OctokitOptions",
+      description: "Options passed to the [Octokit constructor](https://github.com/octokit/octokit.js/blob/main/README.md#constructor-options)\n"
+    }
+  ]}
+/>
