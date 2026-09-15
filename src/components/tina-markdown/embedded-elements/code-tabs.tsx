@@ -5,6 +5,11 @@ import { MdContentCopy } from "react-icons/md";
 import { CodeBlock } from "../standard-elements/code-block/code-block";
 import { CodeBlockSkeleton } from "../standard-elements/code-block/code-block-skeleton";
 
+// Tina serialises the spaces of multi-line string props as U+FFFD; both the
+// rendered block and the clipboard copy must decode them the same way.
+const decodeTabContent = (content?: string) =>
+  content?.replaceAll("\uFFFD", " ") ?? "";
+
 interface Tab {
   name: string;
   content: string;
@@ -59,8 +64,8 @@ export const CodeTabs = ({ tabs, initialSelectedIndex = 0 }: CodeTabsProps) => {
 
   // Handle the copy action
   const handleCopy = () => {
-    const textToCopy = tabs[selectedTabIndex]?.content;
-    navigator.clipboard.writeText(textToCopy || "");
+    const textToCopy = decodeTabContent(tabs[selectedTabIndex]?.content);
+    navigator.clipboard.writeText(textToCopy);
     setHasCopied(true);
     setTimeout(() => setHasCopied(false), 2000);
   };
@@ -89,7 +94,7 @@ export const CodeTabs = ({ tabs, initialSelectedIndex = 0 }: CodeTabsProps) => {
       <div className="flex flex-col z-10 w-full rounded-xl py-0 bg-neutral-background shadow-lg border border-neutral-border">
         {/* TOP SECTION w/ Buttons */}
         <div className="flex items-center w-full border-b border-neutral-border ">
-          <div className="flex flex-1 ">
+          <div className="flex min-w-0 flex-1 overflow-x-auto">
             {tabs?.map((tab, index) => (
               <button
                 key={tab.id || index}
@@ -112,7 +117,7 @@ export const CodeTabs = ({ tabs, initialSelectedIndex = 0 }: CodeTabsProps) => {
           </div>
 
           {/* Copy Button */}
-          <div className="flex pr-2">
+          <div className="flex shrink-0 pr-2">
             <button
               type="button"
               onClick={handleCopy}
@@ -167,7 +172,7 @@ export const CodeTabs = ({ tabs, initialSelectedIndex = 0 }: CodeTabsProps) => {
                 }}
               >
                 <CodeBlock
-                  value={tab.content?.replaceAll("�", " ")}
+                  value={decodeTabContent(tab.content)}
                   lang={tab.language ?? "text"}
                   showCopyButton={false}
                   showBorder={false}
