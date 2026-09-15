@@ -293,7 +293,11 @@ const components: CustomComponentsMap = { YouTubeEmbed };
 <TinaMarkdown content={data.body} components={components} />
 ```
 
-> **The two `name` strings must match.** The template's `name: 'YouTubeEmbed'` and the components-map key `YouTubeEmbed` are how the renderer dispatches `mdxJsxFlowElement` nodes from the rich-text AST. A mismatch renders the embed as a visible placeholder so you spot missing registrations during development.
+<Callout variant="warning"
+  body={<>
+    **The two `name` strings must match.** The template's `name: 'YouTubeEmbed'` and the components-map key `YouTubeEmbed` are how the renderer dispatches `mdxJsxFlowElement` nodes from the rich-text AST. A mismatch renders the embed as a visible placeholder so you spot missing registrations during development.
+  </>}
+/>
 
 ## Default-tag overrides
 

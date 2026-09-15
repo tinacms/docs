@@ -8,7 +8,11 @@ last_edited: '2025-09-18T23:36:56.341Z'
 
 TinaCMS provides built-in search functionality for content. This is useful for allowing editors to quickly finding content in a site. TinaCloud's content search is powered by [Fergus McDowall](https://github.com/fergiemcdowall "Fergus McDowall")'s [search-index](https://www.npmjs.com/package/search-index "search-index") library.
 
-> Note: Search is not currently supported in self-hosted TinaCMS.
+<Callout variant="info"
+  body={<>
+    Search is not currently supported in self-hosted TinaCMS.
+  </>}
+/>
 
 ## Configuration
 
@@ -103,7 +107,11 @@ fields: [
 
 TinaCMS includes built-in fuzzy search capabilities that help users find content even when they make typos or spelling mistakes. Fuzzy search is **enabled by default**, so your search will automatically handle common misspellings without any additional configuration.
 
-> Fuzzy search was released in **tinacms@3.3.0** and **@tinacms/cli@2.1.0**. No config changes are needed to get the benefits of the new search — just update your packages!
+<Callout variant="info"
+  body={<>
+    Fuzzy search was released in **tinacms@3.3.0** and **@tinacms/cli@2.1.0**. No config changes are needed to get the benefits of the new search — just update your packages!
+  </>}
+/>
 
 ### How Fuzzy Search Works
 

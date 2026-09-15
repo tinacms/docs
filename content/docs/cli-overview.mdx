@@ -39,7 +39,11 @@ Here are some common options that can be used in both `tinacms dev` and `tinacms
 
 ### "tinacms dev"
 
-> To run this command, you must have a valid `tina/config.{ts,tsx,js,jsx}` file.
+<Callout variant="info"
+  body={<>
+    To run this command, you must have a valid `tina/config.{ts,tsx,js,jsx}` file.
+  </>}
+/>
 
 `dev` will compile the schema into static files, generate typescript types for use in your project and start a graphQL server on [http://localhost:4001](http://localhost:4001)
 
@@ -127,7 +131,11 @@ A few things to know:
 
 ### "npx @tinacms/cli\@latest init"
 
-> The init command must be run inside of an existing project (E.g a NextJS project, Hugo, Jekyll, etc).
+<Callout variant="info"
+  body={<>
+    The init command must be run inside of an existing project (E.g a NextJS project, Hugo, Jekyll, etc).
+  </>}
+/>
 
 ```bash
 npx @tinacms/cli init

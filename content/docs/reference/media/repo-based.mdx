@@ -147,7 +147,11 @@ If you are configuring Tina on a non-default branch (and the Tina config has not
 
 Repo-based media does not support renaming files through the Media Manager — the UI has no rename action today. To rename a file, you need to delete-and-re-upload via the Media Library, or make the change directly in GitHub.
 
-> **Prevention:** Avoid filenames with spaces, accents, or special characters. Lowercase ASCII with hyphens (e.g. `my-image.jpg`) is the safest bet — filenames with special characters have been seen to break downstream builds (e.g. Astro). First-class filename sanitisation on upload is tracked in [tinacms#6359](https://github.com/tinacms/tinacms/issues/6359).
+<Callout variant="warning"
+  body={<>
+    **Prevention:** Avoid filenames with spaces, accents, or special characters. Lowercase ASCII with hyphens (e.g. `my-image.jpg`) is the safest bet — filenames with special characters have been seen to break downstream builds (e.g. Astro). First-class filename sanitisation on upload is tracked in [tinacms#6359](https://github.com/tinacms/tinacms/issues/6359).
+  </>}
+/>
 
 **Workaround 1 — Delete and re-upload via the Media Library:**
 
@@ -162,6 +166,10 @@ Repo-based media does not support renaming files through the Media Manager — t
 4. Add the file with the new name directly in GitHub
 5. Wait for the new file to sync back to TinaCloud
 
-> If the tracked branch has branch protection rules enabled, attempting to upload via the Media Library will save the file to the media storage (S3) but the change will **not** be committed to the protected branch. In that setup, use Workaround 2.
+<Callout variant="warning"
+  body={<>
+    If the tracked branch has branch protection rules enabled, attempting to upload via the Media Library will save the file to the media storage (S3) but the change will **not** be committed to the protected branch. In that setup, use Workaround 2.
+  </>}
+/>
 
 > First-class rename support in the Media Library is tracked in [tinacms#6722](https://github.com/tinacms/tinacms/issues/6722).

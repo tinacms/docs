@@ -9,7 +9,11 @@ next: content/docs/frameworks/next/pages-router.mdx
 previous: content/docs/frameworks/astro.mdx
 ---
 
-> 👆This guide assumes you are using the **[Next.js app router.](https://nextjs.org/docs/app)**
+<Callout variant="info"
+  body={<>
+    This guide assumes you are using the **[Next.js app router.](https://nextjs.org/docs/app)**
+  </>}
+/>
 
 ## Video Guide
 
@@ -51,7 +55,11 @@ pnpm dev
 
 With TinaCMS running, navigate to `http://localhost:3000/admin/index.html`.
 
-> ❓ Hint: If you are getting errors when running this command, please see the [Common Errors](/docs/forestry/common-errors) page.
+<Callout variant="idea"
+  body={<>
+    If you are getting errors when running this command, please see the [Common Errors](/docs/forestry/common-errors) page.
+  </>}
+/>
 
 At this point, you should be able to see the TinaCMS admin, select a post, save changes, and see the changes persisted to your local markdown files.
 
@@ -120,14 +128,18 @@ export default defineConfig({
 
 **For a more detailed overview about the config see [Content Modeling with TinaCMS](/docs/extending-tina/overview/)**
 
-> 💡 If you've followed this guide using the `tina  init` command, you might have noticed that a `content` and a `pages` folder got created:
+<Callout variant="idea"
+  body={<>
+    If you've followed this guide using the `tina  init` command, you might have noticed that a `content` and a `pages` folder got created:
 
-```bash
-Adding file at content/posts/hello-world.md... ✅
-Adding file at pages/demo/blog/[filename].tsx... ✅
-```
+    ```bash
+    Adding file at content/posts/hello-world.md... ✅
+    Adding file at pages/demo/blog/[filename].tsx... ✅
+    ```
 
-> These can be used as a quick reference but are safe to delete.
+    These can be used as a quick reference but are safe to delete.
+  </>}
+/>
 
 ## Creating a New Post
 

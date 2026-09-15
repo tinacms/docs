@@ -8,7 +8,11 @@ previous: content/docs/self-hosted/querying-data.mdx
 
 When using the default self-hosted auth, logins and passwords are stored in a collection named “User”. This collection is accessible from the Collections menu in the same way as the other collections. The collection consists of a single document with a list of user objects.
 
-> Note: The user collection is not stored in your Git repository. All changes to the collection are persisted to the self-hosted database.
+<Callout variant="info"
+  body={<>
+    The user collection is not stored in your Git repository. All changes to the collection are persisted to the self-hosted database.
+  </>}
+/>
 
 ![](/img/docs/self-hosted/user_management_users_collection_small_gjxgld.png)
 

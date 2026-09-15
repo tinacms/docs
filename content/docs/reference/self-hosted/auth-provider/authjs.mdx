@@ -6,7 +6,11 @@ The default (Auth.js) auth provider uses [Auth.js](https://authjs.dev/) and a us
 
 ## Getting Started
 
-> Note: If you have not set up self-hosting yet, we recommend using the `init backend` command. See the [Getting started doc](/docs/self-hosted/existing-site/) for more information.
+<Callout variant="info"
+  body={<>
+    If you have not set up self-hosting yet, we recommend using the `init backend` command. See the [Getting started doc](/docs/self-hosted/existing-site/) for more information.
+  </>}
+/>
 
 To get started you will need to install the following dependencies:
 
@@ -14,7 +18,11 @@ To get started you will need to install the following dependencies:
 yarn add next-auth tinacms-authjs
 ```
 
-> Hint: Make sure you have a [database adapter](/docs/reference/self-hosted/database-adapter/overview/) setup before continuing.
+<Callout variant="idea"
+  body={<>
+    Make sure you have a [database adapter](/docs/reference/self-hosted/database-adapter/overview/) setup before continuing.
+  </>}
+/>
 
 ### Update Your TinaCMS Config
 
@@ -195,7 +203,11 @@ Remove the password field from the seed data.
 }
 ```
 
-> Note that if you already have users in your database, you will need to remove the password field from them as well.
+<Callout variant="warning"
+  body={<>
+    Note that if you already have users in your database, you will need to remove the password field from them as well.
+  </>}
+/>
 
 ### Configure the Discord Login Provider
 

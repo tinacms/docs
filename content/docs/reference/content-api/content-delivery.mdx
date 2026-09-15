@@ -7,7 +7,11 @@ Requests can be made to the TinaCMS Content API with Read Only Tokens. In the ma
 
 ## Making requests with `curl` and `fetch`
 
-> NOTE: for most cases the tina client can be used and it is not necessary to use fetch directly
+<Callout variant="info"
+  body={<>
+    For most cases the tina client can be used and it is not necessary to use fetch directly
+  </>}
+/>
 
 The Content API endpoint is `https://content.tinajs.io/<TinaGraphQLVersion>/content/<myClientId>/github/<myBranch>`. The token can be passed by including a `X-API-KEY` custom HTTP header with the token as the value.
 

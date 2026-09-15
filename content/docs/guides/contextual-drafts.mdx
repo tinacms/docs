@@ -2,7 +2,11 @@
 title: 'Using Drafts with Visual Editing '
 ---
 
-> The following guide requires tinacms: 1.0.2 or later.
+<Callout variant="info"
+  body={<>
+    The following guide requires tinacms: 1.0.2 or later.
+  </>}
+/>
 
 > Want to skip to the end result? [Check out the final result](https://github.com/tinacms/tina-barebones-starter-preview-mode)
 
@@ -16,7 +20,11 @@ In preview-mode `getStaticProps` will be called on every request. This means tha
 
 ## 1. Add the preview-mode api handlers
 
-> Note: If you have not installed `@tinacms/auth` you can do so by running `yarn add @tinacms/auth` or `npm install @tinacms/auth`
+<Callout variant="info"
+  body={<>
+    If you have not installed `@tinacms/auth` you can do so by running `yarn add @tinacms/auth` or `npm install @tinacms/auth`
+  </>}
+/>
 
 Create a file called `pages/api/preview/enter.{ts,js}` this will handle the request to enter preview-mode. This file should look like this:
 
