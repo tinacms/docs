@@ -133,11 +133,14 @@ If your repo is not a monorepo, there's no need to do any configuration. We'll e
 
 Here's an example monorepo structure that works with TinaCloud:
 
-```plaintext
-    /projects/site-a
-    /projects/site-b
-    /projects/site-c
-```
+<fileStructure
+  fileStructure={[
+    { id: "faq-projects", name: "projects", type: "folder", parentId: null },
+    { id: "faq-site-a", name: "site-a", type: "folder", parentId: "faq-projects" },
+    { id: "faq-site-b", name: "site-b", type: "folder", parentId: "faq-projects" },
+    { id: "faq-site-c", name: "site-c", type: "folder", parentId: "faq-projects" }
+  ]}
+/>
 
 See [Path To TinaCMS](/docs/tinacloud/dashboard/projects/#path-to-tina) for more information.
 

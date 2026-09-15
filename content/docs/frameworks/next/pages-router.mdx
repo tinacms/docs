@@ -145,11 +145,13 @@ export default defineConfig({
 
 Now, let's go back and check what was created. You will see a `/content` folder with your new post saved as a `.md` file. This path is defined in the `tina/config.ts` files post collection!
 
-```bash
-content
-    └── posts
-        └── hello-world.md
-```
+<fileStructure
+  fileStructure={[
+    { id: "pr-content", name: "content", type: "folder", parentId: null },
+    { id: "pr-posts", name: "posts", type: "folder", parentId: "pr-content" },
+    { id: "pr-hello-world", name: "hello-world.md", type: "file", parentId: "pr-posts" }
+  ]}
+/>
 
 ## Rendering the Post Collection
 
