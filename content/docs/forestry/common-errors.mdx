@@ -105,7 +105,7 @@ In forestry you could have a block field that had a template that was not define
 
 ### Error when getting content in the admin
 
-```
+```text
 [Error] GetCollection failed: Unable to fetch, errors: Error querying file <File> from collection pages. Please run "tinacms audit" or add the --verbose option for more info
 ```
 
@@ -120,7 +120,7 @@ This can happen for many reasons. Some common reasons are because the data you a
 
 For example, if you are missing `_template` you will see an error like this
 
-```
+```text
 Error: Unable to determine template for item at hugo/content/about.md, no template name provided for collection with multiple templates
     at TinaSchema.getCollectionAndTemplateByFullPath (/Users/logananderson-forestry-mac/dev/forestry.io/forestry.io/node_modules/@tinacms/schema-tools/dist/index.js:224:19)
 ```

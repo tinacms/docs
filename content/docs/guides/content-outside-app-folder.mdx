@@ -13,7 +13,7 @@ TinaCMS supports this layout using the `localContentPath` config option. This gu
 
 ## Example Structure
 
-```
+```plaintext
 my-monorepo/
 ├── content/               ← your markdown/MDX content
 │   ├── tina/              ← required (TinaCMS writes generated files here)
@@ -79,7 +79,7 @@ export default defineConfig({
 
 TinaCMS writes generated files (`tina-lock.json`, `__generated__/` etc.) into a `tina/` folder inside the content root. **This folder must exist** or the CLI will fail with:
 
-```
+```text
 Unable to find TinaCMS folder, if you're working in folder outside of the TinaCMS config be sure to specify --rootPath
 ```
 
@@ -128,7 +128,7 @@ npx tinacms dev -c "next dev"
 
 You should see:
 
-```
+```text
 🦙 TinaCMS Dev Server is initializing...
 Using separate content repo at /path/to/my-monorepo/content
 
@@ -149,7 +149,7 @@ Check that your collection `path` values are relative to the content root, not t
 
 `localContentPath` is resolved relative to the `tina/` config folder. Count the directory levels carefully:
 
-```
+```text
 packages/website/tina/config.ts
          ↑       ↑     ↑
          │       │     └── the file

@@ -78,7 +78,7 @@ Without them the branch falls back to `main`, so a preview or non-`main` deploy 
 
 The `@astrojs/cloudflare` adapter adds a `SESSION` KV binding (Astro's session store) even when your site doesn't use sessions. Your first deploy creates the namespace automatically, but Cloudflare doesn't write its ID back to your repo, so the next git-based deploy tries to create it again and fails:
 
-```
+```text
 ✘ a namespace with this account ID and title already exists [code: 10014]
 ```
 
