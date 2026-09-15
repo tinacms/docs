@@ -58,12 +58,35 @@ module.exports = {
   },
 
   async redirects() {
-    return redirects.map((redirect) => ({
-      source: redirect.source,
-      destination: redirect.destination,
-      permanent: redirect.permanent,
-      ...(redirect.basePath === false ? { basePath: false } : {}),
-    }));
+    const hostRootRedirects = [
+      {
+        source: "/",
+        destination: `${basePath}`,
+        permanent: false,
+        basePath: false,
+      },
+      {
+        source: "/admin",
+        destination: `${basePath}/admin`,
+        permanent: false,
+        basePath: false,
+      },
+      {
+        source: "/admin/:path*",
+        destination: `${basePath}/admin/:path*`,
+        permanent: false,
+        basePath: false,
+      },
+    ];
+    return [
+      ...hostRootRedirects,
+      ...redirects.map((redirect) => ({
+        source: redirect.source,
+        destination: redirect.destination,
+        permanent: redirect.permanent,
+        ...(redirect.basePath === false ? { basePath: false } : {}),
+      })),
+    ];
   },
 
   turbopack: {
