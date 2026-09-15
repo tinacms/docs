@@ -16,25 +16,52 @@ The `radio-group` field represents a group of radio inputs. It can rendered in a
 
 ## Options
 
-| Option        | Description                                                                                                                                                                   |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `component`   | The name of the plugin component. Always 'radio-group'.                                                                                                                       |
-| `name`        | The path to some value in the data being edited.                                                                                                                              |
-| `options`     | An array of strings or Options to select from.                                                                                                                                |
-| `direction`   | An optional string indicating whether to render the radios in a "horizontal" or "vertical" orientation. This will default to "horizontal" if no value is passed. *(Optional)* |
-| `variant`     | An optional string indicating whether the "radio" or "button" variant should be used. This will default to "radio" if no value is passed. *(Optional)*                        |
-| `label`       | A human readable label for the field. Defaults to the name. *(Optional)*                                                                                                      |
-| `description` | Description that expands on the purpose of the field or prompts a specific action. *(Optional)*                                                                               |
+<propertyTable
+  property={[
+    {
+      name: "component",
+      type: "string",
+      description: "The name of the plugin component. Always 'radio-group'.\n",
+      required: true
+    },
+    {
+      name: "name",
+      type: "string",
+      description: "The path to some value in the data being edited.\n",
+      required: true
+    },
+    {
+      name: "options",
+      type: "(Option | string)[]",
+      description: "An array of strings or Options to select from.\n",
+      required: true
+    },
+    {
+      name: "direction",
+      type: "'horizontal' | 'vertical'",
+      description: "An optional string indicating whether to render the radios in a \"horizontal\" or \"vertical\" orientation. This will default to \"horizontal\" if no value is passed.\n",
+      default: "'horizontal'"
+    },
+    {
+      name: "variant",
+      type: "'radio' | 'button'",
+      description: "An optional string indicating whether the \"radio\" or \"button\" variant should be used. This will default to \"radio\" if no value is passed.\n",
+      default: "'radio'"
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "A human readable label for the field. Defaults to the name.\n"
+    },
+    {
+      name: "description",
+      type: "string",
+      description: "Description that expands on the purpose of the field or prompts a specific action.\n"
+    }
+  ]}
+/>
 
 ```typescript
-interface RadioGroupField {
-  name: string
-  component: string
-  label?: string
-  options: (Option | string)[]
-  direction?: 'horizontal' | 'vertical'
-}
-
 type Option = {
   value: string
   label: string

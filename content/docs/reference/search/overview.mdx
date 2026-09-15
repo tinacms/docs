@@ -40,17 +40,64 @@ export default defineConfig({
 
 ### Definition
 
-| Property                                      | Description                                                                                                                                                                                                 |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `search.tina.indexerToken`                    | TinaCloud search token (*required*)                                                                                                                                                                         |
-| `search.tina.stopwordLanguages`               | Optional array of string stopword languages. Defaults to `['eng']`. See the [stopword](https://github.com/fergiemcdowall/stopword#language-code) GitHub repository for a full list of supported languages.  |
-| `search.tina.fuzzyEnabled`                    | Enable or disable fuzzy search globally. Defaults to `true`.                                                                                                                                                |
-| `search.tina.fuzzyOptions.maxDistance`        | Maximum edit distance for fuzzy matching (0-10). Higher values find more distant matches but may return less relevant results. Defaults to `2`.                                                             |
-| `search.tina.fuzzyOptions.minSimilarity`      | Minimum similarity score (0-1) required for a match. Higher values return more precise matches. Defaults to `0.6`.                                                                                          |
-| `search.tina.fuzzyOptions.maxTermExpansions`  | Maximum number of similar terms to consider per search word (1-100). Defaults to `10`.                                                                                                                      |
-| `search.tina.fuzzyOptions.useTranspositions`  | Allow character transpositions (e.g., "teh" → "the") using Damerau-Levenshtein algorithm. Defaults to `true`.                                                                                               |
-| `search.indexBatchSize`                       | Used by the indexing process to determine the number of documents to index per request. Defaults to `100`.                                                                                                  |
-| `search.maxSearchIndexFieldLength`            | For variable length text fields, this controls how much of the text is considered when indexing. A higher value will increase the indexing time and size of the search index. Defaults to `100` characters. |
+<propertyTable
+  property={[
+    {
+      name: "search.tina.indexerToken",
+      type: "string",
+      description: "TinaCloud search token\n",
+      required: true
+    },
+    {
+      name: "search.tina.stopwordLanguages",
+      type: "string[]",
+      description: "Optional array of string stopword languages. See the [stopword](https://github.com/fergiemcdowall/stopword#language-code) GitHub repository for a full list of supported languages.\n",
+      default: "['eng']"
+    },
+    {
+      name: "search.tina.fuzzyEnabled",
+      type: "boolean",
+      description: "Enable or disable fuzzy search globally.\n",
+      default: "true"
+    },
+    {
+      name: "search.tina.fuzzyOptions.maxDistance",
+      type: "number",
+      description: "Maximum edit distance for fuzzy matching (0-10). Higher values find more distant matches but may return less relevant results.\n",
+      default: "2"
+    },
+    {
+      name: "search.tina.fuzzyOptions.minSimilarity",
+      type: "number",
+      description: "Minimum similarity score (0-1) required for a match. Higher values return more precise matches.\n",
+      default: "0.6"
+    },
+    {
+      name: "search.tina.fuzzyOptions.maxTermExpansions",
+      type: "number",
+      description: "Maximum number of similar terms to consider per search word (1-100).\n",
+      default: "10"
+    },
+    {
+      name: "search.tina.fuzzyOptions.useTranspositions",
+      type: "boolean",
+      description: "Allow character transpositions (e.g., \"teh\" → \"the\") using Damerau-Levenshtein algorithm.\n",
+      default: "true"
+    },
+    {
+      name: "search.indexBatchSize",
+      type: "number",
+      description: "Used by the indexing process to determine the number of documents to index per request.\n",
+      default: "100"
+    },
+    {
+      name: "search.maxSearchIndexFieldLength",
+      type: "number",
+      description: "For variable length text fields, this controls how much of the text is considered when indexing. A higher value will increase the indexing time and size of the search index.\n",
+      default: "100"
+    }
+  ]}
+/>
 
 ## Building the search index
 

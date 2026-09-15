@@ -15,22 +15,25 @@ The `image` field is used for content values that point to an image used on the 
 
 ## Definition
 
-```typescript
-interface ImageProps {
-  component: 'image'
-  clearable?: boolean
-  uploadDir?(formValues: any): string
-}
-```
-
-***
-
-| Key         | Description                                                                                                                                                                                                              |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `component` | The name of the plugin component. Always `'image'`.                                                                                                                                                                      |
-| `clearable` | When true, editors can 'clear' the image field to an empty state via a trash icon. *(Optional)*                                                                                                                          |
-| `uploadDir` | Defines the upload directory for the image. All of the form data is passed in, `fileRelativePath` is most useful in defining the upload directory, but you can also statically define the upload directory. *(Optional)* |
-
-***
+<propertyTable
+  property={[
+    {
+      name: "component",
+      type: "'image'",
+      description: "The name of the plugin component. Always `'image'`.\n",
+      required: true
+    },
+    {
+      name: "clearable",
+      type: "boolean",
+      description: "When true, editors can 'clear' the image field to an empty state via a trash icon.\n"
+    },
+    {
+      name: "uploadDir",
+      type: "(formValues: any) => string",
+      description: "Defines the upload directory for the image. All of the form data is passed in, `fileRelativePath` is most useful in defining the upload directory, but you can also statically define the upload directory.\n"
+    }
+  ]}
+/>
 
 > This interfaces only shows the keys unique to the image field. Visit the [Field Config](https://tina.io/docs/extending-tina/custom-field-components/#default-field-plugins) docs for a complete list of options.
