@@ -5,6 +5,11 @@ import { MdContentCopy } from "react-icons/md";
 import { CodeBlock } from "../standard-elements/code-block/code-block";
 import { CodeBlockSkeleton } from "../standard-elements/code-block/code-block-skeleton";
 
+// Tina serialises the spaces of multi-line string props as U+FFFD; both the
+// rendered block and the clipboard copy must decode them the same way.
+const decodeTabContent = (content?: string) =>
+  content?.replaceAll("\uFFFD", " ") ?? "";
+
 interface Tab {
   name: string;
   content: string;
@@ -59,8 +64,8 @@ export const CodeTabs = ({ tabs, initialSelectedIndex = 0 }: CodeTabsProps) => {
 
   // Handle the copy action
   const handleCopy = () => {
-    const textToCopy = tabs[selectedTabIndex]?.content;
-    navigator.clipboard.writeText(textToCopy || "");
+    const textToCopy = decodeTabContent(tabs[selectedTabIndex]?.content);
+    navigator.clipboard.writeText(textToCopy);
     setHasCopied(true);
     setTimeout(() => setHasCopied(false), 2000);
   };
@@ -167,7 +172,7 @@ export const CodeTabs = ({ tabs, initialSelectedIndex = 0 }: CodeTabsProps) => {
                 }}
               >
                 <CodeBlock
-                  value={tab.content?.replaceAll("�", " ")}
+                  value={decodeTabContent(tab.content)}
                   lang={tab.language ?? "text"}
                   showCopyButton={false}
                   showBorder={false}
