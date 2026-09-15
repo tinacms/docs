@@ -45,7 +45,7 @@ In Vercel, go to your project's **Settings | Git**. You'll find options related
 
 You'll want to **disable the automatic deployment on pushes** for your primary branch (e.g., `main`). The exact setting might vary slightly depending on your Vercel plan or recent UI updates, but the goal is to stop Vercel from listening directly to your Git `push` events. The guides below outline the **`Ignore Build Step`** options required for them to work.
 
-<Callout variant="info"
+<Callout variant="warning"
   body={<>
     Important limitation of both options: Due to the way Vercel is configured internally, every commit to a tracked branch will still count towards your quotas and concurrent build count
   </>}

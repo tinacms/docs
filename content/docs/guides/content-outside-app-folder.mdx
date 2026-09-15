@@ -81,11 +81,9 @@ export default defineConfig({
 
 TinaCMS writes generated files (`tina-lock.json`, `__generated__/` etc.) into a `tina/` folder inside the content root. **This folder must exist** or the CLI will fail with:
 
-<Callout variant="error"
-  body={<>
-    `Unable to find TinaCMS folder, if you're working in folder outside of the TinaCMS config be sure to specify --rootPath`
-  </>}
-/>
+```text
+Unable to find TinaCMS folder, if you're working in folder outside of the TinaCMS config be sure to specify --rootPath
+```
 
 Create it:
 
