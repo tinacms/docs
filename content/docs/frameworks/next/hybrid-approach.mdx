@@ -126,8 +126,8 @@ const { data } = useTina({
 
 Here are the two possible scenarios depicted in the diagram.
 
-<imageEmbed image={{ src: "/fetch-option-1.png", alt: "" }} caption="Flow when an existing page is requested" />
+<imageEmbed image={{ src: "/fetch-option-1.png", alt: "Diagram of an existing page served statically from the build pipeline, falling back to the TinaCMS API on a branch mismatch" }} caption="Flow when an existing page is requested" />
 
-<imageEmbed image={{ src: "/fetch-option-2.png", alt: "" }} caption="Flow when a new page is requested" />
+<imageEmbed image={{ src: "/fetch-option-2.png", alt: "Diagram of a new page falling back to ClientFallbackPage and fetching data dynamically from the TinaCMS API" }} caption="Flow when a new page is requested" />
 
 Here is the documentation on [fetching content across branches](/docs/features/data-fetching#fetching-content-across-branches-in-tinacms)
