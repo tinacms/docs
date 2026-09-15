@@ -14,21 +14,32 @@ The `textarea` field represents a multi-line text input. It should be used for c
 
 ## Options
 
-```typescript
-interface TextareaConfig {
-  name: string
-  component: 'textarea'
-  label?: string
-  description?: string
-}
-```
-
-| Option        | Description                                                                                     |
-| ------------- | ----------------------------------------------------------------------------------------------- |
-| `component`   | The name of the plugin component. Always 'textarea'.                                            |
-| `name`        | The path to some value in the data being edited.                                                |
-| `label`       | A human readable label for the field. Defaults to the name. *(Optional)*                        |
-| `description` | Description that expands on the purpose of the field or prompts a specific action. *(Optional)* |
+<propertyTable
+  property={[
+    {
+      name: "component",
+      type: "'textarea'",
+      description: "The name of the plugin component. Always 'textarea'.\n",
+      required: true
+    },
+    {
+      name: "name",
+      type: "string",
+      description: "The path to some value in the data being edited.\n",
+      required: true
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "A human readable label for the field. Defaults to the name.\n"
+    },
+    {
+      name: "description",
+      type: "string",
+      description: "Description that expands on the purpose of the field or prompts a specific action.\n"
+    }
+  ]}
+/>
 
 > This interfaces only shows the keys unique to the textarea field. Visit the [Field Config](https://tina.io/docs/extending-tina/custom-field-components/#default-field-plugins "custom field link") docs for a complete list of options.
 

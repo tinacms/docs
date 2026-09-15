@@ -19,11 +19,25 @@ By default, TinaCMS does not enforce strict filename constraints, as operating s
 
 ## Configuration
 
-| Property               | Description                                                    |
-| ---------------------- | -------------------------------------------------------------- |
-| `ui.filename.readonly` | Prevents the user from editing the filename                    |
-| `ui.filename.slugify`  | A function that generates the filename based on form values    |
-| `ui.filename.parse`    | A function that sanitizes the filename input as the user types |
+<propertyTable
+  property={[
+    {
+      name: "ui.filename.readonly",
+      type: "boolean",
+      description: "Prevents the user from editing the filename\n"
+    },
+    {
+      name: "ui.filename.slugify",
+      type: "(values, meta) => string",
+      description: "A function that generates the filename based on form values\n"
+    },
+    {
+      name: "ui.filename.parse",
+      type: "(filename) => string",
+      description: "A function that sanitizes the filename input as the user types\n"
+    }
+  ]}
+/>
 
 ## Option A: Sanitizing Input with `parse`
 

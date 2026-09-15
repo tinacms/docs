@@ -96,14 +96,50 @@ In a collection, there are a few fields that are common to all documents. These 
 
 The `_sys` field is an object with the following fields:
 
-* `filename`: The name of the file without the extension
-* `basename`: The name of the file with the extension
-* `path`: The full path of the file relative to the project root
-* `breadcrumbs`: An array of the parent folders of the file
-* `relativePath`: The path of the file relative to the collection path
-* `extension`: The extension of the file
-* `template`: The template of the document (or the name of the collection if not using `templates`)
-* `collection`: Information about the collection
+<typeDefinition
+  property={[
+    {
+      name: "filename",
+      type: "String!",
+      description: "The name of the file without the extension\n"
+    },
+    {
+      name: "basename",
+      type: "String!",
+      description: "The name of the file with the extension\n"
+    },
+    {
+      name: "path",
+      type: "String!",
+      description: "The full path of the file relative to the project root\n"
+    },
+    {
+      name: "breadcrumbs",
+      type: "[String!]!",
+      description: "An array of the parent folders of the file\n"
+    },
+    {
+      name: "relativePath",
+      type: "String!",
+      description: "The path of the file relative to the collection path\n"
+    },
+    {
+      name: "extension",
+      type: "String!",
+      description: "The extension of the file\n"
+    },
+    {
+      name: "template",
+      type: "String!",
+      description: "The template of the document (or the name of the collection if not using `templates`)\n"
+    },
+    {
+      name: "collection",
+      type: "Collection!",
+      description: "Information about the collection\n"
+    }
+  ]}
+/>
 
 ### Example with a nested folder
 

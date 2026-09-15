@@ -14,23 +14,37 @@ The `number` field represents a number input.
 
 ## Options
 
-```typescript
-interface NumberConfig extends FieldConfig {
-  component: 'number'
-  name: string
-  label?: string
-  description?: string
-  step?: string | number
-}
-```
-
-| Option        | Description                                                                                     |
-| ------------- | ----------------------------------------------------------------------------------------------- |
-| `component`   | The name of the plugin component. Always `'number'`.                                            |
-| `name`        | The path to some value in the data being edited.                                                |
-| `label`       | A human readable label for the field. Defaults to the `name`. *(Optional)*                      |
-| `description` | Description that expands on the purpose of the field or prompts a specific action. *(Optional)* |
-| `step`        | The interval used when using the up and down arrows to adjust the value. *(Optional)*           |
+<propertyTable
+  property={[
+    {
+      name: "component",
+      type: "'number'",
+      description: "The name of the plugin component. Always `'number'`.\n",
+      required: true
+    },
+    {
+      name: "name",
+      type: "string",
+      description: "The path to some value in the data being edited.\n",
+      required: true
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "A human readable label for the field. Defaults to the `name`.\n"
+    },
+    {
+      name: "description",
+      type: "string",
+      description: "Description that expands on the purpose of the field or prompts a specific action.\n"
+    },
+    {
+      name: "step",
+      type: "string | number",
+      description: "The interval used when using the up and down arrows to adjust the value.\n"
+    }
+  ]}
+/>
 
 > This interfaces only shows the keys unique to the number field. Visit the [Field Config](https://tina.io/docs/extending-tina/custom-field-components/#default-field-plugins "field config") docs for a complete list of options.
 

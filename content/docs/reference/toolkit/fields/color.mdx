@@ -20,29 +20,54 @@ The "block" widget allows the editor to choose from a set of predefined color sw
 
 ## Options
 
-```typescript
-interface ColorConfig {
-  component: 'color'
-  name: string
-  label?: string
-  description?: string
-  colorFormat?: 'hex' | 'rgb' // Defaults to "hex"
-  colors?: string[]
-  widget?: 'sketch' | 'block' // Defaults to "sketch"
-  width?: string // Defaults to full page width
-}
-```
-
-| Option        | Description                                                                                                                                                                                                                                  |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `component`   | The name of the plugin component. Always `'color'`.                                                                                                                                                                                          |
-| `name`        | The path to some value in the data being edited.                                                                                                                                                                                             |
-| `label`       | A human readable label for the field. Defaults to the `name`. *(Optional)*                                                                                                                                                                   |
-| `description` | Description that expands on the purpose of the field or prompts a specific action. *(Optional)*                                                                                                                                              |
-| `colorFormat` | Specify whether you want the color value to be a hexadecimal ('hex') or RBG value. *(Optional)*                                                                                                                                              |
-| `colors`      | An array of 'swatch' values that will either display as options below the "sketch" widget, or will serve as swatch options for the "block" widget. If no colors are passed, a set of default colors will render, ROYGBIV style. *(Optional)* |
-| `widget`      | An optional string indicating whether the "sketch" or "block" widget should render. This will default to "sketch" if no value is passed. *(Optional)*                                                                                        |
-| `width`       | An optional string to set the width of the color picker. This will default to full page width if no value is passed. *(Optional)*                                                                                                            |
+<propertyTable
+  property={[
+    {
+      name: "component",
+      type: "'color'",
+      description: "The name of the plugin component. Always `'color'`.\n",
+      required: true
+    },
+    {
+      name: "name",
+      type: "string",
+      description: "The path to some value in the data being edited.\n",
+      required: true
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "A human readable label for the field. Defaults to the `name`.\n"
+    },
+    {
+      name: "description",
+      type: "string",
+      description: "Description that expands on the purpose of the field or prompts a specific action.\n"
+    },
+    {
+      name: "colorFormat",
+      type: "'hex' | 'rgb'",
+      description: "Specify whether you want the color value to be a hexadecimal ('hex') or RBG value.\n",
+      default: "'hex'"
+    },
+    {
+      name: "colors",
+      type: "string[]",
+      description: "An array of 'swatch' values that will either display as options below the \"sketch\" widget, or will serve as swatch options for the \"block\" widget. If no colors are passed, a set of default colors will render, ROYGBIV style.\n"
+    },
+    {
+      name: "widget",
+      type: "'sketch' | 'block'",
+      description: "An optional string indicating whether the \"sketch\" or \"block\" widget should render. This will default to \"sketch\" if no value is passed.\n",
+      default: "'sketch'"
+    },
+    {
+      name: "width",
+      type: "string",
+      description: "An optional string to set the width of the color picker. This will default to full page width if no value is passed.\n"
+    }
+  ]}
+/>
 
 > This interfaces only shows the keys unique to the color field. Visit the [Field Config](https://tina.io/docs/extending-tina/custom-field-components/#default-field-plugins "field configuration link") docs for a complete list of options.
 

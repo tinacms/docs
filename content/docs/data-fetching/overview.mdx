@@ -48,17 +48,55 @@ const postsResponse = await client.queries.postConnection({
 
 The following operator types are available for querying
 
-| Key        | Behavior                 | Type(s)                          |
-| :--------- | ------------------------ | -------------------------------- |
-| eq         | Equals                   | string, number, boolean          |
-| in         | One of                   | string\[], number\[], boolean\[] |
-| gt         | Greater than             | string, number                   |
-| gte        | Greater than or equal to | string, number                   |
-| lt         | Less than                | string, number                   |
-| lte        | Less than or equal to    | string, number                   |
-| startsWith | Starts with              | string                           |
-| after      | After                    | datetime                         |
-| before     | Before                   | datetime                         |
+<propertyTable
+  property={[
+    {
+      name: "eq",
+      type: "string, number, boolean",
+      description: "Equals\n"
+    },
+    {
+      name: "in",
+      type: "string[], number[], boolean[]",
+      description: "One of\n"
+    },
+    {
+      name: "gt",
+      type: "string, number",
+      description: "Greater than\n"
+    },
+    {
+      name: "gte",
+      type: "string, number",
+      description: "Greater than or equal to\n"
+    },
+    {
+      name: "lt",
+      type: "string, number",
+      description: "Less than\n"
+    },
+    {
+      name: "lte",
+      type: "string, number",
+      description: "Less than or equal to\n"
+    },
+    {
+      name: "startsWith",
+      type: "string",
+      description: "Starts with\n"
+    },
+    {
+      name: "after",
+      type: "datetime",
+      description: "After\n"
+    },
+    {
+      name: "before",
+      type: "datetime",
+      description: "Before\n"
+    }
+  ]}
+/>
 
 <Callout variant="info"
   body={<>
