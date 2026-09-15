@@ -5,7 +5,12 @@ title: Adding TinaCMS to an Existing Site
 last_edited: '2022-02-04T15:51:56.737Z'
 ---
 
-> Note: This doc assumes that you have a working site. If not, you can quickly get started with our default [Astro starter](/docs/frameworks/astro/), or one of the [other starters](/docs/introduction/using-starter/) in the CLI.
+<Callout
+  variant="info"
+  body={<>
+    This doc assumes that you have a working site. If not, you can quickly get started with our default [Astro starter](/docs/frameworks/astro/), or one of the [other starters](/docs/introduction/using-starter/) in the CLI.
+  </>}
+/>
 
 ## Adding TinaCMS
 
@@ -77,7 +82,12 @@ git commit -m "Add tina-lock.json"
 git push
 ```
 
-> Note, many frameworks offer a way to redirect `/admin/index.html` to `/admin`.
+<Callout
+  variant="info"
+  body={<>
+    Many frameworks offer a way to redirect `/admin/index.html` to `/admin`.
+  </>}
+/>
 
 ![TinaCMS Login Page](/img/docs/using-tina-editor/tina-login.png "The TinaCMS login screen at /admin")
 

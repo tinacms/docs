@@ -10,7 +10,12 @@ TinaCMS can be added to your site locally. In this doc, we'll guide you through 
 
 ## Getting Started
 
-> Note: This TinaCMS Migration will change your site's content files. Please back up your site's content before proceeding. This is best done by doing a git commit before proceeding.
+<Callout
+  variant="warning"
+  body={<>
+    This TinaCMS Migration will change your site's content files. Please back up your site's content before proceeding. This is best done by doing a git commit before proceeding.
+  </>}
+/>
 
 From within your site's directory, run:
 
@@ -144,6 +149,11 @@ For more information on deploying TinaCMS with Netlify, Vercel, or GitHub Pages,
 
 With that set, you should be able to push your config to Git and start editing on production at `<your-site-url>/admin`!
 
-> Tip: If you have Netlify or Vercel previews set up, you can even edit on `<your-preview-url>/admin`.
+<Callout
+  variant="idea"
+  body={<>
+    If you have Netlify or Vercel previews set up, you can even edit on `&lt;your-preview-url&gt;/admin`.
+  </>}
+/>
 
 At this point, you'll be able to edit one of your site's files in production. Next we'll guide you through setting up some other Forestry-supported features like media, data files,

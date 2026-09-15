@@ -34,7 +34,12 @@ yarn remove tina-graphql-gateway-cli
 + import { defineSchema } from 'tinacms'
 ```
 
-> Note: the `defineSchema` API has changed, too. Read on for how to upgrade
+<Callout
+  variant="info"
+  body={<>
+    The `defineSchema` API has changed, too. Read on for how to upgrade
+  </>}
+/>
 
 ### `tina-gql` cli command is now `tinacms`
 
@@ -218,7 +223,12 @@ While this, is a `checkbox` field
 
 TinaCMS currently represents the concept of an _object_ in two ways: a `group` (and `group-list`), which is a uniform collection of fields; and `blocks`, which is a polymporphic collection. Moving forward, we'll be introducing a more comprehensive type, which envelopes the behavior of both `group` and `blocks`, and since _every_ field can be a `list`, this also makes `group-list` redundant.
 
-> Note: we've previously assumed that `blocks` usage would _always_ be as an array. We'll be keeping that assumption with the `blocks` type for compatibility, but `object` will allow for non-array polymorphic objects.
+<Callout
+  variant="info"
+  body={<>
+    We've previously assumed that `blocks` usage would _always_ be as an array. We'll be keeping that assumption with the `blocks` type for compatibility, but `object` will allow for non-array polymorphic objects.
+  </>}
+/>
 
 #### Defining an `object` type
 
@@ -267,7 +277,12 @@ And here is one for `group`:
 
 You can now request `dataJSON` for the entire data object as a single query key. This is great for more tedious queries like theme files where including each item in the result is cumbersome.
 
-> Note there is no typescript help for this feature for now
+<Callout
+  variant="info"
+  body={<>
+    There is no typescript help for this feature for now
+  </>}
+/>
 
 ```graphql
 getThemeDocument(relativePath: $relativePath) {
@@ -366,7 +381,12 @@ The GraphQL connection spec opens up a more future-proof structure, allowing us 
 
 Read [a detailed explanation](https://graphql.org/learn/pagination/) of how the connection spec provides a richer set of capabilities.
 
-> Note: sorting and filtering is still not supported for list queries.
+<Callout
+  variant="warning"
+  body={<>
+    Sorting and filtering is still not supported for list queries.
+  </>}
+/>
 
 ### `_body` is no longer included by default
 
