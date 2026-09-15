@@ -65,7 +65,7 @@ last_edited: '2026-02-09T05:31:49.762Z'
     },
     {
       heading: "9. What is \"Local Mode\" vs \"Prod Mode\"?",
-      docText: "### Local Mode\n\nWhen developers are developing locally, it's often convenient to load/save content from their local filesystem rather than connecting to the content on TinaCloud.\n\nWhen in local-mode, you **will not** need to login to enter edit-mode.\n\n<Callout variant=\"warning\"\n  body={<>\n    **Note:** Local-mode is meant for developing locally, and will not work when your site is hosted on production. When in local-mode, TinaCMS tries to hit `http://localhost:4001`, which isn't available at runtime on your production site (and neither is the underlying filesystem content).\n  </>}\n/>\n\n### Prod Mode\n\nOnce you are ready to host your site in production and put editing behind authentication, you can self-host the CMS backend yourself or you can use TinaCloud's hosted backend.\n\nWhether you're [self-hosting](/docs/self-hosted/overview) TinaCMS or using [TinaCloud](/docs/tinacloud/dashboard/), TinaCMS's Content API authenticates directly with GitHub removing the need for users to create GitHub accounts. Any changes that are saved by your editors will be committed to the configured branch in your GitHub repository.\n"
+      docText: "### Local Mode\n\nWhen developers are developing locally, it's often convenient to load/save content from their local filesystem rather than connecting to the content on TinaCloud.\n\nWhen in local-mode, you **will not** need to login to enter edit-mode.\n\n> **Note:** Local-mode is meant for developing locally, and will not work when your site is hosted on production. When in local-mode, TinaCMS tries to hit `http://localhost:4001`, which isn't available at runtime on your production site (and neither is the underlying filesystem content).\n\n### Prod Mode\n\nOnce you are ready to host your site in production and put editing behind authentication, you can self-host the CMS backend yourself or you can use TinaCloud's hosted backend.\n\nWhether you're [self-hosting](/docs/self-hosted/overview) TinaCMS or using [TinaCloud](/docs/tinacloud/dashboard/), TinaCMS's Content API authenticates directly with GitHub removing the need for users to create GitHub accounts. Any changes that are saved by your editors will be committed to the configured branch in your GitHub repository.\n"
     },
     {
       heading: "10. Does TinaCloud only work with GitHub repositories?",
@@ -96,12 +96,12 @@ last_edited: '2026-02-09T05:31:49.762Z'
     ### Your site is served on a different base path
 
     If your site is served at a sub-directory, ensure that your `build.basePath` is [configured appropriately](/docs/reference/config/#definition)
-
-    <youtube embedSrc="https://www.youtube.com/embed/9O6gCsxV4Ms?si=451MBmVoTsxXu7X7" />
-
-    **Video: FAQ - Setting a base path for TinaCMS (3 min)**
   </>}
 />
+
+<youtube embedSrc="https://www.youtube.com/embed/9O6gCsxV4Ms?si=451MBmVoTsxXu7X7" />
+
+**Video: FAQ - Setting a base path for TinaCMS (3 min)**
 
 <accordionBlock
   accordionItems={[
@@ -136,12 +136,12 @@ last_edited: '2026-02-09T05:31:49.762Z'
     When using the reference field on a collection with a large number of items, you may find the network requests time out. Currently, we do not have anything in place to paginate the reference field.
 
     The alternative would be to add a [custom field component](https://tina.io/docs/extending-tina/custom-field-components) with pagination. To retrieve the paginated results, you can use a [custom query](https://tina.io/docs/data-fetching/custom-queries).
-
-    <youtube embedSrc="https://www.youtube.com/embed/6FVpOvLK51s" />
-
-    **Video: FAQ - Getting a 503 Service Unavailable error when loading the reference field**
   </>}
 />
+
+<youtube embedSrc="https://www.youtube.com/embed/6FVpOvLK51s" />
+
+**Video: FAQ - Getting a 503 Service Unavailable error when loading the reference field**
 
 <accordionBlock
   accordionItems={[
