@@ -18,35 +18,11 @@ last_edited: '2026-02-09T05:31:49.762Z'
     {
       heading: "3. Do I need a certified person to use TinaCMS?",
       docText: "Anyone can start using TinaCMS right away but it is designed for developers to setup and customize. A [certified developer](https://www.credly.com/org/superior-software-for-windows-ssw/badge/tinacms-developer) can accelerate the setup, fine-tune the configuration, and ensure best-practice architecture.\n"
-    }
-  ]}
-/>
-
-## 4. What versions of Node are supported?
-
-<accordion
-  heading="Answer"
-  docText={<>
-    TinaCMS is supported on all active LTS versions of Node. See [Node.js Releases](https://nodejs.org/en/about/previous-releases) to find out more about release versions.
-
-    NPM, PNPM, Yarn and Bun package managers are all supported. We recommend **PNPM**, which is the default in `create-tina-app` and the package manager we use to develop TinaCMS.
-
-    | Node Version |                                          |
-    | ------------ | ---------------------------------------- |
-    | v26.x        | ℹ️ Not supported - current but not LTS   |
-    | v24.x LTS    | ✅ Supported - recommended for production |
-    | v23.x        | ❌ EoL                                    |
-    | v22.x LTS    | ✅ Supported - good for production        |
-    | v21.x        | ❌ EoL                                    |
-    | v20.x        | ❌ EoL                                    |
-    | v19.x        | ❌ EoL                                    |
-
-    Table updated May 2026
-  </>}
-/>
-
-<accordionBlock
-  accordionItems={[
+    },
+    {
+      heading: "4. What versions of Node are supported?",
+      docText: "TinaCMS is supported on all active LTS versions of Node. See [Node.js Releases](https://nodejs.org/en/about/previous-releases) to find out more about release versions.\n\nNPM, PNPM, Yarn and Bun package managers are all supported. We recommend **PNPM**, which is the default in `create-tina-app` and the package manager we use to develop TinaCMS.\n\n| Node Version |                                          |\n| ------------ | ---------------------------------------- |\n| v26.x        | ℹ️ Not supported - current but not LTS   |\n| v24.x LTS    | ✅ Supported - recommended for production |\n| v23.x        | ❌ EoL                                    |\n| v22.x LTS    | ✅ Supported - good for production        |\n| v21.x        | ❌ EoL                                    |\n| v20.x        | ❌ EoL                                    |\n| v19.x        | ❌ EoL                                    |\n\nTable updated May 2026\n"
+    },
     {
       heading: "5. What is TinaCMS's tech stack?",
       docText: "### TinaCloud\n\n* Content querying + indexing - **Node**\n* Cloud provider - **AWS**\n* Identity management - **Go**\n\n### TinaCMS\n\n* CMS - **React 18 / React 19**\n"
