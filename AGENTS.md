@@ -46,7 +46,7 @@ pnpm tinacms build --local --skip-cloud-checks   # Validate schema + content off
 
 ### TinaCMS schema changes
 
-After changing a Tina collection, template, or any other schema input, regenerate the committed lockfile:
+After changing a TinaCMS collection, template, or any other schema input, regenerate the committed lockfile:
 
 1. Run `pnpm dev` and wait for `tina/tina-lock.json` to change.
 2. Stop the dev server; do not leave it running in the background.
