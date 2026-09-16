@@ -139,22 +139,19 @@ TinaCMS Dev Server is active
 
 ## Troubleshooting
 
-### "Unable to find TinaCMS folder ... specify --rootPath"
-
-This error means the content directory is missing a `tina/` folder. Create one with `mkdir content/tina`. The `--rootPath` suggestion in the error message is misleading for this use case — it controls where TinaCMS looks for the **app config**, not the content directory.
-
-### Documents not found or empty collections
-
-Check that your collection `path` values are relative to the content root, not the app folder. If `localContentPath` points to `content/`, then `path: "posts"` resolves to `content/posts/`, not `content/content/posts/`.
-
-### Path resolution reference
-
-`localContentPath` is resolved relative to the `tina/` config folder. Count the directory levels carefully:
-
-```text
-packages/website/tina/config.ts
-         ↑       ↑     ↑
-         │       │     └── the file
-         │       └── localContentPath resolves from here
-         └── ../../../content goes: tina/ → website/ → packages/ → repo root → content/
-```
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "\"Unable to find TinaCMS folder ... specify --rootPath\"",
+      docText: "This error means the content directory is missing a `tina/` folder. Create one with `mkdir content/tina`. The `--rootPath` suggestion in the error message is misleading for this use case — it controls where TinaCMS looks for the **app config**, not the content directory.\n"
+    },
+    {
+      heading: "Documents not found or empty collections",
+      docText: "Check that your collection `path` values are relative to the content root, not the app folder. If `localContentPath` points to `content/`, then `path: \"posts\"` resolves to `content/posts/`, not `content/content/posts/`.\n"
+    },
+    {
+      heading: "Path resolution reference",
+      docText: "`localContentPath` is resolved relative to the `tina/` config folder. Count the directory levels carefully:\n\n```\npackages/website/tina/config.ts\n         ↑       ↑     ↑\n         │       │     └── the file\n         │       └── localContentPath resolves from here\n         └── ../../../content goes: tina/ → website/ → packages/ → repo root → content/\n```\n"
+    }
+  ]}
+/>

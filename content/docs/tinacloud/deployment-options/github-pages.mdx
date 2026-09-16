@@ -46,67 +46,22 @@ Your GitHub Action will look something like:
 
 ## Common Issues
 
-### Common Issue: 'Missing script: "tinacms"'
-
-This error might occur from the following reasons:
-
-#### 1. tinacms dependencies not added to package.json.
-
-Make sure that both the `tinacms` & `@tinacms/cli` dependencies are listed in your package.json.
-
-#### 2. Dependencies aren't being installed in CI.
-
-If you are using npm make sure that `npm ci` is being run before the TinaCMS build command. If you are using yarn, make sure you are running `yarn install --frozen-lockfile` before running the build command.
-
-#### 3. Needing to define a 'tinacms' script.
-
-If your CI is running something like `yarn tinacms build` instead of `npx tinacms build`, you'll need to add a custom script to your package.json:
-
-```json
-  "scripts": {
-    "tinacms": "tinacms",
-    // ...
-```
-
-### Common Issue: /admin is giving a 404
-
-This can happen for a number of reasons but here are the most common reasons and fixes:
-
-#### 1. Not providing a custom build workflow
-
-If your site is deploying with GitHub Pages, it may be using GitHub's default build steps. In this case, TinaCMS won't be included in the build.
-
-![GitHub Pages configuration](/img/docs/tinacloud/gh-pages.png).
-
-To fix this, you'll need to select the "GitHub Actions" source, and build the tinacms admin along with your site. You can see our doc above for help setting up this GitHub Action.
-
-#### 2. 'tinacms build' is not running in CI
-
-Check to make sure that the build command is running and not failing
-
-<Callout variant="info"
-  body={<>
-    If you are using [the github pages setup from hugo](https://gohugo.io/hosting-and-deployment/hosting-on-github/) you will need to make sure that a `package-lock.json` exists in the root of your repo.
-  </>}
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "Common Issue: 'Missing script: \"tinacms\"'",
+      docText: "This error might occur from the following reasons:\n\n#### 1. tinacms dependencies not added to package.json.\n\nMake sure that both the `tinacms` & `@tinacms/cli` dependencies are listed in your package.json.\n\n#### 2. Dependencies aren't being installed in CI.\n\nIf you are using npm make sure that `npm ci` is being run before the TinaCMS build command. If you are using yarn, make sure you are running `yarn install --frozen-lockfile` before running the build command.\n\n#### 3. Needing to define a 'tinacms' script.\n\nIf your CI is running something like `yarn tinacms build` instead of `npx tinacms build`, you'll need to add a custom script to your package.json:\n\n```json\n  \"scripts\": {\n    \"tinacms\": \"tinacms\",\n    // ...\n```\n"
+    },
+    {
+      heading: "Common Issue: /admin is giving a 404",
+      docText: "This can happen for a number of reasons but here are the most common reasons and fixes:\n\n#### 1. Not providing a custom build workflow\n\nIf your site is deploying with GitHub Pages, it may be using GitHub's default build steps. In this case, TinaCMS won't be included in the build.\n\n![GitHub Pages configuration](/img/docs/tinacloud/gh-pages.png).\n\nTo fix this, you'll need to select the \"GitHub Actions\" source, and build the tinacms admin along with your site. You can see our doc above for help setting up this GitHub Action.\n\n#### 2. 'tinacms build' is not running in CI\n\nCheck to make sure that the build command is running and not failing\n\n> Note: If you are using [the github pages setup from hugo](https://gohugo.io/hosting-and-deployment/hosting-on-github/) you will need to make sure that a `package-lock.json` exists in the root of your repo.\n"
+    },
+    {
+      heading: "Common Issue: The root URL is giving a 404",
+      docText: "This is usually due to a missing entrypoint file for GitHub Pages.\n\nTo fix this, you'll need to create a file named `index.tsx` in the `./pages` directory. Your `index.tsx` should look something like this:\n\n```ts\nimport Filename, { getStaticProps as FilenameStaticProps } from './[filename]';\n\nconst Index = Filename;\n\nexport const getStaticProps = async ({ params }) => {\n  return FilenameStaticProps({ params: { filename: 'home' } });\n}\n\nexport default Index;\n```\n"
+    }
+  ]}
 />
-
-### Common Issue: The root URL is giving a 404
-
-This is usually due to a missing entrypoint file for GitHub Pages.
-
-To fix this, you'll need to create a file named `index.tsx` in the `./pages` directory. Your `index.tsx` should look something like this:
-
-```ts
-import Filename, { getStaticProps as FilenameStaticProps } from './[filename]';
-
-const Index = Filename;
-
-export const getStaticProps = async ({ params }) => {
-  return FilenameStaticProps({ params: { filename: 'home' } });
-}
-
-export default Index;
-```
 
 ## Environment variables
 
