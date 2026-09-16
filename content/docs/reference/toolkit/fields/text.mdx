@@ -14,23 +14,37 @@ The `text` field represents a single line text input. It should be used for cont
 
 ## Options
 
-```typescript
-interface TextConfig extends FieldConfig {
-  component: 'text'
-  name: string
-  label?: string
-  description?: string
-  placeholder?: string
-}
-```
-
-| Option        | Description                                                                                     |
-| ------------- | ----------------------------------------------------------------------------------------------- |
-| `component`   | The name of the plugin component. Always `'text'`.                                              |
-| `name`        | The path to some value in the data being edited.                                                |
-| `label`       | A human readable label for the field. Defaults to the `name`. *(Optional)*                      |
-| `description` | Description that expands on the purpose of the field or prompts a specific action. *(Optional)* |
-| `placeholder` | Placeholder text to appear in the input when it empty. *(Optional)*                             |
+<propertyTable
+  property={[
+    {
+      name: "component",
+      type: "'text'",
+      description: "The name of the plugin component. Always `'text'`.\n",
+      required: true
+    },
+    {
+      name: "name",
+      type: "string",
+      description: "The path to some value in the data being edited.\n",
+      required: true
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "A human readable label for the field. Defaults to the `name`.\n"
+    },
+    {
+      name: "description",
+      type: "string",
+      description: "Description that expands on the purpose of the field or prompts a specific action.\n"
+    },
+    {
+      name: "placeholder",
+      type: "string",
+      description: "Placeholder text to appear in the input when it empty.\n"
+    }
+  ]}
+/>
 
 > This interfaces only shows the keys unique to the text field. Visit the [Field Config](/docs/extending-tina/custom-field-components/#default-field-plugins "custom field link") docs for a complete list of options.
 

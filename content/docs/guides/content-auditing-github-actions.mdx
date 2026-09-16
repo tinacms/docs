@@ -86,19 +86,46 @@ You'll need to add configuration settings that will be used when the GitHub acti
 
 #### Secrets
 
-| Name                 | Description                                                                                                                              |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **TINA\_TOKEN**      | Your TinaCloud API Token. **TinaCloud \| \<your-project> \| Tokens \| Content (Readonly)**                                               |
-| **TINA\_CLIENT\_ID** | The TinaCMS Client ID for your project. You can find it in **TinaCloud \| Projects \| \<your-project> \|  ⚙️ Project Details \| Client ID** |
+<propertyTable
+  property={[
+    {
+      name: "TINA_TOKEN",
+      description: "Your TinaCloud API Token. **TinaCloud | \\<your-project> | Tokens | Content (Readonly)**\n",
+      required: true
+    },
+    {
+      name: "TINA_CLIENT_ID",
+      description: "The TinaCMS Client ID for your project. You can find it in **TinaCloud | Projects | \\<your-project> | ⚙️ Project Details | Client ID**\n",
+      required: true
+    }
+  ]}
+/>
 
 #### Variables
 
-| Name                                         | Description                                                                                           |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **TINA\_AUDITOR\_CONTENT\_WINDOW**           | A number indicating how many outdated content items will be checked when you run the action. (e.g. 5) |
-| **TINA\_AUDITOR\_EXPIRY\_DAYS**              | The number of days that will pass before your content is re-evaluated  being checked.                 |
-| **TINA\_AUDITOR\_SYSTEM\_PROMPT (optional)** | The prompt that will be used to evaluate your content when passing it to GitHub model.                |
-| **TINA\_AUDITOR\_COLLECTION**                | The collection the audit query will be ran against.                                                   |
+<propertyTable
+  property={[
+    {
+      name: "TINA_AUDITOR_CONTENT_WINDOW",
+      description: "A number indicating how many outdated content items will be checked when you run the action. (e.g. 5)\n",
+      required: true
+    },
+    {
+      name: "TINA_AUDITOR_EXPIRY_DAYS",
+      description: "The number of days that will pass before your content is re-evaluated being checked.\n",
+      required: true
+    },
+    {
+      name: "TINA_AUDITOR_SYSTEM_PROMPT",
+      description: "The prompt that will be used to evaluate your content when passing it to GitHub model.\n"
+    },
+    {
+      name: "TINA_AUDITOR_COLLECTION",
+      description: "The collection the audit query will be ran against.\n",
+      required: true
+    }
+  ]}
+/>
 
 #### System Prompt (Optional)
 

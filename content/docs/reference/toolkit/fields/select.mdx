@@ -14,23 +14,40 @@ The `select` field represents a select element.
 
 ## Options
 
-| Option        | Description                                                                                     |
-| ------------- | ----------------------------------------------------------------------------------------------- |
-| `component`   | The name of the plugin component. Always 'select'.                                              |
-| `name`        | The path to some value in the data being edited.                                                |
-| `options`     | An array of strings or Options to select from.                                                  |
-| `label`       | A human readable label for the field. Defaults to the name. *(Optional)*                        |
-| `description` | Description that expands on the purpose of the field or prompts a specific action. *(Optional)* |
+<propertyTable
+  property={[
+    {
+      name: "component",
+      type: "'select'",
+      description: "The name of the plugin component. Always 'select'.\n",
+      required: true
+    },
+    {
+      name: "name",
+      type: "string",
+      description: "The path to some value in the data being edited.\n",
+      required: true
+    },
+    {
+      name: "options",
+      type: "(Option | string)[]",
+      description: "An array of strings or Options to select from.\n",
+      required: true
+    },
+    {
+      name: "label",
+      type: "string",
+      description: "A human readable label for the field. Defaults to the name.\n"
+    },
+    {
+      name: "description",
+      type: "string",
+      description: "Description that expands on the purpose of the field or prompts a specific action.\n"
+    }
+  ]}
+/>
 
 ```typescript
-interface SelectField {
-  name: string
-  component: 'select'
-  label?: string
-  description?: string
-  options: (Option | string)[]
-}
-
 type Option = {
   value: string
   label: string

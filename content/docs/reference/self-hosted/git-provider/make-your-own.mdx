@@ -7,20 +7,22 @@ Implement a Git Provider is easy. It is a class or object that implements the [`
 
 ## GitProvider Interface
 
-```ts
-export interface GitProvider {
-  onPut: (key: string, value: string) => Promise<void>
-  onDelete: (key: string) => Promise<void>
-}
-```
-
-### `onPut`
-
-This is used to save content to Git. It is called whenever a value is saved in the CMS.
-
-### `onDelete`
-
-This is used to delete content from Git. It is called whenever a value is deleted in the CMS.
+<typeDefinition
+  property={[
+    {
+      name: "onPut",
+      type: "(key: string, value: string) => Promise<void>",
+      description: "This is used to save content to Git. It is called whenever a value is saved in the CMS.\n",
+      required: true
+    },
+    {
+      name: "onDelete",
+      type: "(key: string) => Promise<void>",
+      description: "This is used to delete content from Git. It is called whenever a value is deleted in the CMS.\n",
+      required: true
+    }
+  ]}
+/>
 
 ## Example
 
