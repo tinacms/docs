@@ -44,7 +44,7 @@ pnpm tinacms build --local --skip-cloud-checks   # Validate schema + content off
 
 `tinacms build --local --skip-cloud-checks` is the schema gate: run it after changing anything under `tina/` or bulk-editing content. It fails on any MDX that does not match the collection schema.
 
-### Tina schema changes
+### TinaCMS schema changes
 
 After changing a Tina collection, template, or any other schema input, regenerate the committed lockfile:
 
