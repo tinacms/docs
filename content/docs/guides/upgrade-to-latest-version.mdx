@@ -16,7 +16,11 @@ To see which version of TinaCMS you’re currently using, check your `package.js
 
 🔍 How to Find Available Versions
 
-> Note: Always update both tinacms and @tinacms/cli to the latest version together to get the latest feature and avoid compatibility issues.
+<Callout variant="info"
+  body={<>
+    Always update both tinacms and @tinacms/cli to the latest version together to get the latest feature and avoid compatibility issues.
+  </>}
+/>
 
 You can view all published versions of TinaCMS packages on npmjs.com:
 
@@ -36,7 +40,11 @@ Example of Installing a Specific Version of TinaCMS with npm:
 npm install tinacms@2.8.0 @tinacms/cli@1.10.0
 ```
 
-> ⚠️ Reminder: After upgrading TinaCMS, run a dev build to ensure lock file is up to date
+<Callout variant="warning"
+  body={<>
+    After upgrading TinaCMS, run a dev build to ensure lock file is up to date
+  </>}
+/>
 
 ```bash
 npm run dev

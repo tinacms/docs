@@ -8,7 +8,12 @@ next: content/docs/data-fetching/custom-queries.mdx
 
 As mentioned in [Introduction to Data fetching](/docs/features/data-fetching/), TinaCMS provides a client for querying content.
 
-> Note, for advanced use-cases, you can also manually query the underlying [GraphQL API](/docs/data-fetching/custom-queries/#writing-inline-queries).
+<Callout
+  variant="info"
+  body={<>
+    For advanced use-cases, you can also manually query the underlying [GraphQL API](/docs/data-fetching/custom-queries/#writing-inline-queries).
+  </>}
+/>
 
 ## Querying a single document
 
@@ -60,7 +65,11 @@ The following operator types are available for querying
 | after      | After                    | datetime                         |
 | before     | Before                   | datetime                         |
 
-> Only `gt`, `gte`, `lt`, `lte`, `after`, `before` may be used in ternary conditions.
+<Callout variant="info"
+  body={<>
+    Only `gt`, `gte`, `lt`, `lte`, `after`, `before` may be used in ternary conditions.
+  </>}
+/>
 
 #### Filtering on Filename (\_sys)
 
@@ -74,7 +83,11 @@ const allPosts = posts?.data?.postConnection?.edges.filter(
 );
 ```
 
-> Note: When using the auto-generated `<collection-name>Connection`, the query will only apply to the document's fields, not the `_sys` properties. Filtering in code as shown above is a suitable alternative.
+<Callout variant="info"
+  body={<>
+    When using the auto-generated &lt;collection-name&gt;Connection, the query will only apply to the document's fields, not the `_sys` properties. Filtering in code as shown above is a suitable alternative.
+  </>}
+/>
 
 ### Sorting
 

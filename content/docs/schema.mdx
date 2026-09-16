@@ -18,7 +18,12 @@ title: This is my title
 This is my main post body.
 ```
 
-> Note: The `isBody` property is used to output a given field to the markdown body, instead of its frontmatter.
+<Callout
+  variant="info"
+  body={<>
+    The `isBody` property is used to output a given field to the markdown body, instead of its frontmatter.
+  </>}
+/>
 
 Once we've defined a collection, we can edit its fields through the TinaCMS UI, or [query its content](/docs/graphql/overview/) using the TinaCMS Content API.
 

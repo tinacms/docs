@@ -103,7 +103,11 @@ Add the following:
 First we'll configure where our images get stored and update the schema so that we're ready to work with markdown files.
 Open `tina/config.ts` and make the following changes.
 
-> By moving our images to `static`, we're ensuring that they'll be tracked in git and bundled at run time.
+<Callout variant="info"
+  body={<>
+    By moving our images to `static`, we're ensuring that they'll be tracked in git and bundled at run time.
+  </>}
+/>
 
 ```diff
 export default defineConfig({
@@ -202,7 +206,12 @@ You'll also need to move the existing images into the new folder we defined.
 As the hello world sample uses a list type that is unsupported by TinaCMS, we'll update the lists to the supported format manually.
 Make the following changes to `content/blog/hello-world/index.mdx`.
 
-> Note: You may need to update other elements on your site. For unsupported markdown elements in TinaCMS, refer to [our guide](https://tina.io/docs/reference/types/rich-text/?#unsupported-elements).
+<Callout
+  variant="info"
+  body={<>
+    You may need to update other elements on your site. For unsupported markdown elements in TinaCMS, refer to [our guide](https://tina.io/docs/reference/types/rich-text/?#unsupported-elements).
+  </>}
+/>
 
 ````diff
 - - Red
@@ -821,7 +830,11 @@ Finally, we'll use the server side data to populate the landing page. Make the f
 
 We'll also format the date in this file.
 
-> Note: we don't need to use the `useTina` hook here because the homepage is static.
+<Callout variant="info"
+  body={<>
+    We don't need to use the `useTina` hook here because the homepage is static.
+  </>}
+/>
 
 ```diff
 + import formatDate from "dateformat"
