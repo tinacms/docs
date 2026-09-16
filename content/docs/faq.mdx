@@ -54,25 +54,12 @@ last_edited: '2026-02-09T05:31:49.762Z'
     {
       heading: "12. Why does Tina.io login window doesn't close when logging in from a site?",
       docText: "When a user logs in from your site, we will pop open a login window. When login is complete, we will attempt to send a message back to the main window.\n\nThe most common reasons for this issue are:\n\n* The Site URL is not properly set for the TinaCMS project. The main window's base URL will need to match the TinaCMS project's Site URL setup in the TinaCloud Dashboard.\n* The Client ID setup in your site's environment variables does not match the Client ID in your project's settings on the TinaCloud dashboard.\n* The user attempting to login to TinaCloud does not have access to edit this site. Ensure that this user is authorized on the TinaCloud dashboard.\n\n> Make sure to include `https` in the Site URL eg: `https://example.com` or if you are testing locally, it might be something like `http://localhost:3000`\n\n### Site is building on a sub-path\n\nThere is a known limitation where TinaCMS doesn't load assets correctly when the admin is deployed to a sub-path: (`https://jamespohalloran.github.io/my-site-root/admin/` for example). To resolve the issue, in your [TinaCMS config file](/docs/reference/config/), set the `build.basePath` property to value of the sub-path (e.g. `my-site-root`).\n"
+    },
+    {
+      heading: "13. How do I resolve \"Failed loading TinaCMS assets\" error?",
+      docText: "This error means that the TinaCMS admin HTML file failed to load the JavaScript bundle. This generally happens for a few reasons:\n\n### User has pushed the development admin/index.html to production\n\nWhen you run `tinacms dev` locally, TinaCMS will generate a development admin/index.html file, which loads its assets from localhost. For production, this file should be built in CI using `tinacms build`. If a developer manually removes the admin/index.html file from their `.gitignore`, they may run into this issue.\n\n### Your site is served on a different base path\n\nIf your site is served at a sub-directory, ensure that your `build.basePath` is [configured appropriately](/docs/reference/config/#definition)\n"
     }
   ]}
-/>
-
-## 13. How do I resolve "Failed loading TinaCMS assets" error?
-
-<accordion
-  heading="Answer"
-  docText={<>
-    This error means that the TinaCMS admin HTML file failed to load the JavaScript bundle. This generally happens for a few reasons:
-
-    ### User has pushed the development admin/index.html to production
-
-    When you run `tinacms dev` locally, TinaCMS will generate a development admin/index.html file, which loads its assets from localhost. For production, this file should be built in CI using `tinacms build`. If a developer manually removes the admin/index.html file from their `.gitignore`, they may run into this issue.
-
-    ### Your site is served on a different base path
-
-    If your site is served at a sub-directory, ensure that your `build.basePath` is [configured appropriately](/docs/reference/config/#definition)
-  </>}
 />
 
 <youtube embedSrc="https://www.youtube.com/embed/9O6gCsxV4Ms?si=451MBmVoTsxXu7X7" />
@@ -100,19 +87,12 @@ last_edited: '2026-02-09T05:31:49.762Z'
     {
       heading: "18. Do you support Git LFS?",
       docText: "Unfortunately we do not support Git LFS at this time due to limitations with the GitHub API.\n"
+    },
+    {
+      heading: "18. Getting a 503 Service Unavailable error when loading the reference field.",
+      docText: "When using the reference field on a collection with a large number of items, you may find the network requests time out. Currently, we do not have anything in place to paginate the reference field.\n\nThe alternative would be to add a [custom field component](https://tina.io/docs/extending-tina/custom-field-components) with pagination. To retrieve the paginated results, you can use a [custom query](https://tina.io/docs/data-fetching/custom-queries).\n"
     }
   ]}
-/>
-
-## 18. Getting a 503 Service Unavailable error when loading the reference field.
-
-<accordion
-  heading="Answer"
-  docText={<>
-    When using the reference field on a collection with a large number of items, you may find the network requests time out. Currently, we do not have anything in place to paginate the reference field.
-
-    The alternative would be to add a [custom field component](https://tina.io/docs/extending-tina/custom-field-components) with pagination. To retrieve the paginated results, you can use a [custom query](https://tina.io/docs/data-fetching/custom-queries).
-  </>}
 />
 
 <youtube embedSrc="https://www.youtube.com/embed/6FVpOvLK51s" />
