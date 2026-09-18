@@ -43,6 +43,17 @@ function MermaidDiagramClient(data: { value?: string }) {
         // Insert the rendered SVG into the DOM
         if (mermaidRef.current) {
           mermaidRef.current.innerHTML = svg;
+          // Mermaid caps the SVG at its intrinsic width, which leaves a
+          // diagram much smaller than the content column. Let it fill the
+          // column instead; the container scrolls when it cannot.
+          const rendered = mermaidRef.current.querySelector("svg");
+          if (rendered) {
+            rendered.removeAttribute("width");
+            rendered.removeAttribute("height");
+            rendered.style.width = "100%";
+            rendered.style.maxWidth = "100%";
+            rendered.style.height = "auto";
+          }
         }
       } catch (error) {
         // Fallback to showing the raw text
@@ -59,7 +70,7 @@ function MermaidDiagramClient(data: { value?: string }) {
     <div contentEditable={false}>
       <div
         ref={mermaidRef}
-        className="mermaid-container dark:bg-brand-primary-contrast w-fit rounded-md p-4"
+        className="mermaid-container dark:bg-brand-primary-contrast w-full overflow-x-auto rounded-md p-4"
       >
         <pre className="mermaid">{value}</pre>
       </div>
