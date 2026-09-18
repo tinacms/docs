@@ -189,49 +189,74 @@ The fragment names are automatically generated based on the collection name and 
 
 We can render out the blocks on a page by creating a new `Blocks` component, which will conditionally render each block-type in a switch statement.
 
-```tsx
-// Blocks.tsx
-
-import React from 'react';
-import type { Pages } from '../tina/__generated__/types';
-import { Content } from './blocks/content';
-import { Features } from './blocks/features';
-import { Hero } from './blocks/hero';
-import { Testimonial } from './blocks/testimonial';
-
-export const Blocks = (props: Pages) => {
-  return (
-    <>
-      {props.blocks
-        ? props.blocks.map(function (block, i) {
-            switch (block.__typename) {
-              case 'PagesBlocksContent':
-                return (
-                  <React.Fragment key={i + block.__typename}>
-                    <Content data={block} />
-                  </React.Fragment>
-                );
-              case 'PagesBlocksHero':
-                return (
-                  <React.Fragment key={i + block.__typename}>
-                    <Hero data={block} />
-                  </React.Fragment>
-                );
-              case 'PagesBlocksFeatures':
-                return (
-                  <React.Fragment key={i + block.__typename}>
-                    <Features data={block} />
-                  </React.Fragment>
-                );
-              default:
-                return null;
-            }
-          })
-        : null}
-    </>
-  );
-};
-```
+<recipe
+  title="Rendering blocks with a Blocks component"
+  description="The component receives the page, walks the blocks the editor arranged, and renders one component per block template."
+  code="//�Blocks.tsx
+  
+  import�React�from�'react';
+  import�type�{�Pages�}�from�'../tina/__generated__/types';
+  import�{�Content�}�from�'./blocks/content';
+  import�{�Features�}�from�'./blocks/features';
+  import�{�Hero�}�from�'./blocks/hero';
+  import�{�Testimonial�}�from�'./blocks/testimonial';
+  
+  export�const�Blocks�=�(props:�Pages)�=>�{
+  ��return�(
+  ����<>
+  ������{props.blocks
+  ��������?�props.blocks.map(function�(block,�i)�{
+  ������������switch�(block.__typename)�{
+  ��������������case�'PagesBlocksContent':
+  ����������������return�(
+  ������������������<React.Fragment�key={i�+�block.__typename}>
+  ��������������������<Content�data={block}�/>
+  ������������������</React.Fragment>
+  ����������������);
+  ��������������case�'PagesBlocksHero':
+  ����������������return�(
+  ������������������<React.Fragment�key={i�+�block.__typename}>
+  ��������������������<Hero�data={block}�/>
+  ������������������</React.Fragment>
+  ����������������);
+  ��������������case�'PagesBlocksFeatures':
+  ����������������return�(
+  ������������������<React.Fragment�key={i�+�block.__typename}>
+  ��������������������<Features�data={block}�/>
+  ������������������</React.Fragment>
+  ����������������);
+  ��������������default:
+  ����������������return�null;
+  ������������}
+  ����������})
+  ��������:�null}
+  ����</>
+  ��);
+  };"
+  instruction={[
+    {
+      header: "Import a component per block template",
+      itemDescription:
+        "Each block template in the schema gets its own React component. Testimonial is imported here too, ready for when you add that case.",
+      codeLineStart: 3,
+      codeLineEnd: 8
+    },
+    {
+      header: "Map over the blocks in order",
+      itemDescription:
+        "props.blocks holds the blocks the editor arranged, in their saved order. Guard against a page with no blocks, then map over them.",
+      codeLineStart: 13,
+      codeLineEnd: 14
+    },
+    {
+      header: "Switch on __typename to pick the component",
+      itemDescription:
+        "Every block carries a __typename that identifies its template, so switching on it picks the right component. The default case returns null, which is what renders for a template you have not handled yet.",
+      codeLineStart: 15,
+      codeLineEnd: 36
+    }
+  ]}
+/>
 
 Note that the `__typename` on each blog is `{CollectionName}{FieldName}{BlockTemplateName}`.
 
