@@ -46,9 +46,10 @@ export const RecipeBlock = (data: {
   description?: string;
   codeblock?: any;
   code?: string;
+  language?: string;
   instruction?: any;
 }) => {
-  const { title, description, codeblock, code, instruction } = data;
+  const { title, description, codeblock, code, language, instruction } = data;
 
   const [highlightLines, setHighlightLines] = useState("");
   const [clickedInstruction, setClickedInstruction] = useState<number | null>(
@@ -326,7 +327,7 @@ export const RecipeBlock = (data: {
                 (code ? (
                   <CodeBlockWithHighlightLines
                     value={code.replaceAll("�", " ")}
-                    lang="javascript"
+                    lang={language || "javascript"}
                     highlightLines={highlightLines}
                   />
                 ) : codeblock ? (

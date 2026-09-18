@@ -25,6 +25,13 @@ export const RecipeTemplate = {
       },
     },
     {
+      type: "string",
+      label: "Language",
+      name: "language",
+      description:
+        "Syntax highlighting language for the code block. Defaults to javascript.",
+    },
+    {
       name: "instruction",
       label: "Instruction",
       type: "object",
