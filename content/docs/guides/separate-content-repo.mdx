@@ -38,6 +38,15 @@ After setup, your TinaCloud project is bound to both repos. From the editor's po
 * **Search index rebuilds** on every content-repo push.
 * The CLI reads content from a sibling content directory via `localContentPath` during local development and CI builds.
 
+```mermaid
+flowchart LR
+    Cloud[One TinaCloud project] -->|Reads the schema| Gen[Generator repo]
+    Cloud -->|Saves content and media| Content[Content repo]
+    Cloud -->|Opens editorial branches and pull requests| Content
+    CLI[tinacms dev and tinacms build] -->|Reads the schema and app code| Gen
+    CLI -->|Finds content via localContentPath| Content
+```
+
 ## Set up a new TinaCloud project
 
 The TinaCloud dashboard surfaces the multi-repo option directly in the create-project flow.

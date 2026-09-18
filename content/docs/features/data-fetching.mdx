@@ -110,6 +110,16 @@ When developing locally, it's often beneficial to talk to the content on your lo
 
 > If you setup TinaCMS via `@tinacms/cli init`, or used one of our starters, this should be setup by default. (Read about the CLI [in our documentation](/docs/graphql/cli/))
 
+```mermaid
+flowchart LR
+    Client[Generated TinaCMS client query] --> Mode{Local mode or production mode}
+    Mode -->|Local| Dev[Content API served by tinacms dev on port 4001]
+    Dev --> Files[Your content files on disk]
+    Mode -->|Production| Cloud[TinaCloud Content API for your client ID and branch]
+    Cloud --> Git[Indexed content from your Git repo]
+    Header[x-branch request header] -->|Swaps the branch in the API URL| Cloud
+```
+
 ## Video Tutorial
 
 For those who prefer to learn from video, you can check out a snippet on "Data Fetching" from our ["TinaCMS Deep Dive"](https://www.youtube.com/watch?v=PcgnJDILv4w\&list=PLPar4H9PHKVqoCwZy79PHr8-W_vA3lAOB\&pp=iAQB) series.

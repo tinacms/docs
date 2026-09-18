@@ -45,6 +45,25 @@ Once you enter the new branch name, the following actions will occur:
 
 When you are ready to publish your content, merge the draft pull request into the protected branch (e.g., main) through GitHub. After the pull request is successfully merged, the updated content will be available on the protected branch.
 
+```mermaid
+sequenceDiagram
+    participant Editor
+    participant Admin as TinaCMS admin
+    participant Cloud as TinaCloud
+    participant GitHub
+
+    Editor->>Admin: Save while on a protected branch
+    Admin->>Editor: Ask for a new branch name
+    Editor->>Admin: New branch name
+    Admin->>Cloud: Start the editorial workflow with the edit
+    Cloud->>GitHub: Create the new branch
+    Cloud->>Cloud: Index the new branch
+    Cloud->>GitHub: Commit the changes and open a draft pull request
+    Cloud-->>Admin: Branch name and pull request link
+    Admin->>Editor: Now editing on the new branch
+    Editor->>GitHub: Merge the pull request to publish
+```
+
 ## Media in the Editorial Workflow
 
 Media follows the same review process as your content. When you upload or delete an image while editing a protected branch, TinaCMS routes the change through a branch and pull request instead of writing to the protected branch directly.
