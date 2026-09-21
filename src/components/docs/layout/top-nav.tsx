@@ -2,6 +2,7 @@ import { MobileNavSidebar } from "@/components/navigation/mobile-navigation-side
 import * as Tabs from "@radix-ui/react-tabs";
 import type React from "react";
 import { Search } from "../../search-docs/search";
+import AdminLink from "../../ui/admin-link";
 import LightDarkSwitch from "../../ui/light-dark-switch";
 import { CtaButton } from "./cta-button";
 import { LanguageSwitcher } from "./language-switcher";
@@ -51,6 +52,7 @@ export const TopNav = ({
           <div className="w-full hidden lg:flex justify-end">
             <LightDarkSwitch />
           </div>
+          <AdminLink />
         </div>
       </div>
     </div>
