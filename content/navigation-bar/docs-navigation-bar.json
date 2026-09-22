@@ -918,6 +918,11 @@
               "_template": "item"
             },
             {
+              "slug": "content/docs/guides/markdown-content-negotiation.mdx",
+              "title": "Serve Markdown to AI Agents",
+              "_template": "item"
+            },
+            {
               "slug": "content/docs/guides/react-data-fetching.mdx",
               "title": "Querying TinaCMS Content at Runtime",
               "_template": "item"

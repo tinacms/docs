@@ -1,0 +1,242 @@
+---
+title: Serve Markdown to AI Agents
+seo:
+  title: Serve Markdown to AI Agents | TinaCMS Docs
+  description: Configure content negotiation for TinaCMS pages in Next.js, Astro, and Vite.
+---
+
+AI agents can consume documentation more reliably when they receive Markdown instead of rendered HTML. Because TinaCMS stores content as Markdown or MDX, a server can return the source file when a client sends `Accept: text/markdown` while continuing to serve HTML to browsers at the same URL.
+
+This requires request-time routing. A static host cannot serve two representations from one URL unless its CDN or edge layer performs the negotiation.
+
+The examples use a simple `text/markdown` match. If your application needs full HTTP negotiation, parse media-type quality values and do not select Markdown when its quality is `q=0`.
+
+<Callout variant="warning" body="MDX can contain JSX and TinaCMS components. Most AI agents can still read it, but clients that require CommonMark may need a separate MDX-to-Markdown conversion step." />
+
+## Next.js App Router
+
+Create a static route handler that returns the source MDX. This example assumes documents live in `content/docs` and that `/docs` maps to `content/docs/index.mdx`.
+
+```typescript
+// src/app/api/markdown/[...slug]/route.ts
+import { readFile, readdir } from "node:fs/promises";
+import path from "node:path";
+
+const docsDirectory = path.join(process.cwd(), "content", "docs");
+
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+export async function generateStaticParams() {
+  const files = await readdir(docsDirectory, { recursive: true });
+
+  return files
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => ({
+      slug: file.replace(/\.mdx$/, "").split(path.sep),
+    }));
+}
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ slug: string[] }> },
+) {
+  const { slug } = await params;
+  const filePath = path.join(docsDirectory, `${slug.join(path.sep)}.mdx`);
+
+  if (!filePath.startsWith(`${docsDirectory}${path.sep}`)) {
+    return new Response(null, { status: 404 });
+  }
+
+  try {
+    return new Response(await readFile(filePath, "utf8"), {
+      headers: { "Content-Type": "text/markdown; charset=utf-8" },
+    });
+  } catch {
+    return new Response(null, { status: 404 });
+  }
+}
+```
+
+Use header-based rewrites to keep the public URL unchanged. Omit them when creating a static export.
+
+```javascript
+// next.config.js
+const isStatic = process.env.EXPORT_MODE === "static";
+
+/** @type {import("next").NextConfig} */
+module.exports = {
+  ...(!isStatic && {
+    async rewrites() {
+      const acceptsMarkdown = [
+        {
+          type: "header",
+          key: "accept",
+          value: "(.*)text/markdown(.*)",
+        },
+      ];
+
+      return {
+        beforeFiles: [
+          {
+            source: "/docs",
+            destination: "/api/markdown/index",
+            has: acceptsMarkdown,
+          },
+          {
+            source: "/docs/:path+",
+            destination: "/api/markdown/:path+",
+            has: acceptsMarkdown,
+          },
+        ],
+      };
+    },
+  }),
+};
+```
+
+Next.js App Router currently overwrites custom `Vary` values with its internal routing headers. Vercel includes `Accept` in its cache key automatically. For other CDNs and reverse proxies, configure the cache key to include `Accept`; otherwise HTML and Markdown can share a cache entry.
+
+## Astro
+
+This approach requires an Astro server adapter and on-demand rendering. Create a server endpoint for the source MDX:
+
+```typescript
+// src/pages/_markdown/[...slug].ts
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import type { APIRoute } from "astro";
+
+export const prerender = false;
+
+const docsDirectory = path.join(process.cwd(), "content", "docs");
+
+export const GET: APIRoute = async ({ params }) => {
+  const slug = params.slug || "index";
+  const filePath = path.join(docsDirectory, `${slug}.mdx`);
+
+  if (!filePath.startsWith(`${docsDirectory}${path.sep}`)) {
+    return new Response(null, { status: 404 });
+  }
+
+  try {
+    return new Response(await readFile(filePath, "utf8"), {
+      headers: { "Content-Type": "text/markdown; charset=utf-8" },
+    });
+  } catch {
+    return new Response(null, { status: 404 });
+  }
+};
+```
+
+Then add middleware that rewrites Markdown requests to the endpoint and adds `Vary: Accept` to both representations:
+
+```typescript
+// src/middleware.ts
+import { defineMiddleware } from "astro:middleware";
+
+export const onRequest = defineMiddleware(async (context, next) => {
+  const pathname = context.url.pathname.replace(/\/$/, "");
+  const isDocsPage = pathname === "/docs" || pathname.startsWith("/docs/");
+
+  if (!isDocsPage) {
+    return next();
+  }
+
+  const acceptsMarkdown = context.request.headers
+    .get("accept")
+    ?.includes("text/markdown");
+  const slug = pathname.slice("/docs".length).replace(/^\//, "") || "index";
+  const response = acceptsMarkdown
+    ? await next(`/_markdown/${slug}`)
+    : await next();
+  const headers = new Headers(response.headers);
+  headers.append("Vary", "Accept");
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+});
+```
+
+Astro static output cannot inspect request headers. For a static deployment, publish separate `.md` files or configure negotiation in the hosting layer.
+
+## Plain Vite
+
+Vite provides a development server and a preview server, but its production output is static files. The following plugin adds negotiation during `vite` and `vite preview`:
+
+```typescript
+// vite.config.ts
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { defineConfig, type Plugin, type PreviewServer, type ViteDevServer } from "vite";
+
+function markdownNegotiation(): Plugin {
+  const docsDirectory = path.join(process.cwd(), "content", "docs");
+
+  const install = (server: ViteDevServer | PreviewServer) => {
+    server.middlewares.use(async (request, response, next) => {
+      const pathname = new URL(request.url || "/", "http://localhost").pathname;
+
+      if (pathname !== "/docs" && !pathname.startsWith("/docs/")) {
+        return next();
+      }
+
+      response.setHeader("Vary", "Accept");
+
+      if (!request.headers.accept?.includes("text/markdown")) {
+        return next();
+      }
+
+      const slug = pathname.slice("/docs".length).replace(/^\//, "") || "index";
+      const filePath = path.join(docsDirectory, `${slug}.mdx`);
+
+      if (!filePath.startsWith(`${docsDirectory}${path.sep}`)) {
+        response.statusCode = 404;
+        return response.end();
+      }
+
+      try {
+        response.setHeader("Content-Type", "text/markdown; charset=utf-8");
+        response.end(await readFile(filePath, "utf8"));
+      } catch {
+        response.statusCode = 404;
+        response.end();
+      }
+    });
+  };
+
+  return {
+    name: "markdown-content-negotiation",
+    configureServer: install,
+    configurePreviewServer: install,
+  };
+}
+
+export default defineConfig({
+  plugins: [markdownNegotiation()],
+});
+```
+
+`vite preview` is for local verification, not production. In production, run equivalent middleware in your application server or configure your CDN/edge platform to route requests based on `Accept`. A static-only deployment should expose generated `.md` files at separate URLs instead.
+
+## Test the result
+
+Verify both representations at the same URL:
+
+```bash
+curl -i https://example.com/docs/getting-started
+curl -i -H 'Accept: text/markdown' https://example.com/docs/getting-started
+```
+
+The first response should use `Content-Type: text/html`. The second should use `Content-Type: text/markdown`. If a CDN or proxy caches the responses, confirm that its cache key includes `Accept` or that the response includes `Vary: Accept`.
+
+## Related resources
+
+- [Markdown for Agents](https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/)
+- [Next.js rewrites](https://nextjs.org/docs/15/app/api-reference/config/next-config-js/rewrites)
+- [Astro middleware](https://docs.astro.build/en/guides/middleware/)
+- [Astro endpoints](https://docs.astro.build/en/guides/endpoints/)
+- [Vite plugin API](https://vite.dev/guide/api-plugin)
