@@ -207,6 +207,23 @@ if (!data) return new Response('Not Found', { status: 404 });
 </Base>
 ```
 
+## Point each collection at its page
+
+The admin only opens the visual editor when it knows which URL a document renders at. Set `ui.router` on every collection you want to edit visually, or clicking a document opens the full-page form with no live preview.
+
+```ts
+// tina/collections/page.ts
+export const PageCollection = {
+  // ...
+  ui: {
+    router: ({ document }) =>
+      document._sys.filename === 'home' ? '/' : `/${document._sys.filename}`,
+  },
+};
+```
+
+See [Visual Editing Router](/docs/contextual-editing/router/) for the full signature.
+
 ## Add field-level click-to-edit
 
 `tinaField()` returns a string identifying which form field a DOM element corresponds to. Stamp it on any element you want clickable in the editor:
