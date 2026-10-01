@@ -1,44 +1,42 @@
 ---
 title: Contribution Guidelines
+last_edited: '2026-10-01T01:30:00.000Z'
+tocIsHidden: true
 ---
 
-<Callout variant="warning"
-  body={<>
-    This page is out of date - check out [the TinaCMS GitHub](https://github.com/tinacms/tinacms/blob/main/CONTRIBUTING.md) for the latest contribution information
-  </>}
+TinaCMS is built in the open on GitHub, and contributions of every size are welcome. The setup steps and PR workflow live next to the code in the TinaCMS repo, so they stay in step with the tooling.
+
+<cardGrid
+  cards={[
+    {
+      title: "Set Up the Repo and Open a PR",
+      description:
+        "Get the monorepo running locally and follow the PR workflow in the TinaCMS CONTRIBUTING.md.",
+      link: "https://github.com/tinacms/tinacms/blob/main/CONTRIBUTING.md"
+    },
+    {
+      title: "Pick Up a Starter Issue",
+      description:
+        "Issues labelled onboarding are small, well-scoped and suited to developers new to the project.",
+      link: "https://github.com/tinacms/tinacms/labels/onboarding"
+    },
+    {
+      title: "File a Bug Report",
+      description:
+        "Follow the checklist that gets a bug from report to fix the fastest.",
+      link: "/docs/contributing/bug-reports"
+    },
+    {
+      title: "Improve These Docs",
+      description:
+        "The docs live in their own repo, and fixes are welcome there.",
+      link: "https://github.com/tinacms/docs"
+    },
+    {
+      title: "Ask a Question",
+      description:
+        "Chat with the team and other contributors on the TinaCMS Discord.",
+      link: "https://discord.com/invite/zumN63Ybpf"
+    }
+  ]}
 />
-
-The following is a set of guidelines and tips for contributing to the TinaCMS and its packages. Please also reference this [doc](https://github.com/tinacms/tinacms/blob/master/CONTRIBUTING.md) for the latest info on contributing.
-
-**If you have questions or need help, please post it on the** **[Forum](https://tina.io/community/).**
-
-## How to Contribute
-
-* [Reporting Bugs](https://github.com/tinacms/tinacms/issues)
-* [Suggesting Enhancements](https://github.com/tinacms/tinacms/issues)
-* [Writing Docs, Guides, or Blog Posts](https://github.com/tinacms/tina.io)
-* Volunteering for User Testing
-* [Adding features, fixing bugs etc.](https://github.com/tinacms/tinacms/issues)
-* [Answer questions in the TinaCMS Forum](https://tina.io/community/)
-* Tackle a [good-first-issue](https://github.com/tinacms/tinacms/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)!
-
-## Contributing Code
-
-Read the [set-up](/docs/contributing/setting-up) guide to get started developing on TinaCMS locally.
-
-### Making Commits
-
-TinaCMS uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/) to generate CHANGELOG entries. Please make sure your commits follow this convention.
-
-### Creating Packages
-
-Packages in TinaCMS are organized according to their name
-
-| Type                    | Naming Convention  | Example Path            |
-| ----------------------- | ------------------ | ----------------------- |
-| Internal packages       | `@tinacms/*`       | `@tinacms/core`         |
-| Node API extensions     | `@tinacms/api-*`   | `@tinacms/api-git`      |
-| React specific packages | `react-tinacms-*`  | `react-tinacms-remark`  |
-| Gatsby plugins          | `gatsby-tinacms-*` | `gatsby-tinacms-json`   |
-| NextJS package          | `next-tinacms-*`   | `next-tinacms-markdown` |
-| Demo Projects           | `demo-*`           | `demo-gatsby`           |
