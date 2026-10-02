@@ -487,6 +487,17 @@
       "source": "/search",
       "destination": "/reference/search/overview",
       "permanent": false
+    },
+    {
+      "source": "/contributing/setting-up",
+      "destination": "/contributing/guidelines",
+      "permanent": true
+    },
+    {
+      "source": "/docs/zh/contributing/setting-up",
+      "destination": "/zh/docs/contributing/guidelines",
+      "permanent": true,
+      "basePath": false
     }
   ],
   "title": "TinaCMS",
