@@ -67,6 +67,54 @@ graph TD;
   C-->D;
 ```
 
+## Charts
+
+Mermaid can also draw charts. TinaCMS renders any diagram type Mermaid supports, including pie charts and XY charts.
+
+### Pie Charts
+
+Use `pie` to show parts of a whole. See the [Mermaid pie chart syntax](https://mermaid.js.org/syntax/pie.html) for every option.
+
+````markdown
+```mermaid
+pie title Pets adopted by volunteers
+  "Dogs" : 386
+  "Cats" : 85
+  "Rats" : 15
+```
+````
+
+```mermaid
+pie title Pets adopted by volunteers
+  "Dogs" : 386
+  "Cats" : 85
+  "Rats" : 15
+```
+
+### XY Charts
+
+Use `xychart-beta` to plot bar and line series against an x and y axis. See the [Mermaid XY chart syntax](https://mermaid.js.org/syntax/xyChart.html) for every option.
+
+````markdown
+```mermaid
+xychart-beta
+  title "Sales Revenue"
+  x-axis [jan, feb, mar, apr, may, jun]
+  y-axis "Revenue (in $)" 4000 --> 11000
+  bar [5000, 6000, 7500, 8200, 9500, 10500]
+  line [5000, 6000, 7500, 8200, 9500, 10500]
+```
+````
+
+```mermaid
+xychart-beta
+  title "Sales Revenue"
+  x-axis [jan, feb, mar, apr, may, jun]
+  y-axis "Revenue (in $)" 4000 --> 11000
+  bar [5000, 6000, 7500, 8200, 9500, 10500]
+  line [5000, 6000, 7500, 8200, 9500, 10500]
+```
+
 ## Editing and Previewing Mermaid Diagrams
 
 Once a Mermaid diagram is inserted, you can switch between **Edit Mode** (for modifying the Mermaid code) and **Preview Mode** (to see the rendered diagram).
@@ -89,7 +137,7 @@ To delete a Mermaid diagram:
 
 ## Mermaid Package Versioning
 
-TinaCMS uses the **Mermaid NPM package** to render and parse the Mermaid syntax. Currently, we have locked the internal version to `v9.3.0` to ensure compatibility with CommonJS.
+TinaCMS uses the **Mermaid NPM package** to render and parse the Mermaid syntax. TinaCMS 3.7.4 and later use Mermaid v11. Earlier versions are locked to `v9.3.0`, which does not support XY charts.
 
 However, when installing Mermaid in your own application, you are free to use any version of Mermaid or other compatible rendering packages.
 

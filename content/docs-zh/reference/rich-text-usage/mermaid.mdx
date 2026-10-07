@@ -63,6 +63,54 @@ graph TD;
   C-->D;
 ```
 
+## 图表
+
+Mermaid 也可以绘制图表。TinaCMS 支持渲染 Mermaid 的所有图表类型，包括饼图和 XY 图表。
+
+### 饼图
+
+使用 `pie` 展示各部分占整体的比例。完整选项请参阅 [Mermaid 饼图语法](https://mermaid.js.org/syntax/pie.html)。
+
+````markdown
+```mermaid
+pie title Pets adopted by volunteers
+  "Dogs" : 386
+  "Cats" : 85
+  "Rats" : 15
+```
+````
+
+```mermaid
+pie title Pets adopted by volunteers
+  "Dogs" : 386
+  "Cats" : 85
+  "Rats" : 15
+```
+
+### XY 图表
+
+使用 `xychart-beta` 在 x 轴和 y 轴上绘制柱状和折线数据。完整选项请参阅 [Mermaid XY 图表语法](https://mermaid.js.org/syntax/xyChart.html)。
+
+````markdown
+```mermaid
+xychart-beta
+  title "Sales Revenue"
+  x-axis [jan, feb, mar, apr, may, jun]
+  y-axis "Revenue (in $)" 4000 --> 11000
+  bar [5000, 6000, 7500, 8200, 9500, 10500]
+  line [5000, 6000, 7500, 8200, 9500, 10500]
+```
+````
+
+```mermaid
+xychart-beta
+  title "Sales Revenue"
+  x-axis [jan, feb, mar, apr, may, jun]
+  y-axis "Revenue (in $)" 4000 --> 11000
+  bar [5000, 6000, 7500, 8200, 9500, 10500]
+  line [5000, 6000, 7500, 8200, 9500, 10500]
+```
+
 ## 编辑和预览 Mermaid 图表
 
 插入 Mermaid 图表后，您可以在 **编辑模式**（用于修改 Mermaid 代码）和 **预览模式**（查看渲染后的图表）之间切换。
@@ -85,7 +133,7 @@ graph TD;
 
 ## Mermaid 包版本控制
 
-TinaCMS 使用 **Mermaid NPM 包** 来渲染和解析 Mermaid 语法。目前，我们已将内部版本锁定为 `v9.3.0` 以确保与 CommonJS 的兼容性。
+TinaCMS 使用 **Mermaid NPM 包** 来渲染和解析 Mermaid 语法。TinaCMS 3.7.4 及更高版本使用 Mermaid v11。更早的版本锁定为 `v9.3.0`，不支持 XY 图表。
 
 然而，在您的应用程序中安装 Mermaid 时，您可以自由使用任何版本的 Mermaid 或其他兼容的渲染包。
 
