@@ -3,7 +3,7 @@ title: Date Fields
 last_edited: '2025-03-26T01:06:16.097Z'
 ---
 
-A structured input that stores date values in ISO 8601 format. Uses [react-datetime](https://www.npmjs.com/package/react-datetime) under the hood.
+A structured input that stores date values as ISO 8601 timestamps. Editors pick the date from a calendar, and can pick a time as well when you set `ui.timeFormat`.
 
 ## Type Definition
 
@@ -26,15 +26,19 @@ A structured input that stores date values in ISO 8601 format. Uses [react-datet
     {
       groupName: "ui",
       name: "dateFormat",
-      description: "Defines the UI date format.\n\nFor example, 'YYYY MM DD'.\n",
+      description: "Sets how TinaCMS shows the date to editors, using Moment.js-style tokens such as `YYYY`, `MM` and `DD`.\n\nFor example, `YYYY MM DD`. Defaults to `MMM DD, YYYY`.\n",
       type: "string"
+    },
+    {
+      groupName: "ui",
+      name: "timeFormat",
+      description: "Adds a time picker and sets how TinaCMS shows the time, using the same tokens as `dateFormat`.\n\nFor example, `HH:mm`. Set it to `true` for the default `h:mm A`.\n",
+      type: "string | boolean"
     }
   ]}
 />
 
-Datetimes' are persisted as UTC, converted from local time of the user on input.
-
-> Any extra properties added to the the date field definition under ui will be passed along to the [react-datettime](https://www.npmjs.com/package/react-datetime) component.
+TinaCMS converts the picked date from the editor's local time and saves it in UTC.
 
 ## Examples
 
@@ -48,11 +52,11 @@ Datetimes' are persisted as UTC, converted from local time of the user on input.
 }
 ```
 
-![](/img/docs/reference/date.png)
+![Date field with its calendar open](/img/docs/reference/date.png)
 
 ### Field with custom date format
 
-You can customize the format that the date field use by customizing the dateFormat & parse properties.
+Set `ui.dateFormat` to change how TinaCMS shows the date to editors. TinaCMS still saves the full timestamp, such as `2026-10-09T00:00:00.000Z`.
 
 ```javascript
 {
@@ -60,17 +64,52 @@ You can customize the format that the date field use by customizing the dateFor
   name: "date",
   type: "datetime",
   ui: {
-    dateFormat: 'YY-MM-DD',
-    parse: (value) => value && value.format('YY-MM-DD'),
+    dateFormat: "YYYY-MM-DD",
   },
 }
 ```
 
-![](/img/docs/reference/date2.png)
+![Date field showing 2026-10-09](/img/docs/reference/date2.png)
+
+### Field that saves only the date
+
+A `datetime` field always saves a full timestamp. TinaCMS turns the value back into a date before it writes the file, even when `ui.parse` returns a bare date.
+
+To save a bare `YYYY-MM-DD`, use a `string` field with the `date` component:
+
+```javascript
+{
+  label: "Date",
+  name: "date",
+  type: "string",
+  ui: {
+    component: "date",
+    format: (value) =>
+      /^\d{4}-\d{2}-\d{2}$/.test(value)
+        ? `${value}T00:00:00`
+        : value,
+    parse: (value) => {
+      if (!value) return value;
+      const date = new Date(value);
+      return [
+        date.getFullYear(),
+        String(date.getMonth() + 1).padStart(2, "0"),
+        String(date.getDate()).padStart(2, "0"),
+      ].join("-");
+    },
+  },
+}
+```
+
+`parse` receives the picked date as an ISO string and saves the day the editor picked, in their local time. `format` reads a stored `2026-10-09` as local midnight. Without it, the picker reads that value as midnight UTC, and editors west of UTC see October 8.
+
+GraphQL treats this field as a string, so your queries can't use the `after` and `before` filters that `datetime` fields support.
+
+If you switch an existing `datetime` field to this, quote each value in your files first, for example `date: '2026-10-09'`. YAML reads an unquoted date as a date rather than a string, and indexing then fails with `Unable to seed` for that file.
 
 ### Field including time picker
 
-You can add a timepicker to the date UI by supplying the `ui.timeFormat` property.
+You can add a timepicker to the date UI by supplying the `ui.timeFormat` property.
 
 ```javascript
 {
@@ -83,4 +122,4 @@ You can add a timepicker to the date UI by supplying the `ui.timeFormat` prope
 }
 ```
 
-![](/img/docs/reference/date3.png)
+![Date field with the calendar and time picker open](/img/docs/reference/date3.png)
