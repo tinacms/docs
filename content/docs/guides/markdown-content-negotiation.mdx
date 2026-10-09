@@ -5,11 +5,11 @@ seo:
   description: Configure content negotiation for TinaCMS pages in Next.js, Astro, and Vite.
 ---
 
-AI agents can consume documentation more reliably when they receive Markdown instead of rendered HTML. Because TinaCMS stores content as Markdown or MDX, a server can return the source file when a client sends `Accept: text/markdown` while continuing to serve HTML to browsers at the same URL.
+Serve TinaCMS source Markdown or MDX to AI agents when they request `Accept: text/markdown`. Browsers can continue to receive HTML at the same URL.
 
-This requires request-time routing. A static host cannot serve two representations from one URL unless its CDN or edge layer performs the negotiation.
+To serve both formats at one URL, route requests through a server, CDN, or edge layer that handles content negotiation. A static host alone cannot do this.
 
-The examples use a simple `text/markdown` match. If your application needs full HTTP negotiation, parse media-type quality values and do not select Markdown when its quality is `q=0`.
+These examples match `text/markdown` in the request header. For full HTTP negotiation, parse media-type quality values and exclude Markdown when its quality is `q=0`.
 
 <Callout variant="warning" body="MDX can contain JSX and TinaCMS components. Most AI agents can still read it, but clients that require CommonMark may need a separate MDX-to-Markdown conversion step." />
 
@@ -99,7 +99,7 @@ Next.js App Router currently overwrites custom `Vary` values with its internal r
 
 ## Astro
 
-This approach requires an Astro server adapter and on-demand rendering. Create a server endpoint for the source MDX:
+Use an Astro server adapter with on-demand rendering. Create a server endpoint for the source MDX:
 
 ```typescript
 // src/pages/_markdown/[...slug].ts
@@ -129,7 +129,7 @@ export const GET: APIRoute = async ({ params }) => {
 };
 ```
 
-Then add middleware that rewrites Markdown requests to the endpoint and adds `Vary: Accept` to both representations:
+Add middleware to rewrite Markdown requests to the endpoint and append `Vary: Accept` to both HTML and Markdown responses:
 
 ```typescript
 // src/middleware.ts
@@ -165,7 +165,7 @@ Astro static output cannot inspect request headers. For a static deployment, pub
 
 ## Plain Vite
 
-Vite provides a development server and a preview server, but its production output is static files. The following plugin adds negotiation during `vite` and `vite preview`:
+Vite produces static files for production. Use this plugin to add content negotiation to its development and preview servers (`vite` and `vite preview`):
 
 ```typescript
 // vite.config.ts
@@ -220,7 +220,7 @@ export default defineConfig({
 });
 ```
 
-`vite preview` is for local verification, not production. In production, run equivalent middleware in your application server or configure your CDN/edge platform to route requests based on `Accept`. A static-only deployment should expose generated `.md` files at separate URLs instead.
+Use `vite preview` only for local verification. In production, run equivalent middleware in your application server or configure your CDN or edge platform to route requests based on `Accept`. For a static-only deployment, publish generated `.md` files at separate URLs.
 
 ## Test the result
 
