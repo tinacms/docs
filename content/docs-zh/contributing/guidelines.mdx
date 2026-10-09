@@ -1,44 +1,42 @@
 ---
 title: 贡献指南
+last_edited: '2026-10-01T01:30:00.000Z'
+tocIsHidden: true
 ---
 
-<Callout variant="warning"
-  body={<>
-    此页面已过时 - 请查看 [TinaCMS GitHub](https://github.com/tinacms/tinacms/blob/main/CONTRIBUTING.md) 以获取最新的贡献信息
-  </>}
+TinaCMS在GitHub上公开开发，欢迎任何规模的贡献。环境设置步骤和PR流程与代码一起放在TinaCMS仓库中，因此会与工具链保持同步。
+
+<cardGrid
+  cards={[
+    {
+      title: "设置仓库并提交PR",
+      description:
+        "在本地运行monorepo，并按照TinaCMS的CONTRIBUTING.md中的PR流程操作。",
+      link: "https://github.com/tinacms/tinacms/blob/main/CONTRIBUTING.md"
+    },
+    {
+      title: "认领入门Issue",
+      description:
+        "带有onboarding标签的Issue规模小、范围明确，适合刚接触该项目的开发者。",
+      link: "https://github.com/tinacms/tinacms/labels/onboarding"
+    },
+    {
+      title: "提交错误报告",
+      description:
+        "按照这份清单提交，能让错误最快从报告走到修复。",
+      link: "/docs/contributing/bug-reports"
+    },
+    {
+      title: "改进这些文档",
+      description:
+        "文档位于独立的仓库中，欢迎在那里提交修复。",
+      link: "https://github.com/tinacms/docs"
+    },
+    {
+      title: "提问",
+      description:
+        "在TinaCMS Discord上与团队和其他贡献者交流。",
+      link: "https://discord.com/invite/zumN63Ybpf"
+    }
+  ]}
 />
-
-以下是一组为TinaCMS及其包贡献的指南和提示。请同时参考此[文档](https://github.com/tinacms/tinacms/blob/master/CONTRIBUTING.md)以获取最新的贡献信息。
-
-**如果您有问题或需要帮助，请在** **[论坛](https://tina.io/community/)** **上发布。**
-
-## 如何贡献
-
-* [报告错误](https://github.com/tinacms/tinacms/issues)
-* [建议增强功能](https://github.com/tinacms/tinacms/issues)
-* [撰写文档、指南或博客文章](https://github.com/tinacms/tina.io)
-* 自愿参与用户测试
-* [添加功能、修复错误等](https://github.com/tinacms/tinacms/issues)
-* [在TinaCMS论坛回答问题](https://tina.io/community/)
-* 解决一个[良好的入门问题](https://github.com/tinacms/tinacms/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)!
-
-## 贡献代码
-
-阅读[设置](/docs/contributing/setting-up)指南以开始在本地开发TinaCMS。
-
-### 提交更改
-
-TinaCMS使用[Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0-beta.4/)来生成变更日志条目。请确保您的提交遵循此约定。
-
-### 创建包
-
-TinaCMS中的包根据其名称进行组织
-
-| 类型                    | 命名约定           | 示例路径                |
-| ----------------------- | ------------------ | ----------------------- |
-| 内部包                  | `@tinacms/*`       | `@tinacms/core`         |
-| Node API扩展            | `@tinacms/api-*`   | `@tinacms/api-git`      |
-| React特定包             | `react-tinacms-*`  | `react-tinacms-remark`  |
-| Gatsby插件              | `gatsby-tinacms-*` | `gatsby-tinacms-json`   |
-| NextJS包                | `next-tinacms-*`   | `next-tinacms-markdown` |
-| 演示项目                | `demo-*`           | `demo-gatsby`           |
