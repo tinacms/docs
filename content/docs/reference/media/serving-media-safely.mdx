@@ -15,7 +15,7 @@ Send `X-Content-Type-Options: nosniff` for your media path. The browser then tru
 
 Send a Content Security Policy on the media path that allows no script and sandboxes the file:
 
-```
+```text
 Content-Security-Policy: default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox
 ```
 
@@ -60,7 +60,7 @@ module.exports = {
 
 **Netlify** (`public/_headers`):
 
-```
+```text
 /uploads/*
   X-Content-Type-Options: nosniff
   Content-Security-Policy: default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox
