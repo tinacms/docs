@@ -24,7 +24,7 @@ This applies only when someone opens a file directly. Images and SVGs placed wit
 <Callout
   variant="warning"
   body={<>
-    `sandbox` can stop PDFs opening inline in some browsers. Check the browsers you support, and drop `sandbox` for `.pdf` if they need it.
+    `default-src 'none'` can stop PDFs opening inline in some browsers, because it also blocks the built-in viewer. Check the browsers you support, and don't send this Content Security Policy for `.pdf` if they need it.
   </>}
 />
 
@@ -58,7 +58,7 @@ module.exports = {
 };
 ```
 
-**Netlify** (`public/_headers`):
+**Netlify** (`_headers` in your publish directory, e.g. `public/_headers`):
 
 ```text
 /uploads/*
@@ -85,7 +85,7 @@ module.exports = {
 }
 ```
 
-**nginx**:
+**nginx** (an `add_header` in a `location` replaces the ones inherited from `server`, so repeat headers like `Strict-Transport-Security` here):
 
 ```nginx
 location /uploads/ {
