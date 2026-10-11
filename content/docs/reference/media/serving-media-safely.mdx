@@ -1,0 +1,99 @@
+---
+title: Serving Uploaded Media Safely
+last_edited: '2026-10-10T00:00:00.000Z'
+---
+
+[Repo-based media](/docs/reference/media/repo-based) is committed to your repository and served from your site's `public` folder, so every uploaded file comes from your site's own domain. If a browser runs one of those files as a page or a script, it runs with your site's cookies and storage.
+
+As of `@tinacms/cli` 4.0.1, TinaCMS rejects HTML, XML and script uploads on the server. SVG stays allowed, because logos and icons rely on it, and an SVG can still run script when someone opens its URL directly. The settings below close that gap and protect any file that reaches your repository another way.
+
+## 1. Stop browsers guessing the type
+
+Send `X-Content-Type-Options: nosniff` for your media path. The browser then trusts the content type your server declares instead of guessing one from the file's bytes.
+
+## 2. Stop an uploaded file running as a page
+
+Send a Content Security Policy on the media path that allows no script and sandboxes the file:
+
+```
+Content-Security-Policy: default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox
+```
+
+This applies only when someone opens a file directly. Images and SVGs placed with `<img>` on your own pages are unaffected, because a CSP header governs a document, not an image loaded into one.
+
+<Callout
+  variant="warning"
+  body={<>
+    `sandbox` can stop PDFs opening inline in some browsers. Check the browsers you support, and drop `sandbox` for `.pdf` if they need it.
+  </>}
+/>
+
+## 3. Serve media from its own domain where you can
+
+A separate domain shares no cookies or storage with your site, so nothing uploaded there can act as your site. External stores (S3, Cloudinary, DigitalOcean Spaces, Azure) give you this when you serve from the provider's own hostname or a dedicated media subdomain. Avoid putting a bucket behind a path on your main domain. See [External Media Providers](/docs/reference/media/external/authentication) for setup.
+
+## Examples
+
+Replace `/uploads` with your [`mediaRoot`](/docs/reference/media/repo-based#media-storage-path). Each example sets `X-Content-Type-Options` and the Content Security Policy on the media path.
+
+**Next.js** (`next.config.js`):
+
+```js
+module.exports = {
+  async headers() {
+    return [
+      {
+        source: '/uploads/:path*',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          {
+            key: 'Content-Security-Policy',
+            value:
+              "default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox",
+          },
+        ],
+      },
+    ];
+  },
+};
+```
+
+**Netlify** (`public/_headers`):
+
+```
+/uploads/*
+  X-Content-Type-Options: nosniff
+  Content-Security-Policy: default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox
+```
+
+**Vercel** (`vercel.json`):
+
+```json
+{
+  "headers": [
+    {
+      "source": "/uploads/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**nginx**:
+
+```nginx
+location /uploads/ {
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Content-Security-Policy "default-src 'none'; img-src 'self' data:; media-src 'self'; style-src 'unsafe-inline'; sandbox" always;
+}
+```
+
+## Who can upload
+
+Anyone with upload access can put a file on your domain. Give media access only to editors you trust, which matters most on self-hosted setups with several editors.

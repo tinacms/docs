@@ -318,6 +318,11 @@
                   "_template": "item"
                 },
                 {
+                  "slug": "content/docs/reference/media/serving-media-safely.mdx",
+                  "title": "Serving Uploaded Media Safely",
+                  "_template": "item"
+                },
+                {
                   "slug": "content/docs/reference/media/overriding-accepted-media-types.mdx",
                   "title": "Overriding Default Media Types",
                   "_template": "item"
