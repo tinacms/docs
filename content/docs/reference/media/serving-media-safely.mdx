@@ -5,7 +5,7 @@ last_edited: '2026-10-10T00:00:00.000Z'
 
 [Repo-based media](/docs/reference/media/repo-based) is committed to your repository and served from your site's `public` folder, so every uploaded file comes from your site's own domain. If a browser runs one of those files as a page or a script, it runs with your site's cookies and storage.
 
-As of `@tinacms/cli` 4.0.1, TinaCMS's upload route rejects HTML, XML and script uploads. Not every upload path runs that check, and SVG stays allowed because logos and icons rely on it and can still run script when someone opens its URL directly. The settings below close that gap and protect any file that reaches your repository another way.
+As of `@tinacms/cli` 4.0.1, TinaCMS's upload route rejects HTML, XML and script uploads. Not every upload path runs that check. SVG stays allowed, because logos and icons rely on it, and an SVG can still run script when someone opens its URL directly. The settings below close that gap and protect any file that reaches your repository another way.
 
 ## 1. Stop browsers guessing the type
 
