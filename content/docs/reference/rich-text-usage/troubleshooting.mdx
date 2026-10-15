@@ -17,7 +17,7 @@ Rich-text fields are saved as markdown or MDX, so some editor content can't be w
     {
       heading: "Why does a color from my palette not show up?",
       docText:
-        "Tina only applies plain CSS colors: hex (`#CC4141`), named colors (`rebeccapurple`), and color functions such as `rgb()`, `hsl()`, `oklch()`, `color-mix()` or `var(--brand, #CC4141)`.\n\nA value with anything else in it, like `red; font-weight: bold` or `url(...)`, is dropped when the content is saved or rendered, and the text keeps its default color. The same rule applies to `highlightColors`.\n"
+        "Tina only applies plain CSS colors: hex (`#CC4141`), named colors (`rebeccapurple`), and color functions such as `rgb()`, `hsl()`, `oklch()`, `color-mix()` or `var(--brand, #CC4141)`.\n\nA `textColors` entry with anything else in its value, like `red; font-weight: bold` or `url(...)`, is left out of the dropdown, and the browser console logs `Ignoring unsupported colour`. Change the value to a plain color.\n"
     },
     {
       heading: "Why do `**`, `*` or `~~` show up as plain text next to colored text?",
@@ -32,12 +32,12 @@ Rich-text fields are saved as markdown or MDX, so some editor content can't be w
     {
       heading: "Why does colored text show as raw `<span>` markup, or lose its color after saving?",
       docText:
-        "The editor, the CLI and the content API all need to support text color. If one of them is older than the others, colored text can load as raw `<span>` markup, or lose its color on save.\n\nUpdate `tinacms` and `@tinacms/cli` to the same, latest version and restart your dev server. If it only happens when editing through TinaCloud, let us know on [Discord](https://discord.com/invite/zumN63Ybpf).\n"
+        "The editor, the CLI and the content API all need to support text color. If one of them is older than the others, colored text can load as raw `<span>` markup, or lose its color on save.\n\nUpdate `tinacms`, `@tinacms/cli` and (for Astro sites) `@tinacms/astro` to their latest versions, and restart your dev server. If it only happens when editing through TinaCloud, let us know on [Discord](https://discord.com/invite/zumN63Ybpf).\n"
     },
     {
       heading: "Why isn't my own `<span>` shown as colored text in the editor?",
       docText:
-        "Tina only treats a `<span>` as text color when its only attribute is a `style` with a single `color`, written as a plain value:\n\n* MDX: `<span style={{ color: \"#CC4141\" }}>text</span>`\n* Markdown: `<span style=\"color: #CC4141\">text</span>`\n\nA span with a `class`, other styles, or a color from a variable (`style={{ color: brandRed }}`) is left in the file exactly as written, and can't be changed from the Text color dropdown.\n"
+        "Tina only treats a `<span>` as text color when its only attribute is a `style` with a single `color`, written as a plain value:\n\n* `<span style={{ color: \"#CC4141\" }}>text</span>`\n* `<span style=\"color: #CC4141\">text</span>`\n\nMDX fields accept both and save the first form. Markdown fields save the second.\n\nA span with a `class`, other styles, or a color from a variable (`style={{ color: brandRed }}`) is left in the file exactly as written, and can't be changed from the Text color dropdown.\n"
     }
   ]}
 />
@@ -49,7 +49,7 @@ Rich-text fields are saved as markdown or MDX, so some editor content can't be w
     {
       heading: "Why does highlighted or colored text lose its styling on my site?",
       docText:
-        "Fields that use the `markdown` parser save highlight and text color as raw HTML (`<mark>` and `<span>`). Renderers that strip raw HTML drop them.\n\nHugo strips raw HTML by default. Turn it on in your site config:\n\n```toml\n[markup.goldmark.renderer]\n  unsafe = true\n```\n\n`<TinaMarkdown>` and `@tinacms/astro` render both without any setup.\n"
+        "Fields that use the `markdown` parser save highlight and text color as raw HTML (`<mark>` and `<span>`). Renderers that strip raw HTML drop them.\n\nHugo strips raw HTML by default. Turn it on in your site config:\n\n```toml\n[markup.goldmark.renderer]\n  unsafe = true\n```\n\n`<TinaMarkdown>` and `@tinacms/astro` render both without any extra setup.\n"
     },
     {
       heading: "Why did part of a word disappear after I highlighted it?",
@@ -60,11 +60,6 @@ Rich-text fields are saved as markdown or MDX, so some editor content can't be w
       heading: "Why did a paragraph with `{` or `}` come back empty?",
       docText:
         "In MDX, curly braces start a JavaScript expression, so a paragraph like `2 * 3 < 4 {x}` can't be read back and loads as an empty paragraph.\n\nWrap text that needs braces in inline code (`` `{x}` ``), or use the `markdown` parser for fields that don't need embedded components.\n"
-    },
-    {
-      heading: "Why does highlight break in my project?",
-      docText:
-        "`mark` is reserved for highlight. If you register a custom MDX component named `mark`, it conflicts with highlight and the editor behaves unpredictably. Rename the component.\n\nSimilarly, don't name a rich-text field `children`.\n"
     }
   ]}
 />
