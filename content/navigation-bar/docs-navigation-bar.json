@@ -199,6 +199,11 @@
                       "slug": "content/docs/reference/rich-text-usage/markdown-shortcode.mdx",
                       "title": "Custom MD Syntax",
                       "_template": "item"
+                    },
+                    {
+                      "slug": "content/docs/reference/rich-text-usage/troubleshooting.mdx",
+                      "title": "MD Troubleshooting",
+                      "_template": "item"
                     }
                   ],
                   "_template": "items"

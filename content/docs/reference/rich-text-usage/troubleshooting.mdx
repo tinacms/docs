@@ -1,0 +1,70 @@
+---
+title: Rich-Text Troubleshooting
+last_edited: '2026-10-16T00:00:00.000Z'
+---
+
+Rich-text fields are saved as markdown or MDX, so some editor content can't be written to the file exactly as it looks. This page covers the cases where formatting changes or disappears after a save, and how to fix them.
+
+## Text color
+
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "Why is there no Text color button in the toolbar?",
+      docText:
+        "The Text color dropdown is part of the default toolbar. If your field sets `overrides.toolbar`, only the buttons you list are shown, so add `\"textColor\"`:\n\n```ts\noverrides: {\n  toolbar: [\"bold\", \"italic\", \"highlight\", \"textColor\"],\n}\n```\n\nIf it's still missing, update `tinacms` and `@tinacms/cli` to the same, latest version.\n"
+    },
+    {
+      heading: "Why does a color from my palette not show up?",
+      docText:
+        "Tina only applies plain CSS colors: hex (`#CC4141`), named colors (`rebeccapurple`), and color functions such as `rgb()`, `hsl()`, `oklch()`, `color-mix()` or `var(--brand, #CC4141)`.\n\nA value with anything else in it, like `red; font-weight: bold` or `url(...)`, is dropped when the content is saved or rendered, and the text keeps its default color. The same rule applies to `highlightColors`.\n"
+    },
+    {
+      heading: "Why do `**`, `*` or `~~` show up as plain text next to colored text?",
+      docText:
+        "This happens when bold, italic or strikethrough starts or ends in the middle of a word that also has color. For example, coloring \"believ\" in un**believ**able saves as:\n\n```md\nun**<span style={{ color: \"#CC4141\" }}>believ</span>**able\n```\n\nMarkdown treats the `<` and `>` of the color tag like punctuation, so the `**` beside it no longer counts as bold when the file is loaded again. The editor shows the asterisks as text, and the next save escapes them (`\\*\\*`), so the formatting is lost for good.\n\nTo avoid it, when a word has color, apply bold, italic and strikethrough to the whole word or not at all. To fix content it has already happened to, open the raw markdown editor, remove the stray `\\*` or `\\~` characters, and reapply the formatting to whole words.\n"
+    },
+    {
+      heading: "Why did color disappear from spaces?",
+      docText:
+        "Spaces at the start or end of colored text are saved outside the color tag, so that bold and italic around them keep working. Color on spaces alone isn't saved, as there's nothing visible to color.\n"
+    },
+    {
+      heading: "Why does colored text show as raw `<span>` markup, or lose its color after saving?",
+      docText:
+        "The editor, the CLI and the content API all need to support text color. If one of them is older than the others, colored text can load as raw `<span>` markup, or lose its color on save.\n\nUpdate `tinacms` and `@tinacms/cli` to the same, latest version and restart your dev server. If it only happens when editing through TinaCloud, let us know on [Discord](https://discord.com/invite/zumN63Ybpf).\n"
+    },
+    {
+      heading: "Why isn't my own `<span>` shown as colored text in the editor?",
+      docText:
+        "Tina only treats a `<span>` as text color when its only attribute is a `style` with a single `color`, written as a plain value:\n\n* MDX: `<span style={{ color: \"#CC4141\" }}>text</span>`\n* Markdown: `<span style=\"color: #CC4141\">text</span>`\n\nA span with a `class`, other styles, or a color from a variable (`style={{ color: brandRed }}`) is left in the file exactly as written, and can't be changed from the Text color dropdown.\n"
+    }
+  ]}
+/>
+
+## Formatting and saving
+
+<accordionBlock
+  accordionItems={[
+    {
+      heading: "Why does highlighted or colored text lose its styling on my site?",
+      docText:
+        "Fields that use the `markdown` parser save highlight and text color as raw HTML (`<mark>` and `<span>`). Renderers that strip raw HTML drop them.\n\nHugo strips raw HTML by default. Turn it on in your site config:\n\n```toml\n[markup.goldmark.renderer]\n  unsafe = true\n```\n\n`<TinaMarkdown>` and `@tinacms/astro` render both without any setup.\n"
+    },
+    {
+      heading: "Why did part of a word disappear after I highlighted it?",
+      docText:
+        "In a field that uses the `markdown` parser, highlighting part of a word can drop the highlighted text on save. For example, highlighting \"believ\" in \"unbelievable\" saves as `unable`.\n\nHighlight whole words instead, or use the `mdx` parser for the field if it needs highlights inside words.\n"
+    },
+    {
+      heading: "Why did a paragraph with `{` or `}` come back empty?",
+      docText:
+        "In MDX, curly braces start a JavaScript expression, so a paragraph like `2 * 3 < 4 {x}` can't be read back and loads as an empty paragraph.\n\nWrap text that needs braces in inline code (`` `{x}` ``), or use the `markdown` parser for fields that don't need embedded components.\n"
+    },
+    {
+      heading: "Why does highlight break in my project?",
+      docText:
+        "`mark` is reserved for highlight. If you register a custom MDX component named `mark`, it conflicts with highlight and the editor behaves unpredictably. Rename the component.\n\nSimilarly, don't name a rich-text field `children`.\n"
+    }
+  ]}
+/>
