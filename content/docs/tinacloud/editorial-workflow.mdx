@@ -41,15 +41,15 @@ Once you enter the new branch name, the following actions will occur:
 * The changes will be saved to the new branch.
 * A pull request will be created, as a draft or ready for review depending on the save option you choose.
 
-### Save options
+### Save Options
 
-The save button in the modal is a split button. The main button runs the save option you used last, and the arrow opens the others.
+The save button in the modal is a split button. The main button runs the save option you used last (Save draft the first time), and the arrow opens the others.
 
 ![Save options in the new branch modal](/img/docs/editorial-workflow/save-options.png)
 
 * **Save draft** (default): opens the pull request as a draft. Use this when the content is not ready for a reviewer.
 * **Save (ready for review)**: opens the pull request ready for review, so editors do not need to mark it ready in GitHub.
-* **Save and publish**: saves straight to the branch you are on. This option is turned off when that branch is protected.
+* **Save and publish**: commits straight to the protected branch. It always shows as turned off here, because the Editorial Workflow only runs on protected branches. Save draft or Save (ready for review) are the options to use.
 
 TinaCMS remembers your last choice in your browser, so the main button shows it next time.
 
