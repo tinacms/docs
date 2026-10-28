@@ -4,6 +4,10 @@ title: The TinaCMS CLI
 next: content/docs/reference/media/overview.mdx
 ---
 
+The TinaCMS CLI is the `tinacms` command that you run in your terminal. Use it to start a local dev server, build TinaCMS for production, and add TinaCMS to an existing project. It also has commands to check your content and your TinaCMS package versions.
+
+AI coding agents work well with the CLI and help you do agentic engineering. For example, an agent can run `tinacms build` to check a schema change, read the errors, and fix them. See [Vibe Coding with TinaCMS](/docs/vibe-coding) for a full AI workflow.
+
 ## Available Commands
 
 ```sh
@@ -243,7 +247,7 @@ This command builds the search-index using the content in your repository and up
 
 ### "tinacms doctor"
 
-The `doctor` command checks whether the TinaCMS packages installed in your project are current against the npm `latest` dist-tag. It answers the question "am *I* current?" — the CLI counterpart to the [`/versions`](/versions) page.
+The `doctor` command checks whether the TinaCMS packages installed in your project are current against the npm `latest` dist-tag. It answers the question "am *I* current?". It is the CLI counterpart to the [`/versions`](/versions) page.
 
 The command:
 
