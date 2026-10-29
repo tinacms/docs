@@ -4,8 +4,7 @@
 #   exit 0  -> SKIP the build
 #   exit 1  -> PROCEED with the build
 #
-# Wire this up in: Vercel Project Settings -> Git -> Ignored Build Step
-#   Command:  bash scripts/vercel-ignore-build.sh
+# Wired up via the ignoreCommand in vercel.json (same as tina.io).
 #
 # Goal: stop spending build minutes on PREVIEW deployments for the translation
 # bot's branches (translate-pr-<PR>-<timestamp>), which nobody reviews directly.
