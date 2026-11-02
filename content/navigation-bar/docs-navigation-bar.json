@@ -112,6 +112,21 @@
           ]
         },
         {
+          "title": "Migration",
+          "items": [
+            {
+              "slug": "content/docs/guides/converting-wordpress-to-tina.mdx",
+              "title": "WordPress",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs/guides/converting-gatsby-to-tina.mdx",
+              "title": "Gatsby",
+              "_template": "item"
+            }
+          ]
+        },
+        {
           "title": "Configuring TinaCMS",
           "items": [
             {
@@ -973,22 +988,6 @@
                   "slug": "content/docs/integration/frameworks.mdx",
                   "title": "Overview",
                   "_template": "item"
-                },
-                {
-                  "slug": "content/docs/guides/converting-wordpress-to-tina.mdx",
-                  "title": "Migrating From WordPress",
-                  "_template": "item"
-                },
-                {
-                  "title": "Gatsby",
-                  "items": [
-                    {
-                      "slug": "content/docs/guides/converting-gatsby-to-tina.mdx",
-                      "title": "Migrating an existing Gatsby blog to TinaCMS",
-                      "_template": "item"
-                    }
-                  ],
-                  "_template": "items"
                 },
                 {
                   "title": "NextJS",
