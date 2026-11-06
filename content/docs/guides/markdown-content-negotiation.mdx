@@ -24,9 +24,13 @@ pnpm add -D @types/negotiator
   </>}
 />
 
+The examples assume each docs URL has a matching source file, so `/docs/guides/setup` maps to `content/docs/guides/setup.mdx` and `/docs` maps to `content/docs/index.mdx`. A Markdown request for a page stored anywhere else, such as a `.md` file or `guides/index.mdx`, returns a 404 even though its HTML works, so adjust the file lookup to match your content layout.
+
+The examples also serve every file they find, including its frontmatter. If your content includes drafts or private fields, filter them out before returning the response.
+
 ## Next.js App Router
 
-Create a static route handler that returns the source MDX. This example assumes documents live in `content/docs` and that `/docs` maps to `content/docs/index.mdx`.
+Create a static route handler that returns the source MDX.
 
 ```typescript
 // src/app/api/markdown/[...slug]/route.ts
@@ -69,7 +73,7 @@ export async function GET(
 }
 ```
 
-Use middleware to negotiate the response and keep the public URL unchanged. This matches TinaDocs' Next.js 15 implementation. Merge it into any existing middleware and matcher configuration.
+Use middleware to negotiate the response and keep the public URL unchanged. This matches TinaDocs' Next.js 15 implementation. Merge it into any existing middleware and matcher configuration. Middleware paths are relative to `basePath`, so if your `basePath` is `/docs`, update the matcher and the rewrite path to match.
 
 ```typescript
 // src/middleware.ts
@@ -197,7 +201,8 @@ function markdownNegotiation(): Plugin {
 
       if (type !== "text/markdown") {
         // Vite's HTML fallback only runs when Accept names text/html or */*.
-        request.headers.accept = "text/html";
+        // Keep the original value because Vite also checks it for text/css.
+        request.headers.accept = `${request.headers.accept ?? "*/*"}, text/html`;
         return next();
       }
 
@@ -210,8 +215,9 @@ function markdownNegotiation(): Plugin {
       }
 
       try {
+        const source = await readFile(filePath, "utf8");
         response.setHeader("Content-Type", "text/markdown; charset=utf-8");
-        response.end(await readFile(filePath, "utf8"));
+        response.end(source);
       } catch {
         response.statusCode = 404;
         response.end();

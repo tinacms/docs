@@ -6,15 +6,18 @@ type CellProps = {
 };
 
 // TinaMarkdown builds the <thead> and <tbody> itself and renders each cell
-// through the `th` and `td` components, so these only need to style the output.
+// through the `th` and `td` components. Cell content skips the rest of the
+// component mapping, so inline links and code are styled on the table instead.
 export const Table = (props) => (
   <div className="my-6 overflow-x-auto rounded-lg shadow-md">
-    <table className="w-full table-auto">{props.children}</table>
+    <table className="w-full table-auto [&>tbody>tr:last-child]:border-b-0 [&_a]:underline [&_a]:opacity-80 [&_a]:transition-all [&_a]:duration-200 [&_a]:ease-out [&_a:hover]:text-brand-primary [&_code]:rounded [&_code]:border [&_code]:border-neutral-border [&_code]:bg-neutral-surface [&_code]:px-1 [&_code]:py-0.5 [&_code]:text-brand-primary [&_code]:shadow-sm">
+      {props.children}
+    </table>
   </div>
 );
 
 export const TableRow = ({ children }: { children?: ReactNode }) => (
-  <tr className="bg-neutral-background-secondary/50 border-b border-neutral-border last:border-b-0">
+  <tr className="bg-neutral-background-secondary/50 border-b border-neutral-border">
     {children}
   </tr>
 );
