@@ -96,6 +96,21 @@
           ]
         },
         {
+          "title": "迁移",
+          "items": [
+            {
+              "slug": "content/docs-zh/guides/converting-wordpress-to-tina.mdx",
+              "title": "WordPress",
+              "_template": "item"
+            },
+            {
+              "slug": "content/docs-zh/guides/converting-gatsby-to-tina.mdx",
+              "title": "Gatsby",
+              "_template": "item"
+            }
+          ]
+        },
+        {
           "title": "配置TinaCMS",
           "items": [
             {
@@ -823,22 +838,6 @@
                   "slug": "content/docs-zh/integration/frameworks.mdx",
                   "title": "概述",
                   "_template": "item"
-                },
-                {
-                  "slug": "content/docs-zh/guides/converting-wordpress-to-tina.mdx",
-                  "title": "从WordPress迁移",
-                  "_template": "item"
-                },
-                {
-                  "title": "Gatsby",
-                  "items": [
-                    {
-                      "slug": "content/docs-zh/guides/converting-gatsby-to-tina.mdx",
-                      "title": "将现有Gatsby博客迁移到TinaCMS",
-                      "_template": "item"
-                    }
-                  ],
-                  "_template": "items"
                 },
                 {
                   "title": "NextJS",

@@ -54,7 +54,7 @@ The rich-text field stores **markdown content** with a WYSIWYG interface, suppor
     {
       name: "toolbar",
       description:
-        "Select which toolbar options are displayed. The following options are supported:\n\n\\['heading', 'link', 'image', 'quote', 'ul', 'ol', 'bold', 'italic', 'code', 'codeBlock', 'mermaid', 'table', 'raw', 'embed'].\n",
+        "Select which toolbar options are displayed. The following options are supported:\n\n\\['heading', 'link', 'image', 'quote', 'ul', 'ol', 'bold', 'italic', 'strikethrough', 'highlight', 'textColor', 'code', 'codeBlock', 'mermaid', 'table', 'raw', 'embed'].\n",
       type: "ToolbarOverrideType[]",
       groupName: "overrides"
     },
@@ -72,6 +72,13 @@ The rich-text field stores **markdown content** with a WYSIWYG interface, suppor
       groupName: "overrides",
       name: "headingLevels",
       type: "HeadingLevel[]"
+    },
+    {
+      description:
+        "The colors offered by the Text color dropdown, as `{ label, value }` pairs. Defaults to red, blue, green, orange and purple. See [Text Color](#text-color).\n",
+      groupName: "overrides",
+      name: "textColors",
+      type: "{ label: string; value: string }[]"
     }
   ]}
 />
@@ -104,7 +111,7 @@ the rich-text editor.
       name: "toolbar",
       type: "ToolbarOverrideType[]",
       description:
-        "Select which toolbar options are displayed. The following options are supported: `['heading', 'link', 'image', 'quote', 'ul', 'ol', 'bold', 'italic', 'code', 'codeBlock', 'mermaid', 'table', 'raw', 'embed']`.\n"
+        "Select which toolbar options are displayed. The following options are supported: `['heading', 'link', 'image', 'quote', 'ul', 'ol', 'bold', 'italic', 'strikethrough', 'highlight', 'textColor', 'code', 'codeBlock', 'mermaid', 'table', 'raw', 'embed']`.\n"
     },
     {
       name: "showFloatingToolbar",
@@ -117,6 +124,12 @@ the rich-text editor.
       description:
         "Restricts which heading levels are offered in the editor UI. Accepts any subset of `['h1', 'h2', 'h3', 'h4', 'h5', 'h6']`. When omitted, all levels are available.\n",
       type: "HeadingLevel[]"
+    },
+    {
+      name: "textColors",
+      description:
+        "The colors offered by the Text color dropdown, as `{ label, value }` pairs. Defaults to red, blue, green, orange and purple.\n",
+      type: "{ label: string; value: string }[]"
     }
   ]}
 />
@@ -192,6 +205,71 @@ export const heroBlockSchema = {
   ],
 }
 ```
+
+## Text Color
+
+Editors can color text with the **Text color** dropdown, which sits next to Highlight in the toolbar. Select some text, then pick a color. **Clear text color** puts the text back to its default color.
+
+### Customize text colors
+
+The dropdown offers red, blue, green, orange and purple by default. Set `textColors` in the field's `overrides` to offer your own palette instead, for example your design system's colors:
+
+```ts
+{
+  type: "rich-text",
+  name: "body",
+  label: "Body",
+  overrides: {
+    textColors: [
+      { label: "Brand Red", value: "#CC4141" },
+      { label: "Brand Purple", value: "var(--brand-purple, #6A4C93)" },
+    ],
+  },
+}
+```
+
+A `value` can be any plain CSS color: hex, a named color, or a color function like `rgb()`, `hsl()`, `oklch()`, `color-mix()` or `var()`. Anything else is ignored when the content is saved or rendered.
+
+If your field sets `overrides.toolbar`, add `"textColor"` to it, as only the listed buttons are shown:
+
+```ts
+overrides: {
+  toolbar: ["bold", "italic", "highlight", "textColor"],
+}
+```
+
+### How colored text is saved
+
+Each piece of colored text is wrapped in its own `<span>`, inside any bold, italic, strikethrough or highlight:
+
+| Editor content | Saved with the `mdx` parser |
+| --- | --- |
+| red text | `<span style={{ color: "#CC4141" }}>red</span>` |
+| bold red text | `**<span style={{ color: "#CC4141" }}>bold</span>**` |
+| highlighted red text | `<mark style={{ backgroundColor: "#FEF08A" }}><span style={{ color: "#CC4141" }}>both</span></mark>` |
+
+Fields that use the `markdown` parser save the same thing as HTML: `<span style="color: #CC4141">red</span>`.
+
+### Render colored text
+
+`<TinaMarkdown>` and `@tinacms/astro` render colored text as a `<span>` with a `color` style, so it works without any setup. To render it your own way, for example with a class instead of an inline style, pass a `textColor` component:
+
+```tsx
+<TinaMarkdown
+  content={data.post.body}
+  components={{
+    textColor: ({ color, children }) => (
+      <span style={{ color }} className="brand-text">
+        {children}
+      </span>
+    ),
+  }}
+/>
+```
+
+`color` is the saved value, and is always a plain CSS color.
+
+If colors go missing or formatting looks wrong after a save, see [Rich-Text Troubleshooting](/docs/reference/rich-text-usage/troubleshooting).
 
 ## Examples
 

@@ -48,6 +48,13 @@ Set this to `""`, if you want your media to be uploaded to the root of your `pub
 
 > Anything in this directory will be synced with TinaCloud's media server, and the images will be publicly accessible.
 
+<Callout
+  variant="warning"
+  body={<>
+    Uploaded files are served from your own domain. See [Serving Uploaded Media Safely](/docs/reference/media/serving-media-safely) for the headers that keep an opened file from running as a page.
+  </>}
+/>
+
 ### Media Permissions
 
 The `static` property determines whether media files can be uploaded, edited, or deleted directly through the editor.
