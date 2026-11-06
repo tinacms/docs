@@ -1,56 +1,40 @@
-import { TinaMarkdown } from "tinacms/dist/rich-text";
-import DocsMDXComponentRenderer from "../markdown-component-mapping";
+import type { ReactNode } from "react";
 
-export const Table = (props) => {
-  // Navigate through the nested structure to find the actual table content
-  const tableRows = props?.children?.props?.children || [];
-  const rowCount = tableRows.length;
-
-  return (
-    <div className="my-6 overflow-x-auto rounded-lg shadow-md">
-      <table className="w-full table-auto">
-        <tbody>
-          {tableRows.map((row, rowIndex) => {
-            // Each row has its own props.children array containing cells
-            const cells = row?.props?.children || [];
-            const CellComponent = rowIndex === 0 ? "th" : "td";
-
-            return (
-              <tr
-                key={`row-${rowIndex}`}
-                className={"bg-neutral-background-secondary/50"}
-              >
-                {cells.map((cell, cellIndex) => {
-                  return (
-                    <CellComponent
-                      key={`cell-${rowIndex}-${cellIndex}`}
-                      className={` px-4 pt-2 ${
-                        rowIndex === 0
-                          ? " text-left font-tuner bg-neutral-background-secondary  border-b-[0.5px] border-neutral-border "
-                          : ""
-                      } ${cellIndex === 0 ? "max-w-xs break-words" : ""}
-                      ${
-                        rowIndex === 0 || rowIndex === rowCount - 1
-                          ? ""
-                          : "border-b border-neutral-border"
-                      }
-                      `}
-                    >
-                      {cell?.props?.children}
-                      <TinaMarkdown
-                        content={cell?.props?.content as any}
-                        components={DocsMDXComponentRenderer}
-                      />
-                    </CellComponent>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
-  );
+type CellProps = {
+  align?: "left" | "center" | "right" | null;
+  children?: ReactNode;
 };
+
+// TinaMarkdown builds the <thead> and <tbody> itself and renders each cell
+// through the `th` and `td` components, so these only need to style the output.
+export const Table = (props) => (
+  <div className="my-6 overflow-x-auto rounded-lg shadow-md">
+    <table className="w-full table-auto">{props.children}</table>
+  </div>
+);
+
+export const TableRow = ({ children }: { children?: ReactNode }) => (
+  <tr className="bg-neutral-background-secondary/50 border-b border-neutral-border last:border-b-0">
+    {children}
+  </tr>
+);
+
+export const TableHeaderCell = ({ align, children }: CellProps) => (
+  <th
+    className="px-4 py-2 text-left font-tuner bg-neutral-background-secondary"
+    style={align ? { textAlign: align } : undefined}
+  >
+    {children}
+  </th>
+);
+
+export const TableCell = ({ align, children }: CellProps) => (
+  <td
+    className="px-4 py-2 first:max-w-xs first:break-words"
+    style={align ? { textAlign: align } : undefined}
+  >
+    {children}
+  </td>
+);
 
 export default Table;

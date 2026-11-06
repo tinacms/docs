@@ -18,7 +18,11 @@ pnpm add negotiator
 pnpm add -D @types/negotiator
 ```
 
-<Callout variant="warning" body="MDX can contain JSX and TinaCMS components. Most AI agents can still read it, but clients that require CommonMark may need a separate MDX-to-Markdown conversion step." />
+<Callout variant="warning"
+  body={<>
+    MDX can contain JSX and TinaCMS components. Most AI agents can still read it, but clients that require CommonMark may need a separate MDX-to-Markdown conversion step.
+  </>}
+/>
 
 ## Next.js App Router
 
@@ -101,7 +105,7 @@ Use an Astro adapter for a Node.js server with on-demand rendering. Set `output:
 Create a server endpoint for the source MDX:
 
 ```typescript
-// src/pages/_markdown/[...slug].ts
+// src/pages/api/markdown/[...slug].ts
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import type { APIRoute } from "astro";
@@ -149,7 +153,7 @@ export const onRequest = defineMiddleware(async (context, next) => {
   const slug = pathname.slice("/docs".length).replace(/^\//, "") || "index";
   const response =
     type === "text/markdown"
-      ? await next(`/_markdown/${slug}`)
+      ? await context.rewrite(`/api/markdown/${slug}`)
       : await next();
   const headers = new Headers(response.headers);
   headers.append("Vary", "Accept");
@@ -192,6 +196,8 @@ function markdownNegotiation(): Plugin {
       }).mediaType(["text/html", "text/markdown"]);
 
       if (type !== "text/markdown") {
+        // Vite's HTML fallback only runs when Accept names text/html or */*.
+        request.headers.accept = "text/html";
         return next();
       }
 

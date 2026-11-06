@@ -1,4 +1,5 @@
 import type { ImageMetadata } from "@/tina/collections/image-metadata";
+import type { ComponentProps } from "react";
 import type { Components, TinaMarkdownContent } from "tinacms/dist/rich-text";
 import Accordion, { AccordionBlock } from "./embedded-elements/accordion";
 import { ApiReference } from "./embedded-elements/api-reference";
@@ -23,9 +24,16 @@ import Blockquote from "./standard-elements/blockquote";
 import { CodeBlock } from "./standard-elements/code-block/code-block";
 import HeaderFormat from "./standard-elements/header-format";
 import MermaidElement from "./standard-elements/mermaid-diagram";
-import Table from "./standard-elements/table";
+import Table, {
+  TableCell,
+  TableHeaderCell,
+  TableRow,
+} from "./standard-elements/table";
 
 type ComponentMapping = {
+  tr: ComponentProps<typeof TableRow>;
+  th: ComponentProps<typeof TableHeaderCell>;
+  td: ComponentProps<typeof TableCell>;
   youtube: { embedSrc: string; caption?: string; minutes?: string };
   codeTabs: {
     tabs: {
@@ -208,6 +216,9 @@ export const MarkdownComponentMapping: Components<ComponentMapping> = {
     />
   ),
   table: (props) => <Table {...props} />,
+  tr: (props) => <TableRow {...props} />,
+  th: (props) => <TableHeaderCell {...props} />,
+  td: (props) => <TableCell {...props} />,
   code_block: (props) =>
     props?.lang === "mermaid" ? (
       <MermaidElement {...props} />
