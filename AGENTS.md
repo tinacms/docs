@@ -44,6 +44,24 @@ pnpm tinacms build --local --skip-cloud-checks   # Validate schema + content off
 
 `tinacms build --local --skip-cloud-checks` is the schema gate: run it after changing anything under `tina/` or bulk-editing content. It fails on any MDX that does not match the collection schema.
 
+### TinaCMS schema changes
+
+After changing a TinaCMS collection, template, or any other schema input, regenerate the committed lockfile:
+
+1. Run `pnpm dev` and wait for `tina/tina-lock.json` to change.
+2. Stop the dev server; do not leave it running in the background.
+3. Commit `tina/tina-lock.json` with the schema change.
+4. Run the schema gate and verify CI. `tinacms build` does not regenerate the lockfile.
+
+## Pull request best practices
+
+- Keep each PR focused. Explain the problem, the change, and how it was validated; link related issues and upstream PRs.
+- For UI work, run `pnpm dev` and independently inspect every affected route at desktop and mobile widths. Do not rely only on screenshots or claims supplied by the author.
+- Capture before/after screenshots when the change is visual. Upload them to the PR with `gh pr edit <number> --attach './before.png#Before the change' --attach './after.png#After the change'`.
+- Attach visual-review evidence or feedback with `gh pr comment <number> --body 'Visual review' --attach './desktop.png#Desktop view' --attach './mobile.png#Mobile view'`.
+- Run `pnpm lint`, relevant tests, and the schema gate when `tina/` or content changed. Confirm required CI checks pass before approving.
+- Submit the review separately after visual inspection: `gh pr review <number> --approve --body 'LGTM'` or `gh pr review <number> --request-changes --body '<required changes>'`.
+
 ## Coding Standards
 
 - Use `@/` path aliases for imports: `@/components`, `@/utils`, `@/app`, `@/tina`, `@/services`, `@/hooks`, `@/styles`, `@/content`, `@/lib`, `@/types`, `@/config`
