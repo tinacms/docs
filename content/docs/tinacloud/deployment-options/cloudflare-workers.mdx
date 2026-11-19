@@ -1,11 +1,115 @@
 ---
 title: Deploying to Cloudflare Workers
-last_edited: '2026-07-10T00:00:00.000Z'
+last_edited: '2026-11-19T00:00:00.000Z'
 next: content/docs/tinacloud/deployment-options/alibaba-cloud.mdx
 previous: content/docs/tinacloud/deployment-options/cloudflare-pages.mdx
 ---
 
 Deploy to Cloudflare Workers when your site needs a server at request time: SSR, API routes, redirects, or the TinaCMS visual-editing route. Every push to your production branch rebuilds and redeploys.
+
+There are two ways to get there:
+
+* **Starting a new site?** [Deploy a starter from TinaCloud](#deploy-a-starter-from-tinacloud). TinaCloud creates the project, adds the keys to your Worker, and starts the build for you.
+* **Deploying a site you already have?** Follow the [Astro](#astro) or [Next.js](#nextjs) section below.
+
+## Deploy a starter from TinaCloud
+
+TinaCloud can deploy a starter to Cloudflare Workers and connect it to a new TinaCloud project in one flow. You end up with a GitHub repo in your account, a Worker that rebuilds on every push, and a TinaCloud project with the Worker's URL already set as its Site URL.
+
+You need a [TinaCloud](https://app.tina.io) account, a Cloudflare account, and a GitHub account.
+
+These starters support it:
+
+* [Next.js Starter](https://github.com/tinacms/tina-nextjs-starter)
+* [TinaDocs Starter](https://github.com/tinacms/tina-docs)
+* [Astro Starter](https://github.com/tinacms/tina-astro-starter)
+* [React Starter](https://github.com/tinacms/tina-react-starter)
+
+### 1. Choose a starter
+
+In TinaCloud, add a project and choose **Select a Starter Template**, or go straight to [app.tina.io/projects/starter](https://app.tina.io/projects/starter). Pick a starter, then select **Deploy to Cloudflare**.
+
+### 2. Connect your accounts
+
+A Cloudflare window opens and asks you to approve TinaCloud. See [what TinaCloud can do in your Cloudflare account](#what-tinacloud-can-do-in-your-cloudflare-account) for the permissions it asks for. Then connect GitHub from the same screen, so TinaCloud can commit your editors' changes.
+
+If your Cloudflare login has more than one account, choose the one to deploy to.
+
+### 3. Deploy on Cloudflare
+
+Select **Open Cloudflare deploy page**. Cloudflare's deploy page opens in a new tab and creates two things: a copy of the starter in your GitHub account, and a Worker that builds from it.
+
+* Skip Cloudflare's prompt for variables and secrets. TinaCloud adds the keys in the next step.
+* Keep the TinaCloud tab open. It watches your Cloudflare account and picks up the new Worker by itself.
+
+> Cloudflare's first build fails, because it runs before the keys exist. That's expected. A new build runs once the keys are in place.
+
+### 4. Finish
+
+Back in TinaCloud, check the Worker it found is the one you just deployed, then select **Connect Worker**. If it found the wrong one, select **Not this one?** and pick yours from the list.
+
+TinaCloud then:
+
+1. Reads which GitHub repo the Worker builds from.
+2. Waits for Cloudflare to push the starter code to that repo, then creates your TinaCloud project with the Worker's URL as its Site URL.
+3. Saves the client ID and a read-only content token as build variables on the Worker. Variables with the same names are replaced; your other variables are left alone.
+4. Indexes your repo.
+5. Starts a new build in Cloudflare, or follows the one Cloudflare started by itself, and shows its progress with a link to the build log.
+
+If TinaCloud's GitHub app can't see the repo's owner yet, you are asked to install it there after step 1, and the setup carries on once you have.
+
+### 5. Edit your site
+
+When the build passes, you see **Your site is live**. Select **Edit with Tina** to open the editor at `/admin` on your Worker's URL, or **Open site** to see the site.
+
+### What TinaCloud can do in your Cloudflare account
+
+TinaCloud asks Cloudflare for four permissions:
+
+* **Account Settings: Read**, to list your Cloudflare accounts so you can choose one.
+* **Workers: Metadata Read**, to find the Worker you just deployed and its `workers.dev` URL or custom domain.
+* **Workers: Edit** and **Workers CI: Edit**, to read which GitHub repo the Worker builds from, save the two build variables, start a build, and read that build's status and log.
+
+TinaCloud uses the access only during setup. It doesn't store your Cloudflare token. It ends the access when the build passes, when it has read a failed build's log, or when you leave the setup page. If you close the tab mid-setup, the access lapses when Cloudflare's token expires, or you can revoke it yourself. After that, saves from the editor go to GitHub, and Cloudflare rebuilds from the push as it does for any commit.
+
+To revoke it, open [**Manage OAuth authorizations**](https://dash.cloudflare.com/?to=/profile/access-management/authorization) in your Cloudflare profile and select **Revoke** on its row.
+
+### Configure Cloudflare yourself
+
+If you would rather not give TinaCloud access to your Cloudflare account, select **Prefer to configure Cloudflare yourself?** under the deploy buttons. You do the Cloudflare side by hand, and TinaCloud never asks for access to your Cloudflare account.
+
+1. Select **Deploy to Cloudflare** and deploy the starter. Skip Cloudflare's variable prompt. The first build fails until you add the two values in step 3.
+2. In TinaCloud, connect GitHub, pick the repo Cloudflare created, and enter your Worker's public URL as the Site URL, for example `https://my-site.my-account.workers.dev`. Then create the project.
+3. TinaCloud shows two values. In Cloudflare, open **Workers & Pages** | your Worker | **Settings** | **Build** | **Variables and secrets** and add both:
+
+   * The client ID, as a plain text variable. Its name depends on the starter: `NEXT_PUBLIC_TINA_CLIENT_ID` for the Next.js and TinaDocs starters, `PUBLIC_TINA_CLIENT_ID` for Astro, and `TINA_PUBLIC_CLIENT_ID` for React. TinaCloud shows the right name for your starter.
+   * `TINA_TOKEN`, as a secret. Choose **Encrypt** so it is hidden in Cloudflare.
+4. Wait until TinaCloud has indexed your repo, then retry the build in Cloudflare.
+
+Select **Verify** at any time to check your setup. It runs only when you select it, and reports:
+
+* **TinaCloud has indexed your repo**
+* **The Cloudflare build passed**
+* **Your site answers**
+* **Your admin page has this project's client ID**
+
+Each failed check says what to fix. **Go to project** appears once nothing has failed and the indexing and site checks pass. The build and admin checks can come back as "could not be checked" (TinaCloud can't read the build result of a private repo, for example), and that doesn't block you. You can also select **Skip** to go to the project without verifying.
+
+### Troubleshooting the TinaCloud flow
+
+**"This is a private application and can only be authorized by members of the developer's account".** You are on a TinaCloud environment whose Cloudflare app isn't public. On [app.tina.io](https://app.tina.io) this shouldn't happen; if it does, [contact support](https://tina.io/docs/support).
+
+**TinaCloud doesn't find your Worker.** It watches for new Workers for 10 minutes. After that, select **I've deployed it** and pick your Worker from the list. If Cloudflare is limiting requests, TinaCloud checks less often and says so.
+
+**"Cloudflare has not pushed the starter code to your repo after 2 minutes".** Cloudflare creates the repo before it pushes the starter into it. Check the repo on GitHub has the starter's files, then select **Try again** and **Connect Worker**.
+
+**"This Worker is not connected to a Git repository".** The Worker wasn't created from Cloudflare's deploy page. Deploy the starter with the **Open Cloudflare deploy page** button so Cloudflare builds it from your repo.
+
+**"Your Cloudflare account has no workers.dev subdomain".** TinaCloud can't tell which Site URL to allow. Set up a `workers.dev` subdomain or add a custom domain to the Worker in Cloudflare, then try again.
+
+**"Reconnect Cloudflare".** Your Cloudflare approval expired or is missing a permission. Select **Reconnect Cloudflare** and approve again.
+
+**The build failed.** Your TinaCloud project and build variables are still in place. Open the build log from the link TinaCloud shows, fix the cause, and retry the build in Cloudflare.
 
 ## Astro
 
