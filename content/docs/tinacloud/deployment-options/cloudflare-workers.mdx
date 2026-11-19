@@ -42,7 +42,7 @@ Select **Open Cloudflare deploy page**. Cloudflare's deploy page opens in a new 
 * Skip Cloudflare's prompt for variables and secrets. TinaCloud adds the keys in the next step.
 * Keep the TinaCloud tab open. It watches your Cloudflare account and picks up the new Worker by itself.
 
-> Cloudflare's first build stops with a "Missing TinaCloud build variables" message, because it runs before the keys exist. That's expected. TinaCloud starts a new build once the keys are in place.
+> Cloudflare's first build fails, because it runs before the keys exist. That's expected. A new build runs once the keys are in place.
 
 ### 4. Finish
 
@@ -50,13 +50,13 @@ Back in TinaCloud, check the Worker it found is the one you just deployed, then 
 
 TinaCloud then:
 
-1. Waits for Cloudflare to push the starter code to your new repo.
-2. Reads the repo from the Worker and creates your TinaCloud project, with the Worker's URL as its Site URL.
+1. Reads which GitHub repo the Worker builds from.
+2. Waits for Cloudflare to push the starter code to that repo, then creates your TinaCloud project with the Worker's URL as its Site URL.
 3. Saves the client ID and a read-only content token as build variables on the Worker. Variables with the same names are replaced; your other variables are left alone.
 4. Indexes your repo.
-5. Starts a new build in Cloudflare, and shows its progress with a link to the build log.
+5. Starts a new build in Cloudflare, or follows the one Cloudflare started by itself, and shows its progress with a link to the build log.
 
-If TinaCloud's GitHub app can't see the repo's owner yet, you are asked to install it there, and the setup carries on once you have.
+If TinaCloud's GitHub app can't see the repo's owner yet, you are asked to install it there after step 1, and the setup carries on once you have.
 
 ### 5. Edit your site
 
@@ -70,13 +70,13 @@ TinaCloud asks Cloudflare for four permissions:
 * **Workers: Metadata Read**, to find the Worker you just deployed and its `workers.dev` URL or custom domain.
 * **Workers: Edit** and **Workers CI: Edit**, to read which GitHub repo the Worker builds from, save the two build variables, start a build, and read that build's status and log.
 
-TinaCloud uses the access only during setup. It doesn't store your Cloudflare token, and it ends the access when the build passes or you leave the setup. After that, saves from the editor go to GitHub, and Cloudflare rebuilds from the push as it does for any commit.
+TinaCloud uses the access only during setup. It doesn't store your Cloudflare token. It ends the access when the build passes, when it has read a failed build's log, or when you leave the setup page. If you close the tab mid-setup, the access lapses when Cloudflare's token expires, or you can revoke it yourself. After that, saves from the editor go to GitHub, and Cloudflare rebuilds from the push as it does for any commit.
 
-To remove TinaCloud yourself at any time, open [**Manage OAuth authorizations**](https://dash.cloudflare.com/?to=/profile/access-management/authorization) in your Cloudflare profile and select **Revoke** on its row.
+To revoke it, open [**Manage OAuth authorizations**](https://dash.cloudflare.com/?to=/profile/access-management/authorization) in your Cloudflare profile and select **Revoke** on its row.
 
 ### Configure Cloudflare yourself
 
-If you would rather not give TinaCloud access to your Cloudflare account, select **Prefer to configure Cloudflare yourself?** under the deploy buttons. You do the Cloudflare side by hand and TinaCloud never connects to it.
+If you would rather not give TinaCloud access to your Cloudflare account, select **Prefer to configure Cloudflare yourself?** under the deploy buttons. You do the Cloudflare side by hand, and TinaCloud never asks for access to your Cloudflare account.
 
 1. Select **Deploy to Cloudflare** and deploy the starter. Skip Cloudflare's variable prompt. The first build fails until you add the two values in step 3.
 2. In TinaCloud, connect GitHub, pick the repo Cloudflare created, and enter your Worker's public URL as the Site URL, for example `https://my-site.my-account.workers.dev`. Then create the project.
@@ -99,9 +99,9 @@ Each failed check says what to fix. **Go to project** appears once nothing has f
 
 **"This is a private application and can only be authorized by members of the developer's account".** You are on a TinaCloud environment whose Cloudflare app isn't public. On [app.tina.io](https://app.tina.io) this shouldn't happen; if it does, [contact support](https://tina.io/docs/support).
 
-**TinaCloud doesn't find your Worker.** It watches for new Workers for 10 minutes. After that, select **I've deployed it** to look again. If Cloudflare is limiting requests, TinaCloud checks less often and says so.
+**TinaCloud doesn't find your Worker.** It watches for new Workers for 10 minutes. After that, select **I've deployed it** and pick your Worker from the list. If Cloudflare is limiting requests, TinaCloud checks less often and says so.
 
-**"Cloudflare has not pushed the starter code to your repo after 2 minutes".** Cloudflare creates the repo before it pushes the starter into it. Check the repo on GitHub has the starter's files, then select **Try again**.
+**"Cloudflare has not pushed the starter code to your repo after 2 minutes".** Cloudflare creates the repo before it pushes the starter into it. Check the repo on GitHub has the starter's files, then select **Try again** and **Connect Worker**.
 
 **"This Worker is not connected to a Git repository".** The Worker wasn't created from Cloudflare's deploy page. Deploy the starter with the **Open Cloudflare deploy page** button so Cloudflare builds it from your repo.
 
