@@ -520,6 +520,10 @@
               "_template": "item"
             },
             {
+              "slug": "content/docs/tinacloud/tinacloud-cli.mdx",
+              "_template": "item"
+            },
+            {
               "title": "Key Features",
               "items": [
                 {

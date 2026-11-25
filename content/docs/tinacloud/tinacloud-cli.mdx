@@ -1,0 +1,146 @@
+---
+title: TinaCloud CLI
+---
+
+The TinaCloud CLI lets you manage organizations and projects from the command
+line.
+
+## Installation
+
+### Linux & MacOS
+
+On Linux and macOS, you can install the binary and man pages using the command
+below.
+
+```sh
+curl -L https://github.com/tinacms/tinacloud-cli/raw/main/scripts/install.sh | bash
+```
+
+By default, the installer will install the latest version of the CLI to
+`/usr/local/bin`. These defaults can be overriden by setting the appropriate
+environment variables.
+
+| Variable     | Default                   |
+| ------------ | ------------------------- |
+| VERSION      | Latest                    |
+| INSTALL_PATH | /usr/local/bin            |
+| MAN_PATH     | /usr/local/share/man/man1 |
+
+### GitHub Releases
+
+Alternatively, you can download the archive for your platform from the [GitHub
+releases page](https://github.com/tinacms/tinacloud-cli/releases). Extract
+the archive, then add the binary to your `PATH`. Archives are available for
+Linux, macOS and Windows on x86-64 and ARM64.
+
+### Build from source
+
+If none of the options above work for you, you can also compile the executable
+yourself.
+
+```sh
+git clone https://github.com/tinacms/tinacloud-cli
+cd tinacloud-cli
+make build
+```
+
+## Getting started
+
+Sign in through your browser, then check your session:
+
+```sh
+tinacloud auth login
+tinacloud auth status
+```
+
+Most commands require you to pass in your TinaCloud organization ID and/or
+project ID. To make this process less repetitive, if inside a TinaCMS project,
+running `tinacloud configure` will write these two IDs to
+`<project-root>/<tina-dir>/tinacloud.json`. For an alternative Tina directory,
+pass `--tina-dir <path>` to `configure` and to commands that read the
+configuration.
+
+Once written, commands that require any of these two values will attempt to
+read from said file first unless explicitly provided.
+
+```sh
+tinacloud project status
+tinacloud project update site-url add --url https://example.com
+tinacloud project update protected-branch add --branch main
+```
+
+To configure without prompts, supply both IDs:
+
+```sh
+tinacloud configure --org-id <organization-id> --project-id <project-id> --no-input
+```
+
+## Commands
+
+| Command                                          | Description                                                    |
+| ------------------------------------------------ | -------------------------------------------------------------- |
+| `auth login`, `auth status`, `auth logout`       | Sign in, check your session or sign out                        |
+| `org list`                                       | List organizations you belong to                               |
+| `project list`                                   | List projects in an organization                               |
+| `project create`                                 | Create a project from a GitHub repository                      |
+| `project status`                                 | Show project status                                            |
+| `project update site-url add` / `remove`         | Add or remove site URLs                                        |
+| `project update protected-branch add` / `remove` | Add or remove protected branches (requires editorial workflow) |
+| `configure`                                      | Configure a local Tina project                                 |
+| `completion`                                     | Generate shell completion scripts                              |
+
+## Enable Autocomplete
+
+Autocomplete can be enabled by installing one of the provided autocomplete
+scripts into your shell profile, if not there already.
+
+```sh
+$ tinacloud completion --help
+
+Available Commands:
+bash        Generate the bash completion script
+zsh         Generate the zsh completion script
+fish        Generate the fish completion script
+powershell  Generate the PowerShell completion script
+```
+
+Select the shell according to the terminal you use, then run `tinacloud
+completion <shell> --help`. Follow the printed instructions, then restart your
+terminal for the changes to take effect.
+
+## Telemetry
+
+Telemetry is disabled by default. Set `TINACLOUD_TELEMETRY=true` to enable
+usage and error reporting. When enabled, the CLI reports completed
+configuration methods and failed commands, including their arguments and error
+messages. 
+
+Events are associated with the signed-in TinaCloud user when available.
+Otherwise, they use a random ID for that invocation.
+
+## Examples
+
+### Login
+
+```sh
+tinacloud auth login
+tinacloud auth status
+```
+
+### List organizations and projects
+
+```sh
+tinacloud org list
+tinacloud project list --org-id <organization-id>
+```
+
+### Create a project
+
+```sh
+tinacloud project create --org-id <organization-id> --name my-site --repo-url https://github.com/example/my-site
+```
+
+The site URL defaults to `http://localhost:3000`. Use `--site-url` to change
+it.  Project creation may prompt you to install the TinaCloud GitHub App. With
+`--no-input`, it fails instead if installation is required. After creation,
+the CLI attempts to save the IDs to the local Tina directory if it exists.
