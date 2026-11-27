@@ -28,6 +28,8 @@ The examples assume each docs URL has a matching source file, so `/docs/guides/s
 
 The examples also serve every file they find, including its frontmatter. If your content includes drafts or private fields, filter them out before returning the response.
 
+Each example sends Markdown with `Cache-Control: private, no-store`. HTML and Markdown share a URL, and some caches ignore `Vary`, so keeping Markdown out of shared caches stops a browser from being served Markdown. The worst case is an agent receiving cached HTML.
+
 ## Next.js App Router
 
 Create a static route handler that returns the source MDX.
@@ -65,7 +67,10 @@ export async function GET(
 
   try {
     return new Response(await readFile(filePath, "utf8"), {
-      headers: { "Content-Type": "text/markdown; charset=utf-8" },
+      headers: {
+        "Content-Type": "text/markdown; charset=utf-8",
+        "Cache-Control": "private, no-store",
+      },
     });
   } catch {
     return new Response(null, { status: 404 });
@@ -100,7 +105,7 @@ export const config = { matcher: "/docs/:path*" };
 
 Static exports do not run middleware. TinaDocs uses `EXPORT_MODE=static` to select its static-export configuration; a static host still serves HTML at the docs URL regardless of `Accept`.
 
-The middleware appends `Vary: Accept` to both representations, but Next.js or the hosting layer can replace this header. [Vercel includes `Accept` in its cache key](https://vercel.com/docs/caching/cdn-cache) automatically. For other CDNs and reverse proxies, configure separate cache entries by `Accept` or bypass caching for docs routes; otherwise HTML and Markdown can share a cache entry.
+The middleware appends `Vary: Accept` to both representations, but Next.js replaces `Vary` on page responses with its own values, so HTML responses do not keep it (Next.js 14 also drops it from the Markdown response). This is why the route handler marks Markdown `private, no-store`. [Vercel includes `Accept` in its cache key](https://vercel.com/docs/caching/cdn-cache) automatically. For other CDNs and reverse proxies, configure separate cache entries by `Accept` or bypass caching for docs routes; otherwise agents can receive cached HTML.
 
 ## Astro
 
@@ -128,7 +133,10 @@ export const GET: APIRoute = async ({ params }) => {
 
   try {
     return new Response(await readFile(filePath, "utf8"), {
-      headers: { "Content-Type": "text/markdown; charset=utf-8" },
+      headers: {
+        "Content-Type": "text/markdown; charset=utf-8",
+        "Cache-Control": "private, no-store",
+      },
     });
   } catch {
     return new Response(null, { status: 404 });
@@ -217,6 +225,7 @@ function markdownNegotiation(): Plugin {
       try {
         const source = await readFile(filePath, "utf8");
         response.setHeader("Content-Type", "text/markdown; charset=utf-8");
+        response.setHeader("Cache-Control", "private, no-store");
         response.end(source);
       } catch {
         response.statusCode = 404;
@@ -248,7 +257,7 @@ curl -i https://example.com/docs/getting-started
 curl -i -H 'Accept: text/markdown' https://example.com/docs/getting-started
 ```
 
-The first response should use `Content-Type: text/html`. The second should use `Content-Type: text/markdown`. If a CDN or proxy caches the responses, confirm that its cache key includes `Accept` or that the response includes `Vary: Accept`.
+The first response should use `Content-Type: text/html`. The second should use `Content-Type: text/markdown` and `Cache-Control: private, no-store`. If a CDN or proxy caches the responses, confirm that its cache key includes `Accept` or that the response includes `Vary: Accept`.
 
 Also test negotiation at both `/docs` and a nested docs URL:
 
